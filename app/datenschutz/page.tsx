@@ -89,12 +89,13 @@ export default function DatenschutzPage() {
               um Ihr Anliegen zu bearbeiten und Ihnen zu antworten.
             </p>
             <p>
-              Das Kontaktformular auf dieser Website ist zum aktuellen Zeitpunkt
-              rein informativ. Eine automatische Übermittlung der eingegebenen
-              Daten findet derzeit noch nicht statt; die technische Anbindung
-              wird zu einem späteren Zeitpunkt ergänzt. Diese
-              Datenschutzerklärung wird entsprechend angepasst, sobald das
-              Formular Daten übermittelt.
+              Wenn Sie das Kontaktformular auf dieser Website absenden, werden
+              die von Ihnen eingegebenen Angaben (insbesondere Name, allfällige
+              Firma bzw. Verwaltung, E-Mail-Adresse, Telefonnummer, allfällige
+              Objektadresse, Anfrageart, ausgewählte Leistungen sowie Ihre
+              Nachricht) an Clean24 übermittelt und dort zur Bearbeitung Ihrer
+              Anfrage verwendet. Die Übermittlung erfolgt nur, wenn Sie der
+              Bearbeitung Ihrer Angaben zuvor zustimmen.
             </p>
           </LegalSection>
 
@@ -135,9 +136,20 @@ export default function DatenschutzPage() {
             <p>
               Es sind derzeit keine externen Analyse-, Tracking-, Marketing-,
               Newsletter- oder Zahlungsdienste eingebunden. Bild- und
-              Schriftdateien werden mit der Website ausgeliefert. Sollten
-              künftig Dienste von Drittanbietern eingesetzt werden, informieren
-              wir an dieser Stelle darüber.
+              Schriftdateien werden mit der Website ausgeliefert.
+            </p>
+            <p>
+              Für die technische Übermittlung von Anfragen aus dem
+              Kontaktformular kann ein spezialisierter E-Mail-Dienstleister
+              eingesetzt werden, der die Nachricht in unserem Auftrag an unsere
+              E-Mail-Adresse zustellt. Dabei werden die von Ihnen im Formular
+              gemachten Angaben verarbeitet. Der Dienstleister verwendet diese
+              Daten ausschliesslich zum Zweck der Zustellung und nicht zu
+              eigenen Zwecken.
+            </p>
+            <p>
+              Sollten künftig weitere Dienste von Drittanbietern eingesetzt
+              werden, informieren wir an dieser Stelle darüber.
             </p>
           </LegalSection>
 

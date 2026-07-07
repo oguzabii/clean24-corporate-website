@@ -6,36 +6,88 @@ import { Button } from "@/components/ui/Button";
 import { anfrageOptions } from "@/data/anfrage";
 import { services } from "@/data/services";
 import { contact } from "@/data/contact";
+import { CONTACT_LIMITS, type ContactPayload } from "@/lib/contact";
 
 const inputClass =
   "w-full rounded-lg border border-navy-200 bg-white px-4 py-3 text-sm text-navy-900 placeholder:text-navy-400 transition-colors focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400/40";
 const labelClass = "block text-sm font-medium text-navy-800";
 
+type Status = "idle" | "loading" | "success" | "error";
+
 /**
- * UI-only contact form. Backend submission is intentionally not wired yet —
- * on submit we prevent default and show a prepared-state confirmation. The
- * request type can be preselected via the `?anfrage=` query parameter.
+ * Contact form wired to POST /api/contact. Validates client-side via native
+ * HTML constraints, then submits JSON and reflects the real server result
+ * (loading / success / error). The request type can be preselected via the
+ * `?anfrage=` query parameter.
  */
 export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
   const [anfrageart, setAnfrageart] = useState(defaultAnfrage);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   function toggleService(slug: string) {
     setSelectedServices((prev) =>
-      prev.includes(slug)
-        ? prev.filter((s) => s !== slug)
-        : [...prev, slug],
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug],
     );
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    // No backend yet: prepare locally and confirm. Do not attempt to send.
-    event.preventDefault();
-    setSubmitted(true);
+  function resetForm() {
+    setAnfrageart(defaultAnfrage);
+    setSelectedServices([]);
+    setErrorMessage("");
+    setStatus("idle");
   }
 
-  if (submitted) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const payload: ContactPayload = {
+      name: String(formData.get("name") ?? ""),
+      company: String(formData.get("firma") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("telefon") ?? ""),
+      objectAddress: String(formData.get("objekt") ?? ""),
+      requestType: anfrageart,
+      services: selectedServices,
+      message: String(formData.get("nachricht") ?? ""),
+      privacyConsent: formData.get("datenschutz") === "on",
+      honeypot: String(formData.get("website") ?? ""),
+    };
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+
+      if (response.ok && data.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+        setErrorMessage(
+          data.error ??
+            "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+        );
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage(
+        "Verbindung fehlgeschlagen. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+      );
+    }
+  }
+
+  if (status === "success") {
     return (
       <div className="rounded-2xl border border-teal-200 bg-teal-50/60 p-8 sm:p-10">
         <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-teal-500 text-white">
@@ -56,9 +108,8 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
           Vielen Dank für Ihre Anfrage.
         </h3>
         <p className="mt-3 text-[0.95rem] leading-7 text-navy-600">
-          Ihre Anfrage wurde vorbereitet. Die technische Übermittlung wird im
-          nächsten Schritt angebunden. Für dringende Anliegen erreichen Sie uns
-          direkt:
+          Wir haben Ihre Nachricht erhalten und melden uns zeitnah bei Ihnen.
+          Für dringende Anliegen erreichen Sie uns direkt:
         </p>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <Button href={contact.phoneHref} variant="outline" size="md">
@@ -70,7 +121,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
         </div>
         <button
           type="button"
-          onClick={() => setSubmitted(false)}
+          onClick={resetForm}
           className="mt-6 text-sm font-semibold text-navy-800 underline-offset-4 hover:text-teal-600 hover:underline"
         >
           Weitere Anfrage erfassen
@@ -79,8 +130,25 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
     );
   }
 
+  const loading = status === "loading";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Honeypot — hidden from real users, catches bots. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden"
+      >
+        <label htmlFor="website">Website (bitte leer lassen)</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {/* Quick request-type selection */}
       <fieldset>
         <legend className="text-sm font-medium text-navy-800">
@@ -123,6 +191,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
             name="name"
             type="text"
             required
+            maxLength={CONTACT_LIMITS.name}
             autoComplete="name"
             className={inputClass}
             placeholder="Vor- und Nachname"
@@ -137,6 +206,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
             id="firma"
             name="firma"
             type="text"
+            maxLength={CONTACT_LIMITS.company}
             autoComplete="organization"
             className={inputClass}
             placeholder="Unternehmen oder Verwaltung"
@@ -151,6 +221,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
             name="email"
             type="email"
             required
+            maxLength={CONTACT_LIMITS.email}
             autoComplete="email"
             className={inputClass}
             placeholder="name@beispiel.ch"
@@ -165,6 +236,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
             name="telefon"
             type="tel"
             required
+            maxLength={CONTACT_LIMITS.phone}
             autoComplete="tel"
             className={inputClass}
             placeholder="+41 …"
@@ -179,6 +251,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
             id="objekt"
             name="objekt"
             type="text"
+            maxLength={CONTACT_LIMITS.objectAddress}
             autoComplete="street-address"
             className={inputClass}
             placeholder="Strasse, PLZ, Ort des Objekts"
@@ -243,6 +316,7 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
           name="nachricht"
           required
           rows={5}
+          maxLength={CONTACT_LIMITS.message}
           className={inputClass}
           placeholder="Beschreiben Sie kurz Ihr Objekt, den gewünschten Umfang und mögliche Termine."
         />
@@ -268,13 +342,39 @@ export function KontaktForm({ defaultAnfrage }: { defaultAnfrage: string }) {
         </span>
       </label>
 
+      {status === "error" ? (
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm leading-6 text-red-800"
+        >
+          <p className="font-medium">{errorMessage}</p>
+          <p className="mt-1 text-red-700">
+            Alternativ erreichen Sie uns unter{" "}
+            <a
+              href={contact.phoneHref}
+              className="font-semibold underline underline-offset-2"
+            >
+              {contact.phone}
+            </a>{" "}
+            oder{" "}
+            <a
+              href={contact.emailHref}
+              className="font-semibold underline underline-offset-2"
+            >
+              {contact.email}
+            </a>
+            .
+          </p>
+        </div>
+      ) : null}
+
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button type="submit" size="lg">
-          Anfrage senden
+        <Button type="submit" size="lg" disabled={loading}>
+          {loading ? "Wird gesendet …" : "Anfrage senden"}
         </Button>
         <p className="text-sm text-navy-500">
-          Hinweis: Die Formularanbindung folgt. Ihre Angaben werden derzeit noch
-          nicht übermittelt.
+          Mit dem Absenden werden Ihre Angaben zur Bearbeitung der Anfrage an
+          Clean24 übermittelt.
         </p>
       </div>
     </form>
