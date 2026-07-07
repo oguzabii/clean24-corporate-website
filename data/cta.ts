@@ -7,17 +7,23 @@ export interface CtaLink {
 }
 
 export const cta = {
-  /** Primary conversion action across the site. */
-  primary: { label: "Offerte anfordern", href: "#kontakt" } satisfies CtaLink,
-  /** Softer secondary action. */
-  secondary: { label: "Kontakt aufnehmen", href: "#kontakt" } satisfies CtaLink,
-  /** Discover the service range. */
-  services: { label: "Leistungen entdecken", href: "#leistungen" } satisfies CtaLink,
+  /** Primary conversion action — opens the contact page prefilled for an offer. */
+  primary: {
+    label: "Offerte anfordern",
+    href: "/kontakt?anfrage=offerte",
+  } satisfies CtaLink,
+  /** Softer secondary action — the general contact page. */
+  secondary: { label: "Kontakt aufnehmen", href: "/kontakt" } satisfies CtaLink,
+  /** Discover the service range on the homepage. */
+  services: {
+    label: "Leistungen entdecken",
+    href: "/#leistungen",
+  } satisfies CtaLink,
   /** Direct phone call. */
   call: { label: "Jetzt anrufen", href: contact.phoneHref } satisfies CtaLink,
-  /** B2B action for real estate administrations. */
+  /** B2B action — contact page prefilled for administrations. */
   verwaltungen: {
     label: "Anfrage für Verwaltungen senden",
-    href: "#kontakt",
+    href: "/kontakt?anfrage=verwaltung",
   } satisfies CtaLink,
 } as const;

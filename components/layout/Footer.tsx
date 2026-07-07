@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import { Logo } from "@/components/ui/Logo";
 import { site } from "@/data/site";
 import { contact } from "@/data/contact";
+import { cta } from "@/data/cta";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 
@@ -48,7 +49,7 @@ export function Footer() {
           {/* Services */}
           <FooterColumn title="Leistungen">
             {services.slice(0, 8).map((service) => (
-              <FooterLink key={service.slug} href={`#leistungen`}>
+              <FooterLink key={service.slug} href="/#leistungen">
                 {service.name}
               </FooterLink>
             ))}
@@ -57,7 +58,7 @@ export function Footer() {
           {/* Industries */}
           <FooterColumn title="Branchen">
             {industries.map((industry) => (
-              <FooterLink key={industry.slug} href={`#branchen`}>
+              <FooterLink key={industry.slug} href="/#branchen">
                 {industry.name}
               </FooterLink>
             ))}
@@ -65,7 +66,8 @@ export function Footer() {
 
           {/* Contact */}
           <FooterColumn title="Kontakt">
-            <FooterLink href="#kontakt">Offerte anfordern</FooterLink>
+            <FooterLink href="/kontakt">Kontakt</FooterLink>
+            <FooterLink href={cta.primary.href}>Offerte anfordern</FooterLink>
             <FooterLink href={contact.phoneHref}>Jetzt anrufen</FooterLink>
             <FooterLink href={contact.emailHref}>E-Mail schreiben</FooterLink>
           </FooterColumn>

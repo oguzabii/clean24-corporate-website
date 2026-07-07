@@ -9,6 +9,8 @@ export interface ContactInfo {
   emailHref: string;
   phone: string;
   phoneHref: string;
+  /** Swiss company identification / VAT number. */
+  uid: string;
 }
 
 export const contact: ContactInfo = {
@@ -21,4 +23,5 @@ export const contact: ContactInfo = {
   emailHref: "mailto:info@clean-24.ch",
   phone: "+41 44 516 19 23",
   phoneHref: "tel:+41445161923",
+  uid: "CHE-260.909.323",
 };

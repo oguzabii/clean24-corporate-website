@@ -183,7 +183,7 @@ export default function Home() {
           {industries.map((industry, index) => (
             <Link
               key={industry.slug}
-              href="#kontakt"
+              href="/kontakt"
               className="group grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-navy-100 px-2 py-6 transition-colors hover:bg-mist sm:grid-cols-[4rem_16rem_1fr_auto] sm:gap-6 sm:py-7"
             >
               <span className="text-sm font-semibold tabular-nums text-teal-600">
@@ -318,7 +318,7 @@ export default function Home() {
       </Section>
 
       {/* 8 — Final CTA */}
-      <Section id="kontakt" tone="navyDeep" className="relative overflow-hidden">
+      <Section tone="navyDeep" className="relative overflow-hidden">
         <div
           className="pointer-events-none absolute left-1/2 top-0 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-teal-500/10 blur-3xl"
           aria-hidden
@@ -336,10 +336,10 @@ export default function Home() {
             transparentes Angebot.
           </p>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button href={contact.emailHref} variant="accent" size="lg">
+            <Button href={cta.primary.href} variant="accent" size="lg">
               {cta.primary.label}
             </Button>
-            <Button href={contact.emailHref} variant="outlineLight" size="lg">
+            <Button href={cta.secondary.href} variant="outlineLight" size="lg">
               {cta.secondary.label}
             </Button>
             <Button href={contact.phoneHref} variant="outlineLight" size="lg">
