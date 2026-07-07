@@ -5,3 +5,8 @@ export { services, featuredServices, type Service } from "./services";
 export { industries, type Industry } from "./industries";
 export { mainNav, type NavItem } from "./navigation";
 export { cta, type CtaLink } from "./cta";
+export { competences, type Competence } from "./competences";
+export { qualityPromise, type QualityBlock } from "./quality";
+export { processSteps, type ProcessStep } from "./process";
+export { trustPoints } from "./trust";
+export { verwaltungenLeistungen } from "./verwaltungen";

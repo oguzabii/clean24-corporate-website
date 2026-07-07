@@ -1,34 +1,36 @@
+import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /**
- * Clean24 wordmark with a minimal mark.
- * `tone` switches the wordmark color for light vs. dark backgrounds.
+ * The real Clean24 logo (public/brand/clean24-logo.png, 900×428).
+ * The asset has a solid white background, so on dark surfaces (`tone="light"`)
+ * it is presented on a small white plate to keep the mark clean and premium.
  */
 export function Logo({
   tone = "dark",
   className,
+  priority = false,
 }: {
   tone?: "dark" | "light";
   className?: string;
+  priority?: boolean;
 }) {
-  const wordmark = tone === "light" ? "text-white" : "text-navy-900";
-
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <span
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-navy-700 to-navy-900 ring-1 ring-inset ring-white/10"
-        aria-hidden
-      >
-        <span className="h-2.5 w-2.5 rounded-full bg-teal-400" />
-      </span>
-      <span
-        className={cn(
-          "text-lg font-semibold tracking-tight",
-          wordmark,
-        )}
-      >
-        Clean<span className="text-teal-500">24</span>
-      </span>
+    <span
+      className={cn(
+        "inline-flex items-center",
+        tone === "light" && "rounded-lg bg-white px-3 py-2",
+        className,
+      )}
+    >
+      <Image
+        src="/brand/clean24-logo.png"
+        alt="Clean24 — Ihr Reinigungsprofi"
+        width={900}
+        height={428}
+        priority={priority}
+        className="h-10 w-auto"
+      />
     </span>
   );
 }

@@ -8,7 +8,7 @@ export const site = {
   slogan: "Sauberkeit mit System.",
   secondary:
     "Professionelle Reinigung. Klare Abläufe. Verlässliche Ergebnisse.",
-  badge: "Premium Swiss Cleaning & Facility Services",
+  badge: "Schweizer Reinigungs- & Facility-Services",
   /** Short brand pillars derived from the secondary message (not metrics). */
   pillars: [
     {

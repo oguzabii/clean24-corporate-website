@@ -2,12 +2,13 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Container } from "./Container";
 
-type SectionTone = "white" | "mist" | "navy";
+type SectionTone = "white" | "mist" | "navy" | "navyDeep";
 
 const tones: Record<SectionTone, string> = {
   white: "bg-white text-ink",
   mist: "bg-mist text-ink",
   navy: "bg-navy-900 text-white",
+  navyDeep: "bg-navy-950 text-white",
 };
 
 /**
@@ -33,7 +34,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("py-16 sm:py-24", tones[tone], className)}
+      className={cn("py-20 sm:py-28", tones[tone], className)}
     >
       {bare ? (
         children

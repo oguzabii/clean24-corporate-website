@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Clean24 — Sauberkeit mit System",
   description:
-    "Clean24 Corporate Experience — die premium Schweizer Reinigungs- und Facility-Marke. Sauberkeit mit System.",
+    "Clean24 Memis GmbH — professionelle Reinigung und Facility-Services für Unternehmen, Verwaltungen und private Kunden in Zürich und Umgebung. Sauberkeit mit System.",
 };
 
 export default function RootLayout({

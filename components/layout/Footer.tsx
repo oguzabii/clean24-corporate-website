@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-navy-950 text-navy-200">
       <Container className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           {/* Brand + contact */}
           <div className="space-y-4">
             <Logo tone="light" />
@@ -65,9 +65,16 @@ export function Footer() {
 
           {/* Contact */}
           <FooterColumn title="Kontakt">
-            <FooterLink href="#kontakt">Offerte anfragen</FooterLink>
-            <FooterLink href={contact.phoneHref}>Anrufen</FooterLink>
+            <FooterLink href="#kontakt">Offerte anfordern</FooterLink>
+            <FooterLink href={contact.phoneHref}>Jetzt anrufen</FooterLink>
             <FooterLink href={contact.emailHref}>E-Mail schreiben</FooterLink>
+          </FooterColumn>
+
+          {/* Legal — pages follow in a later phase. */}
+          <FooterColumn title="Rechtliches">
+            <FooterLink href="/impressum">Impressum</FooterLink>
+            <FooterLink href="/datenschutz">Datenschutz</FooterLink>
+            <FooterLink href="/agb">AGB</FooterLink>
           </FooterColumn>
         </div>
 
