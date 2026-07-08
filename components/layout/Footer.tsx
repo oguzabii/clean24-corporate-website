@@ -17,12 +17,8 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           {/* Brand + contact */}
           <div className="space-y-4">
-            {/* Full-colour logo on an elegant floating card so the brand
-                colours read on the dark footer — a soft, lifted surface, not
-                a flat pasted plate. */}
-            <span className="inline-flex rounded-2xl bg-gradient-to-br from-white to-navy-50 px-5 py-3.5 shadow-lg shadow-navy-950/60 ring-1 ring-white/10">
-              <Logo tone="dark" />
-            </span>
+            {/* White logo directly on the navy footer — transparent, no card. */}
+            <Logo tone="light" className="h-11" />
             <p className="max-w-xs text-sm leading-6 text-navy-300">
               {site.slogan} {site.secondary}
             </p>
