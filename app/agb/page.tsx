@@ -10,7 +10,7 @@ import {
 import { contact } from "@/data/contact";
 
 export const metadata: Metadata = {
-  title: "AGB | Clean24",
+  title: "AGB",
   description:
     "Allgemeine Geschäftsbedingungen (AGB) der Clean24 Memis GmbH für Reinigungs- und Facility-Dienstleistungen – Entwurf zur Prüfung.",
 };

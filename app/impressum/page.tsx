@@ -10,7 +10,7 @@ import {
 import { contact } from "@/data/contact";
 
 export const metadata: Metadata = {
-  title: "Impressum | Clean24",
+  title: "Impressum",
   description:
     "Impressum der Clean24 Memis GmbH, Glanzenbergstrasse 26, 8953 Dietikon – Anbieterkennzeichnung, Kontakt und Unternehmensidentifikation.",
 };

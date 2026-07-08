@@ -7,7 +7,7 @@ import { cta } from "@/data/cta";
 import { services } from "@/data/services";
 
 export const metadata: Metadata = {
-  title: "Kontakt | Clean24",
+  title: "Kontakt",
   description:
     "Kontaktieren Sie Clean24 Memis GmbH in Dietikon. Offerten über das Online-Formular, Anfragen für Verwaltungen per E-Mail oder telefonische Rückfrage.",
 };

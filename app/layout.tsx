@@ -15,10 +15,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://clean-24.ch";
+const homeTitle =
+  "Clean24 | Reinigung & Facility Services in Zürich und Umgebung";
+const homeDescription =
+  "Professionelle Reinigung für Unternehmen, Verwaltungen und private Kunden. Clean24 bietet klare Abläufe, transparente Offerten und zuverlässige Reinigung in Zürich und Umgebung.";
+
 export const metadata: Metadata = {
-  title: "Clean24 — Sauberkeit mit System",
-  description:
-    "Clean24 Memis GmbH — professionelle Reinigung und Facility-Services für Unternehmen, Verwaltungen und private Kunden in Zürich und Umgebung. Sauberkeit mit System.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: homeTitle,
+    template: "%s | Clean24",
+  },
+  description: homeDescription,
+  applicationName: "Clean24",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: siteUrl,
+    title: homeTitle,
+    description: homeDescription,
+    images: [
+      {
+        url: "/media/clean24/hero-facility-cleaning.jpg",
+        width: 2048,
+        height: 1152,
+        alt: "Clean24 – professionelle Gebäude- und Facility-Reinigung.",
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

@@ -10,7 +10,7 @@ import {
 import { contact } from "@/data/contact";
 
 export const metadata: Metadata = {
-  title: "Datenschutz | Clean24",
+  title: "Datenschutz",
   description:
     "Datenschutzerklärung der Clean24 Memis GmbH – Informationen zur Bearbeitung von Personendaten bei der Kontaktaufnahme und beim Besuch dieser Website.",
 };
