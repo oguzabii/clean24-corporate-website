@@ -65,6 +65,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white font-sans text-ink">
+        {/* Progressive enhancement: if JS is unavailable, reveal-animated
+            content must still be fully visible. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1 !important;transform:none !important;}`}</style>
+        </noscript>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
