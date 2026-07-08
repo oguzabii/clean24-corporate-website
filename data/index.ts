@@ -10,9 +10,3 @@ export { qualityPromise, type QualityBlock } from "./quality";
 export { processSteps, type ProcessStep } from "./process";
 export { trustPoints } from "./trust";
 export { verwaltungenLeistungen } from "./verwaltungen";
-export {
-  anfrageOptions,
-  defaultAnfrage,
-  resolveAnfrage,
-  type AnfrageOption,
-} from "./anfrage";

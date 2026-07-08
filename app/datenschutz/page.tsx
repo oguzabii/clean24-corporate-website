@@ -81,7 +81,7 @@ export default function DatenschutzPage() {
             </p>
           </LegalSection>
 
-          <LegalSection title="Kontaktaufnahme per E-Mail, Telefon oder Formular">
+          <LegalSection title="Kontaktaufnahme per E-Mail und Telefon">
             <p>
               Wenn Sie uns per E-Mail oder Telefon kontaktieren, bearbeiten wir
               die von Ihnen mitgeteilten Angaben (z. B. Name, Firma,
@@ -89,13 +89,17 @@ export default function DatenschutzPage() {
               um Ihr Anliegen zu bearbeiten und Ihnen zu antworten.
             </p>
             <p>
-              Wenn Sie das Kontaktformular auf dieser Website absenden, werden
-              die von Ihnen eingegebenen Angaben (insbesondere Name, allfällige
-              Firma bzw. Verwaltung, E-Mail-Adresse, Telefonnummer, allfällige
-              Objektadresse, Anfrageart, ausgewählte Leistungen sowie Ihre
-              Nachricht) an Clean24 übermittelt und dort zur Bearbeitung Ihrer
-              Anfrage verwendet. Die Übermittlung erfolgt nur, wenn Sie der
-              Bearbeitung Ihrer Angaben zuvor zustimmen.
+              Diese Website selbst verarbeitet keine über ein Kontaktformular
+              übermittelten Daten. Für Offert- und Reinigungsanfragen leiten wir
+              Sie auf unser separates Online-Formular unter{" "}
+              <a
+                href="https://formular.clean-24.ch/"
+                className="text-navy-900 underline underline-offset-2 hover:text-teal-600"
+              >
+                formular.clean-24.ch
+              </a>{" "}
+              weiter. Für dieses Formular gelten die dort bereitgestellten
+              Informationen zur Datenbearbeitung.
             </p>
           </LegalSection>
 
@@ -134,22 +138,16 @@ export default function DatenschutzPage() {
 
           <LegalSection title="Externe Dienste">
             <p>
-              Es sind derzeit keine externen Analyse-, Tracking-, Marketing-,
-              Newsletter- oder Zahlungsdienste eingebunden. Bild- und
+              Auf dieser Website sind keine Analyse-, Tracking-, Marketing-,
+              Newsletter-, Zahlungs- oder CRM-Dienste eingebunden. Bild- und
               Schriftdateien werden mit der Website ausgeliefert.
             </p>
             <p>
-              Für die technische Übermittlung von Anfragen aus dem
-              Kontaktformular kann ein spezialisierter E-Mail-Dienstleister
-              eingesetzt werden, der die Nachricht in unserem Auftrag an unsere
-              E-Mail-Adresse zustellt. Dabei werden die von Ihnen im Formular
-              gemachten Angaben verarbeitet. Der Dienstleister verwendet diese
-              Daten ausschliesslich zum Zweck der Zustellung und nicht zu
-              eigenen Zwecken.
-            </p>
-            <p>
-              Sollten künftig weitere Dienste von Drittanbietern eingesetzt
-              werden, informieren wir an dieser Stelle darüber.
+              Offert- und Reinigungsanfragen werden auf unser separates
+              Online-Formular unter formular.clean-24.ch weitergeleitet, das als
+              eigenständiges System betrieben wird. Sollten auf dieser Website
+              künftig Dienste von Drittanbietern eingesetzt werden, informieren
+              wir an dieser Stelle darüber.
             </p>
           </LegalSection>
 

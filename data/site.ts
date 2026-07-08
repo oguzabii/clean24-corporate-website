@@ -9,6 +9,12 @@ export const site = {
   secondary:
     "Professionelle Reinigung. Klare Abläufe. Verlässliche Ergebnisse.",
   badge: "Schweizer Reinigungs- & Facility-Services",
+  /**
+   * Clean24 Sales Engine — the separate lead-intake / offer flow on its own
+   * subdomain. Offer requests are routed here; this corporate site does not
+   * process form submissions itself.
+   */
+  salesEngineUrl: "https://formular.clean-24.ch/",
   /** Short brand pillars derived from the secondary message (not metrics). */
   pillars: [
     {
