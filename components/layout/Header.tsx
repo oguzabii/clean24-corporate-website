@@ -2,16 +2,17 @@ import Link from "next/link";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { mainNav } from "@/data/navigation";
+import { DesktopNav } from "./DesktopNav";
+import { MobileMenu } from "./MobileMenu";
 import { cta } from "@/data/cta";
 import { contact } from "@/data/contact";
 import { site } from "@/data/site";
 
 /**
  * Site header: slim dark contact bar (desktop) above a sticky, translucent
- * main bar with the wordmark, navigation and primary CTA. The mobile
- * navigation menu is intentionally deferred — the mobile sticky CTA covers
- * conversion.
+ * main bar with the wordmark, mega navigation and primary CTA. The desktop
+ * mega menu is pure-CSS (hover + keyboard focus); the mobile drawer is a
+ * small client component.
  */
 export function Header() {
   return (
@@ -37,34 +38,24 @@ export function Header() {
         </Container>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-navy-100/70 bg-white/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-navy-100/70 bg-white/85 backdrop-blur-md">
         <Container className="flex h-[4.5rem] items-center justify-between gap-4">
-          <Link href="/" aria-label="Clean24 Startseite">
+          <Link href="/" aria-label="Clean24 Startseite" className="shrink-0">
             <Logo tone="dark" priority />
           </Link>
 
-          <nav
-            className="hidden items-center gap-8 lg:flex"
-            aria-label="Hauptnavigation"
-          >
-            {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-navy-700 transition-colors hover:text-teal-600"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <DesktopNav />
 
-          <Button
-            href={cta.primary.href}
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
-            {cta.primary.label}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              href={cta.primary.href}
+              size="sm"
+              className="hidden sm:inline-flex"
+            >
+              {cta.primary.label}
+            </Button>
+            <MobileMenu />
+          </div>
         </Container>
       </header>
     </>
