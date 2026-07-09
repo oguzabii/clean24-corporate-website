@@ -90,4 +90,32 @@ const shapes: Record<VisualKind, React.ReactNode> = {
       <line x1="64" y1="66" x2="94" y2="66" className="text-teal-400" stroke="currentColor" />
     </>
   ),
+  // Box / carton (move-out starter kit)
+  box: (
+    <>
+      <path d="M30 46l30-14 30 14v34l-30 14-30-14z" />
+      <path d="M30 46l30 14 30-14" />
+      <line x1="60" y1="60" x2="60" y2="94" />
+      <path d="M45 39l30 14" className="text-teal-400" stroke="currentColor" />
+    </>
+  ),
+  // Cloth / folded microfibre stack
+  cloth: (
+    <>
+      <rect x="30" y="40" width="60" height="18" rx="4" />
+      <rect x="30" y="62" width="60" height="18" rx="4" />
+      <line x1="42" y1="49" x2="78" y2="49" className="text-teal-400" stroke="currentColor" />
+      <line x1="42" y1="71" x2="78" y2="71" />
+    </>
+  ),
+  // Checklist / plan sheet
+  checklist: (
+    <>
+      <rect x="34" y="26" width="52" height="68" rx="5" />
+      <path d="M46 44l5 5 8-9" className="text-teal-400" stroke="currentColor" />
+      <path d="M46 64l5 5 8-9" className="text-teal-400" stroke="currentColor" />
+      <line x1="64" y1="42" x2="78" y2="42" />
+      <line x1="64" y1="62" x2="78" y2="62" />
+    </>
+  ),
 };

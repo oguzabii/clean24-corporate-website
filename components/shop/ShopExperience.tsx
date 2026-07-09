@@ -1,9 +1,10 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { CartProvider, useCart } from "./CartContext";
 import { ProductCard } from "./ProductCard";
 import { CartDrawer } from "./CartDrawer";
-import { products } from "@/data/shop";
+import { categories, products, sortedProducts } from "@/data/shop";
 
 /** Sticky cart toggle showing the current item count. */
 function CartButton() {
@@ -30,25 +31,75 @@ function CartButton() {
   );
 }
 
+/** Category filter tabs: "Alle" + one per category, in catalog order. */
+const FILTERS = [{ id: "all", label: "Alle" }, ...categories];
+
 export function ShopExperience() {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const visibleProducts = useMemo(() => {
+    const all = sortedProducts(products);
+    return activeCategory === "all"
+      ? all
+      : all.filter((p) => p.categoryId === activeCategory);
+  }, [activeCategory]);
+
   return (
     <CartProvider>
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-2xl text-sm leading-6 text-navy-600">
-          Der Clean24 Shop befindet sich im Aufbau. Produkte, Preise und
-          Verfügbarkeit sind Beispielangaben – der Online-Checkout wird aktuell
-          vorbereitet.
+          Produkte, Preise und Verfügbarkeit sind editierbare Katalogangaben –
+          der Online-Checkout wird aktuell vorbereitet.
         </p>
         <div className="shrink-0">
           <CartButton />
         </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product) => (
-          <ProductCard key={product.slug} product={product} />
-        ))}
+      {/* Category filter tabs */}
+      <div
+        className="mb-8 flex flex-wrap gap-2"
+        role="tablist"
+        aria-label="Produktkategorien"
+      >
+        {FILTERS.map((filter) => {
+          const active = filter.id === activeCategory;
+          return (
+            <button
+              key={filter.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => setActiveCategory(filter.id)}
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 ${
+                active
+                  ? "border-navy-800 bg-navy-800 text-white"
+                  : "border-navy-200 bg-white text-navy-700 hover:border-teal-300"
+              }`}
+            >
+              {filter.label}
+            </button>
+          );
+        })}
       </div>
+
+      {visibleProducts.length > 0 ? (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {visibleProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      ) : (
+        <p className="rounded-2xl border border-navy-100 bg-white p-8 text-center text-sm text-navy-500">
+          In dieser Kategorie sind derzeit keine Produkte verfügbar.
+        </p>
+      )}
+
+      {/* Catalog / checkout status note */}
+      <p className="mt-10 max-w-3xl text-sm leading-6 text-navy-500">
+        Der Online-Checkout wird vorbereitet. Produktdaten, Verfügbarkeit und
+        Preise werden vor dem Live-Verkauf finalisiert.
+      </p>
 
       <CartDrawer />
     </CartProvider>

@@ -14,8 +14,8 @@ export default function ShopPage() {
     <>
       <PageHeader
         eyebrow="Shop"
-        title="Clean24 Shop."
-        lead="Reinigungssets und Zubehör für Objektpflege, Küche, Bad und Wohnungsabgaben – zusammengestellt für verlässliche Ergebnisse."
+        title="Shop"
+        lead="Ausgewählte Produkte rund um Reinigung, Pflege und Wohnungsabgaben – direkt von Clean24."
       />
 
       <Section tone="mist">

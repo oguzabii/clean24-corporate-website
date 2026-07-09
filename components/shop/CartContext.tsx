@@ -11,11 +11,13 @@ import {
 } from "react";
 
 export interface CartLine {
-  key: string; // `${productSlug}:${variantId}`
+  key: string; // `${productId}:${variantId}`
+  productId: string;
   productSlug: string;
   variantId: string;
   name: string;
   variantLabel: string;
+  /** Concrete price in Rappen. Only purchasable (priced) variants get here. */
   priceCents: number;
   visual: string;
   image?: string;
@@ -88,9 +90,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
 
+  // Only purchasable (available + priced) variants ever reach this call — the
+  // ProductCard gates it via isVariantPurchasable(), so the cart can never hold
+  // coming-soon / out-of-stock / price-less items. Subtotals are therefore
+  // always over real, addable items.
   const addLine = useCallback(
     (line: Omit<CartLine, "key" | "qty">, qty = 1) => {
-      const key = `${line.productSlug}:${line.variantId}`;
+      const key = `${line.productId}:${line.variantId}`;
       setLines((prev) => {
         const existing = prev.find((l) => l.key === key);
         if (existing) {
@@ -118,9 +124,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLines((prev) => prev.filter((l) => l.key !== key));
   }, []);
 
-  // Future: POST to /api/checkout → Stripe Checkout Session with these line
-  // items. For now we only surface a "checkout is being prepared" state — no
-  // network call, no fake success.
+  // ---------------------------------------------------------------------------
+  // FUTURE CHECKOUT (not implemented in this phase — do NOT fake success):
+  //   1. POST cart lines to `/api/checkout`.
+  //   2. Map each { productId, variantId } → a server-side price ID.
+  //   3. Create a Stripe Checkout Session (card) and/or TWINT payment.
+  //   4. Apply shipping rates and discount codes server-side.
+  //   5. Redirect to the payment provider; confirm via webhook, not client.
+  // For now we only surface a "checkout is being prepared" state — no network
+  // call, no order confirmation, no fake success.
+  // ---------------------------------------------------------------------------
   const startCheckout = useCallback(() => setCheckoutState("preparing"), []);
 
   const { count, subtotalCents } = useMemo(() => {

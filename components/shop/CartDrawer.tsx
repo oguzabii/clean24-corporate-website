@@ -161,8 +161,8 @@ export function CartDrawer() {
                 className="mt-4 rounded-lg border border-teal-200 bg-teal-50/70 px-4 py-3 text-sm leading-6 text-navy-700"
                 role="status"
               >
-                Der Online-Checkout wird aktuell vorbereitet. Für konkrete
-                Bestellungen oder Fragen erreichen Sie uns jederzeit direkt.
+                Der Online-Checkout wird aktuell vorbereitet. Produktdaten,
+                Versand und Zahlung werden vor dem Live-Verkauf finalisiert.
               </div>
             ) : (
               <button
