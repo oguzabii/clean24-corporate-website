@@ -275,6 +275,23 @@ export function getCategory(id: string): ProductCategory | undefined {
   return categories.find((c) => c.id === id);
 }
 
+/** Product lookup by slug — used by the /shop/[slug] detail routes. */
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => p.slug === slug);
+}
+
+/** All products of a category, in catalog (`sortOrder`) order. */
+export function getProductsByCategory(categoryId: string): Product[] {
+  return sortedProducts(products.filter((p) => p.categoryId === categoryId));
+}
+
+/** The category record a product belongs to. */
+export function getProductCategory(
+  product: Product,
+): ProductCategory | undefined {
+  return getCategory(product.categoryId);
+}
+
 /** Human-readable category label (falls back to the raw id). */
 export function categoryLabel(id: string): string {
   return getCategory(id)?.label ?? id;
@@ -302,6 +319,80 @@ export function isVariantPurchasable(
     variant.availability === "available" &&
     typeof variant.priceCents === "number"
   );
+}
+
+/** German display labels for the three availability states. */
+export const availabilityLabels: Record<Availability, string> = {
+  available: "Verfügbar",
+  "coming-soon": "Bald verfügbar",
+  "out-of-stock": "Nicht verfügbar",
+};
+
+/** Availability label for a product. */
+export function getProductAvailabilityLabel(product: Product): string {
+  return availabilityLabels[product.availability];
+}
+
+/** Availability label for a single variant. */
+export function getVariantAvailabilityLabel(variant: ProductVariant): string {
+  return availabilityLabels[variant.availability];
+}
+
+/** A product is purchasable if at least one of its variants is. */
+export function isProductPurchasable(product: Product): boolean {
+  return product.variants.some((v) => isVariantPurchasable(product, v));
+}
+
+/**
+ * Badge shown on product visuals: non-available states win over marketing
+ * badges; fully available products may show their (truthful) `badge`.
+ */
+export function getProductBadgeLabel(product: Product): string | null {
+  if (product.availability !== "available") {
+    return availabilityLabels[product.availability];
+  }
+  return product.badge ?? null;
+}
+
+/**
+ * Centralized add-to-cart button state for a selected variant. Shared by the
+ * shop grid card and the product detail purchase panel so purchase gating
+ * lives in exactly one place (next to isVariantPurchasable).
+ */
+export function getAddToCartState(
+  product: Product,
+  variant: ProductVariant,
+): { label: string; disabled: boolean } {
+  if (isVariantPurchasable(product, variant)) {
+    return { label: "In den Warenkorb", disabled: false };
+  }
+  // Not purchasable — surface the most specific reason.
+  const availability =
+    product.availability === "available"
+      ? variant.availability
+      : product.availability;
+  if (availability === "out-of-stock") {
+    return { label: "Nicht verfügbar", disabled: true };
+  }
+  // coming-soon, or available-but-not-yet-priced.
+  return { label: "Bald verfügbar", disabled: true };
+}
+
+/**
+ * Up to `limit` related products: same category first (catalog order), then
+ * `featured` products as filler. Never includes the product itself.
+ */
+export function getRelatedProducts(product: Product, limit = 3): Product[] {
+  const sameCategory = getProductsByCategory(product.categoryId).filter(
+    (p) => p.id !== product.id,
+  );
+  const fillers = sortedProducts(products).filter(
+    (p) =>
+      p.featured &&
+      p.id !== product.id &&
+      !sameCategory.some((s) => s.id === p.id),
+  );
+  return [...sameCategory, ...fillers].slice(0, limit);
 }
 
 /** Format Rappen (CHF cents) as a Swiss price string, e.g. "CHF 24.90". */

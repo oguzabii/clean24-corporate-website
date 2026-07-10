@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { products } from "@/data/shop";
 
 const siteUrl = "https://clean-24.ch";
 
@@ -20,6 +21,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/datenschutz", changeFrequency: "yearly", priority: 0.3 },
     { path: "/agb", changeFrequency: "yearly", priority: 0.3 },
   ];
+
+  // Product detail pages, generated from the catalog (data/shop.ts).
+  for (const product of products) {
+    entries.push({
+      path: `/shop/${product.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    });
+  }
 
   return entries.map((entry) => ({
     url: `${siteUrl}${entry.path}`,

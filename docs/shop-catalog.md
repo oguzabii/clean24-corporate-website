@@ -63,7 +63,58 @@ Jedes Produkt ist ein Eintrag im Array `products`. Wichtige Felder:
 
 ---
 
-## 3. Verfügbarkeit (`availability`)
+## 3. Produkt-Detailseiten (`/shop/[slug]`)
+
+Jedes Produkt erhält automatisch eine eigene Detailseite unter
+`/shop/<slug>`, z. B. `/shop/mikrofasertuecher-set`. Die Seiten werden zur
+Build-Zeit aus `data/shop.ts` generiert (`generateStaticParams` in
+`app/shop/[slug]/page.tsx`); unbekannte Slugs liefern eine 404-Seite. Alle
+Detail-URLs erscheinen automatisch in der Sitemap (`app/sitemap.ts`).
+
+> **Slug ändern = URL ändern.** Slugs möglichst stabil halten (SEO/Verlinkung).
+> Kleinbuchstaben, Bindestriche, keine Umlaute.
+
+### Inhalte pflegen (optionale Felder)
+
+Die Detailseite rendert nur Felder, die tatsächlich gepflegt sind — leere
+Abschnitte erscheinen **nicht**:
+
+| Feld in `data/shop.ts`      | Abschnitt auf der Detailseite       |
+| --------------------------- | ----------------------------------- |
+| `longDescription` (Text)    | „Beschreibung“                      |
+| `suitableFor` (Liste)       | „Geeignet für“ (Aufzählung)         |
+| `usageNotes` (Text)         | „Anwendung / Hinweise“              |
+| `safetyNote` (Text)         | „Sicherheitshinweis“                |
+| Varianten-`availability`    | „Lieferung & Verfügbarkeit“ (immer) |
+
+Beispiel:
+
+```ts
+longDescription: "…",
+suitableFor: ["Glasflächen", "Spiegel"],
+usageNotes: "…",
+safetyNote: "…",
+```
+
+### Ähnliche Produkte
+
+„Das könnte Sie auch interessieren“ zeigt bis zu **3** Produkte
+(`getRelatedProducts`): zuerst Produkte derselben Kategorie, danach mit
+`featured: true` markierte Produkte als Auffüllung — nie das Produkt selbst.
+
+### Bilder & Galerie
+
+- `image` → Hauptbild auf Karte **und** Detailseite
+  (Pfad: `/shop/products/…`, Dateien in `public/shop/products/`).
+- `gallery` → weitere Bilder, als Thumbnails unter dem Hauptbild.
+- Ohne `image` erscheint der gebrandete CSS-Platzhalter (`visual`).
+
+> Der Online-Checkout ist weiterhin **nicht** live — auch von Detailseiten aus
+> gibt es keine Zahlung und keine Bestellbestätigung.
+
+---
+
+## 4. Verfügbarkeit (`availability`)
 
 Es gibt drei Zustände, auf Produkt- **und** Varianten-Ebene:
 
@@ -84,7 +135,7 @@ Warenkorb gelangen.
 
 ---
 
-## 4. Varianten (`variants`)
+## 5. Varianten (`variants`)
 
 Jedes Produkt hat mindestens eine Variante. Felder:
 
@@ -102,7 +153,7 @@ Jedes Produkt hat mindestens eine Variante. Felder:
 
 ---
 
-## 5. Preise (Rappen / CHF-Cents)
+## 6. Preise (Rappen / CHF-Cents)
 
 - Preise werden **in Rappen** gespeichert (Ganzzahl). Beispiel: `2490` =
   **CHF 24.90**.
@@ -115,7 +166,7 @@ Jedes Produkt hat mindestens eine Variante. Felder:
 
 ---
 
-## 6. Warenkorb-Verhalten
+## 7. Warenkorb-Verhalten
 
 - Nur verkäufliche (verfügbare + bepreiste) Varianten können hinzugefügt werden.
 - Eine Warenkorb-Zeile speichert: `productId`, `variantId`, `name`,
@@ -129,7 +180,7 @@ Jedes Produkt hat mindestens eine Variante. Felder:
 
 ---
 
-## 7. Was vor dem echten Checkout noch fehlt
+## 8. Was vor dem echten Checkout noch fehlt
 
 Diese Phase ist **kein** Checkout/Payment. Noch offen (spätere Phasen):
 
