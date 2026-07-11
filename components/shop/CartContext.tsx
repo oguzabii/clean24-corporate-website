@@ -24,20 +24,16 @@ export interface CartLine {
   qty: number;
 }
 
-export type CheckoutState = "idle" | "preparing";
-
 interface CartApi {
   lines: CartLine[];
   isOpen: boolean;
   count: number;
   subtotalCents: number;
-  checkoutState: CheckoutState;
   openCart: () => void;
   closeCart: () => void;
   addLine: (line: Omit<CartLine, "key" | "qty">, qty?: number) => void;
   setQty: (key: string, qty: number) => void;
   removeLine: (key: string) => void;
-  startCheckout: () => void;
 }
 
 const CartContext = createContext<CartApi | null>(null);
@@ -46,7 +42,6 @@ const STORAGE_KEY = "clean24-cart-v1";
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
   const [hydrated, setHydrated] = useState(false);
 
   // Load the persisted cart once after mount. This is a legitimate one-time
@@ -106,7 +101,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
         return [...prev, { ...line, key, qty }];
       });
-      setCheckoutState("idle");
       setIsOpen(true);
     },
     [],
@@ -125,16 +119,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // ---------------------------------------------------------------------------
-  // FUTURE CHECKOUT (not implemented in this phase — do NOT fake success):
+  // FUTURE CHECKOUT (not implemented — do NOT fake success):
+  // The cart drawer links to shopConfig.checkoutPath (/checkout), which is a
+  // scaffold page while shopConfig.checkoutEnabled is false. The real flow
+  // will live there later:
   //   1. POST cart lines to `/api/checkout`.
   //   2. Map each { productId, variantId } → a server-side price ID.
   //   3. Create a Stripe Checkout Session (card) and/or TWINT payment.
   //   4. Apply shipping rates and discount codes server-side.
   //   5. Redirect to the payment provider; confirm via webhook, not client.
-  // For now we only surface a "checkout is being prepared" state — no network
-  // call, no order confirmation, no fake success.
   // ---------------------------------------------------------------------------
-  const startCheckout = useCallback(() => setCheckoutState("preparing"), []);
 
   const { count, subtotalCents } = useMemo(() => {
     return lines.reduce(
@@ -151,13 +145,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     isOpen,
     count,
     subtotalCents,
-    checkoutState,
     openCart,
     closeCart,
     addLine,
     setQty,
     removeLine,
-    startCheckout,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

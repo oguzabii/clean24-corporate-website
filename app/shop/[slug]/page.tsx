@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { ProductVisual } from "@/components/shop/ProductVisual";
 import { ProductPurchasePanel } from "@/components/shop/ProductPurchasePanel";
+import { ShopInfoLinks } from "@/components/shop/ShopInfoLinks";
 import {
   categoryLabel,
   getProductBySlug,
@@ -303,6 +304,7 @@ export default async function ProductDetailPage({
               <li>{shopConfig.prelaunchNotice}</li>
               <li>Der Online-Checkout wird aktuell vorbereitet.</li>
             </ul>
+            <ShopInfoLinks className="mt-4 border-t border-navy-100 pt-4" />
           </DetailCard>
         </div>
       </Section>

@@ -17,6 +17,11 @@
 
 export type ShopStatus = "prelaunch" | "live" | "paused";
 
+export interface ShopInfoLink {
+  label: string;
+  href: string;
+}
+
 export interface ShopConfig {
   /** ISO 4217 currency code shown with prices. */
   currency: "CHF";
@@ -41,6 +46,18 @@ export interface ShopConfig {
    * and the purchase panel while catalog data is not final.
    */
   prelaunchNotice: string;
+  /** Route of the checkout scaffold (future real checkout lives here too). */
+  checkoutPath: string;
+  /** Shop information pages, linked from /shop, detail pages and the footer. */
+  shopInfoLinks: ShopInfoLink[];
+  /** Ordered step labels of the (future) checkout flow, shown as a preview. */
+  checkoutSteps: string[];
+  /** Headline of the disabled-checkout page. */
+  checkoutDisabledTitle: string;
+  /** Label of the primary CTA on the disabled-checkout page. */
+  checkoutDisabledCtaLabel: string;
+  /** Target of the primary CTA on the disabled-checkout page. */
+  checkoutDisabledCtaHref: string;
 }
 
 export const shopConfig: ShopConfig = {
@@ -57,4 +74,14 @@ export const shopConfig: ShopConfig = {
   shopStatus: "prelaunch",
   prelaunchNotice:
     "Produktdaten, Verfügbarkeit und Preise werden vor dem Live-Verkauf finalisiert.",
+  checkoutPath: "/checkout",
+  shopInfoLinks: [
+    { label: "Versand & Zahlung", href: "/shop/versand-zahlung" },
+    { label: "Retoure & Rückgabe", href: "/shop/retoure" },
+    { label: "Shop FAQ", href: "/shop/faq" },
+  ],
+  checkoutSteps: ["Warenkorb", "Kundendaten", "Versand", "Zahlung", "Bestätigung"],
+  checkoutDisabledTitle: "Online-Checkout in Vorbereitung",
+  checkoutDisabledCtaLabel: "Zurück zum Shop",
+  checkoutDisabledCtaHref: "/shop",
 };

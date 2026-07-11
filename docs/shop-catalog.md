@@ -191,10 +191,11 @@ Jedes Produkt hat mindestens eine Variante. Felder:
   abgeleiteten Schlüssel `key` = `productId:variantId`).
 - Der Warenkorb wird in `localStorage` (`clean24-cart-v1`) persistiert.
 - Die Zwischensumme summiert nur real hinzugefügte (also verfügbare) Artikel.
-- Der Checkout-Button löst **keinen** Kauf aus. Er zeigt ausschliesslich:
-  *„Der Online-Checkout wird aktuell vorbereitet. Produktdaten, Versand und
-  Zahlung werden vor dem Live-Verkauf finalisiert.“*
-  Es gibt **keine** vorgetäuschte Bestellbestätigung.
+- Der Button „Zum Checkout“ führt zur Scaffold-Seite `/checkout`
+  (Abschnitt 13). Er löst **keinen** Kauf aus: Solange
+  `checkoutEnabled: false` ist, zeigt `/checkout` nur den
+  Vorbereitungsstatus. Es gibt **keine** vorgetäuschte Bestellbestätigung,
+  der Warenkorb wird nicht geleert und es werden keine Kundendaten erfasst.
 
 ---
 
@@ -236,6 +237,10 @@ Komponenten lesen diese Werte, statt Texte zu duplizieren:
 | `defaultShippingCountry`    | `"CH"`                                                 |
 | `shopStatus`                | `"prelaunch"` → später `"live"` / `"paused"`           |
 | `prelaunchNotice`           | Neutraler Satz „Produktdaten … werden finalisiert.“    |
+| `checkoutPath`              | Route des Checkout-Scaffolds (`/checkout`)             |
+| `shopInfoLinks`             | Links zu Versand & Zahlung / Retoure / Shop FAQ        |
+| `checkoutSteps`             | Schritt-Labels der künftigen Checkout-Strecke          |
+| `checkoutDisabledTitle` / `…CtaLabel` / `…CtaHref` | Texte/Ziel der Scaffold-Seite   |
 
 Verwendet in: `ProductCard`, `ProductPurchasePanel`, `CartDrawer`,
 `ShopExperience` (Grid-Hinweis) und im „Gut zu wissen“-Panel der
@@ -306,3 +311,44 @@ Für jedes echte Produkt das Intake-Template ausfüllen:
 Es enthält alle Pflicht- und Optionalfelder, ein fertiges Code-Snippet für
 `data/shop.ts` und die Checkliste vor Veröffentlichung (Preis, MwSt,
 Bestand, Foto, Sicherheitstexte, Versand/Retouren/AGB, Validierung).
+
+---
+
+## 13. Checkout-Scaffold & Shop-Informationsseiten
+
+**`/checkout`** (`app/checkout/page.tsx`) ist ein **Scaffold**, kein echter
+Checkout. Der Warenkorb-Button „Zum Checkout“ führt dorthin. Solange
+`checkoutEnabled: false` ist, zeigt die Seite:
+
+- die geplanten Checkout-Schritte (`shopConfig.checkoutSteps`) als Vorschau,
+- eine schreibgeschützte Warenkorb-Übersicht (aus `localStorage`),
+- CTAs zurück zum Shop und zum Kontakt.
+
+Es werden **keine** Kundendaten erfasst, keine Zahlungen verarbeitet und
+keine Bestellungen bestätigt. Die spätere echte Strecke (Kundendaten →
+Versand → Zahlung via `/api/checkout` + Stripe/TWINT) wird diese Seite
+ersetzen — **Zahlung ist weiterhin nicht implementiert; Stripe/TWINT bleibt
+zukünftige Arbeit.**
+
+**Shop-Informationsseiten** (verlinkt via `shopConfig.shopInfoLinks` auf
+`/shop`, den Produkt-Detailseiten und im Footer):
+
+| Seite                   | Route                  | Inhalt (Prelaunch-ehrlich)                    |
+| ----------------------- | ---------------------- | --------------------------------------------- |
+| Versand & Zahlung       | `/shop/versand-zahlung`| Versand/Zahlarten werden vor Launch finalisiert |
+| Retoure & Rückgabe      | `/shop/retoure`        | Rückgabeprozess wird vor Launch definiert     |
+| Shop FAQ                | `/shop/faq`            | Ehrliche Antworten zum aktuellen Stand        |
+
+**`checkoutEnabled` erst aktivieren, wenn ALLES erfüllt ist:**
+
+- [ ] Produktdaten final (`dataStatus: "ready"`)
+- [ ] Preise final (`pricingStatus: "final"`)
+- [ ] Bestand verifiziert (`stockStatus` gepflegt)
+- [ ] Versand verifiziert (Optionen, Kosten, Abwicklung)
+- [ ] Retouren- und Rechtstexte verifiziert (AGB, Widerruf)
+- [ ] Zahlungsanbieter konfiguriert (Stripe und/oder TWINT)
+- [ ] Testbestellung erfolgreich durchgeführt
+
+Die Validierung (`npm run validate:shop`) blockiert `checkoutEnabled: true`,
+solange `shopStatus` `"prelaunch"` ist oder kein Produkt gleichzeitig
+`available` und `pricingStatus: "final"` ist.

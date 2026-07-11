@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/layout/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ShopExperience } from "@/components/shop/ShopExperience";
+import { ShopInfoLinks } from "@/components/shop/ShopInfoLinks";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -20,6 +21,14 @@ export default function ShopPage() {
 
       <Section tone="mist">
         <ShopExperience />
+
+        {/* Shop information pages (Versand, Retoure, FAQ) */}
+        <div className="mt-12 border-t border-navy-100 pt-8">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-navy-500">
+            Shop-Informationen
+          </h2>
+          <ShopInfoLinks className="mt-3" />
+        </div>
       </Section>
     </>
   );

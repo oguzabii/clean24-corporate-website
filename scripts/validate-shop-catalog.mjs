@@ -228,6 +228,16 @@ for (const p of products) {
 if (shopConfig.checkoutEnabled && shopConfig.shopStatus === "prelaunch") {
   err(`shopConfig: checkoutEnabled is true while shopStatus is "prelaunch" — do not enable checkout before launch verification.`);
 }
+if (shopConfig.checkoutEnabled) {
+  // A live checkout needs something real to sell: at least one available
+  // product whose pricing has been finalized.
+  const sellable = products.filter(
+    (p) => p.availability === "available" && p.pricingStatus === "final",
+  );
+  if (sellable.length === 0) {
+    err(`shopConfig: checkoutEnabled is true but no product is "available" with pricingStatus "final".`);
+  }
+}
 if (
   shopConfig.freeShippingThresholdCents !== null &&
   (!Number.isInteger(shopConfig.freeShippingThresholdCents) ||

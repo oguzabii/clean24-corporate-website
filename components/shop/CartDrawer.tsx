@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCart } from "./CartContext";
 import { ProductVisual } from "./ProductVisual";
 import { formatChf, type ProductVisual as VisualKind } from "@/data/shop";
@@ -8,16 +9,8 @@ import { shopConfig } from "@/data/shop-config";
 
 /** Right-side Warenkorb drawer. Full-width on mobile, panel on desktop. */
 export function CartDrawer() {
-  const {
-    lines,
-    isOpen,
-    subtotalCents,
-    checkoutState,
-    closeCart,
-    setQty,
-    removeLine,
-    startCheckout,
-  } = useCart();
+  const { lines, isOpen, subtotalCents, closeCart, setQty, removeLine } =
+    useCart();
 
   if (!isOpen) return null;
 
@@ -157,25 +150,17 @@ export function CartDrawer() {
               {shopConfig.shippingNotice}
             </p>
 
-            {/* While shopConfig.checkoutEnabled is false, "Checkout" only
-                reveals the preparation notice — no payment flow exists. A
-                future phase will branch here to POST /api/checkout instead. */}
-            {checkoutState === "preparing" ? (
-              <div
-                className="mt-4 rounded-lg border border-teal-200 bg-teal-50/70 px-4 py-3 text-sm leading-6 text-navy-700"
-                role="status"
-              >
-                {shopConfig.checkoutDisabledMessage}
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={startCheckout}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-md bg-teal-500 px-6 text-sm font-semibold text-navy-950 transition-colors hover:bg-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2"
-              >
-                Checkout
-              </button>
-            )}
+            {/* Leads to the /checkout scaffold. While
+                shopConfig.checkoutEnabled is false that page only shows the
+                preparation state — no payment, no data collection, no fake
+                success. This block renders only when the cart has items. */}
+            <Link
+              href={shopConfig.checkoutPath}
+              onClick={closeCart}
+              className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-md bg-teal-500 px-6 text-sm font-semibold text-navy-950 transition-colors hover:bg-teal-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2"
+            >
+              Zum Checkout
+            </Link>
           </div>
         ) : null}
       </div>

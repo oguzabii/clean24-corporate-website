@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { products } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 const siteUrl = "https://clean-24.ch";
 
@@ -30,6 +31,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     });
   }
+
+  // Shop info pages + checkout scaffold, from shopConfig (single source).
+  for (const link of shopConfig.shopInfoLinks) {
+    entries.push({ path: link.href, changeFrequency: "monthly", priority: 0.4 });
+  }
+  entries.push({
+    path: shopConfig.checkoutPath,
+    changeFrequency: "monthly",
+    priority: 0.3,
+  });
 
   return entries.map((entry) => ({
     url: `${siteUrl}${entry.path}`,
