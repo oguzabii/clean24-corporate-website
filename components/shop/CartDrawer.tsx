@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCart } from "./CartContext";
 import { ProductVisual } from "./ProductVisual";
 import { formatChf, type ProductVisual as VisualKind } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 /** Right-side Warenkorb drawer. Full-width on mobile, panel on desktop. */
 export function CartDrawer() {
@@ -153,16 +154,18 @@ export function CartDrawer() {
               </span>
             </div>
             <p className="mt-2 text-xs text-navy-500">
-              Versand- und Rabattcodes werden beim Checkout hinzugefügt.
+              {shopConfig.shippingNotice}
             </p>
 
+            {/* While shopConfig.checkoutEnabled is false, "Checkout" only
+                reveals the preparation notice — no payment flow exists. A
+                future phase will branch here to POST /api/checkout instead. */}
             {checkoutState === "preparing" ? (
               <div
                 className="mt-4 rounded-lg border border-teal-200 bg-teal-50/70 px-4 py-3 text-sm leading-6 text-navy-700"
                 role="status"
               >
-                Der Online-Checkout wird aktuell vorbereitet. Produktdaten,
-                Versand und Zahlung werden vor dem Live-Verkauf finalisiert.
+                {shopConfig.checkoutDisabledMessage}
               </div>
             ) : (
               <button

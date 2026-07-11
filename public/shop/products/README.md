@@ -3,29 +3,54 @@
 Legen Sie echte Produktfotos in **diesem Ordner** ab
 (`public/shop/products/`).
 
-## Nutzung / How to use
+## Bildvorgaben / Image specs
 
-1. Foto hier ablegen, z. B. `mikrofasertuecher-set.jpg`.
-2. In [`data/shop.ts`](../../../data/shop.ts) beim jeweiligen Produkt das
-   Feld `image` setzen:
+- **Empfohlene Grösse:** `1200 × 1200` px (quadratisch) oder `1200 × 1500` px
+  (Hochformat 4:5).
+- **Akzeptierte Formate:** `.jpg`, `.png`, `.webp`.
+- **Hintergrund:** sauber, hell und professionell — neutraler Studio- oder
+  Weisshintergrund.
+- **Bildausschnitt:** Produkt zentriert, genügend Rand, keine starken Filter
+  oder Effekte.
 
-   ```ts
-   image: "/shop/products/mikrofasertuecher-set.jpg",
-   ```
+## Namenskonvention / Naming convention
 
-3. Solange kein `image` gesetzt ist, wird automatisch der markenkonforme
-   CSS-Platzhalter (`visual`) aus
-   [`components/shop/ProductVisual.tsx`](../../../components/shop/ProductVisual.tsx)
-   angezeigt.
+Dateinamen folgen dem Produkt-Slug aus `data/shop.ts`:
 
-## Empfehlungen / Recommendations
+```text
+produkt-slug-main.jpg     ← Hauptbild
+produkt-slug-01.jpg       ← Galeriebild 1
+produkt-slug-02.jpg       ← Galeriebild 2
+```
 
-- **Format:** `.jpg` oder `.png` (`.webp` ebenfalls möglich).
-- **Seitenverhältnis:** quadratisch (1:1) oder Hochformat 4:5.
-- **Auflösung:** mind. 1000 × 1000 px, sauber freigestellt oder neutraler
-  Hintergrund.
+Beispiel für `mikrofasertuecher-set`:
+
+```text
+mikrofasertuecher-set-main.jpg
+mikrofasertuecher-set-01.jpg
+mikrofasertuecher-set-02.jpg
+```
+
+## Einbinden in `data/shop.ts` / How to reference
+
+```ts
+image: "/shop/products/mikrofasertuecher-set-main.jpg",
+gallery: [
+  "/shop/products/mikrofasertuecher-set-01.jpg",
+  "/shop/products/mikrofasertuecher-set-02.jpg",
+],
+```
+
+Danach `imageStatus` des Produkts auf `"provided"` (bzw. nach finaler Freigabe
+`"final"`) setzen und `npm run validate:shop` ausführen — das Skript prüft,
+dass alle referenzierten Dateien existieren.
+
+## Regeln / Rules
+
+- **Keine zufälligen Stock-Fotos.** Nur Original-Produktfotos verwenden.
 - **Keine erfundenen Etiketten, Zertifikate oder Produktversprechen** auf
   Verpackungen abbilden, solange diese nicht real und geprüft sind.
-
-> Hinweis: Es werden keine zufälligen Stock-Produktfotos verwendet. Bis echte
-> Fotos vorliegen, bleiben die gebrandeten Platzhalter aktiv.
+- Solange kein `image` gesetzt ist, wird automatisch der markenkonforme
+  CSS-Platzhalter (`visual`) aus
+  [`components/shop/ProductVisual.tsx`](../../../components/shop/ProductVisual.tsx)
+  angezeigt.

@@ -38,6 +38,11 @@ Jedes Produkt ist ein Eintrag im Array `products`. Wichtige Felder:
 | `variants`       |   ja    | Liste der Varianten (siehe unten)                              |
 | `featured`       |  nein   | Für spätere „Featured“-Bereiche                                 |
 | `sortOrder`      |  nein   | Kleinere Zahl = weiter vorne im Grid                            |
+| `shippingNotes`  |  nein   | Produktspezifischer Versandhinweis (öffentlich, Detailseite)    |
+| `careInstructions` | nein  | „Pflegehinweise“ auf der Detailseite                            |
+| `ingredientsOrMaterials` | nein | „Material / Inhalt“ auf der Detailseite                    |
+| `warningNotes`   |  nein   | „Wichtige Hinweise“ auf der Detailseite                         |
+| Readiness-Felder |  nein   | **Interne** Status-Felder (nie öffentlich) — siehe Abschnitt 10 |
 
 ### Neues Produkt hinzufügen
 
@@ -56,7 +61,8 @@ Jedes Produkt ist ein Eintrag im Array `products`. Wichtige Felder:
 - Empfohlenes Format: `.jpg` oder `.png`.
 - Empfohlenes Seitenverhältnis: quadratisch (1:1) oder Hochformat 4:5.
 - Danach im Produkt das Feld `image` setzen, z. B.
-  `image: "/shop/products/mikrofasertuecher-set.jpg"`.
+  `image: "/shop/products/mikrofasertuecher-set-main.jpg"`
+  (Namenskonvention `produkt-slug-main.jpg` — siehe README im Bilder-Ordner).
 - Ohne `image` wird automatisch der gebrandete CSS-Platzhalter
   ([`components/shop/ProductVisual.tsx`](../components/shop/ProductVisual.tsx))
   angezeigt. Es werden **keine** zufälligen Stock-Fotos verwendet.
@@ -85,7 +91,16 @@ Abschnitte erscheinen **nicht**:
 | `suitableFor` (Liste)       | „Geeignet für“ (Aufzählung)         |
 | `usageNotes` (Text)         | „Anwendung / Hinweise“              |
 | `safetyNote` (Text)         | „Sicherheitshinweis“                |
+| `careInstructions` (Text)   | „Pflegehinweise“                    |
+| `ingredientsOrMaterials`    | „Material / Inhalt“                 |
+| `warningNotes` (Text)       | „Wichtige Hinweise“                 |
+| `shippingNotes` (Text)      | Zusatz unter „Lieferung & Verfügbarkeit“ |
 | Varianten-`availability`    | „Lieferung & Verfügbarkeit“ (immer) |
+
+Interne Readiness-Felder (`dataStatus`, `pricingStatus`, `imageStatus`,
+`stockStatus`, `legalStatus`, `productDataNote`) werden **nie** öffentlich
+angezeigt. Produkte ohne `dataStatus: "ready"` zeigen im Kaufbereich einen
+neutralen Hinweis, dass Produktdaten vor dem Live-Verkauf finalisiert werden.
 
 Beispiel:
 
@@ -163,14 +178,17 @@ Jedes Produkt hat mindestens eine Variante. Felder:
 - Platzhalterpreise sind im Code klar markiert:
   `// Editable placeholder price — replace before production checkout.`
   Diese vor dem Live-Verkauf ersetzen.
+- Der interne `pricingStatus` (Abschnitt 10) dokumentiert den Stand:
+  `missing` → kein Preis, `placeholder` → Testpreis, `final` → verbindlich.
 
 ---
 
 ## 7. Warenkorb-Verhalten
 
 - Nur verkäufliche (verfügbare + bepreiste) Varianten können hinzugefügt werden.
-- Eine Warenkorb-Zeile speichert: `productId`, `variantId`, `name`,
-  `variantLabel`, `priceCents`, `image`/`visual`, `qty`.
+- Eine Warenkorb-Zeile speichert: `productId`, `productSlug`, `variantId`,
+  `name`, `variantLabel`, `priceCents`, `image`/`visual`, `qty` (plus den
+  abgeleiteten Schlüssel `key` = `productId:variantId`).
 - Der Warenkorb wird in `localStorage` (`clean24-cart-v1`) persistiert.
 - Die Zwischensumme summiert nur real hinzugefügte (also verfügbare) Artikel.
 - Der Checkout-Button löst **keinen** Kauf aus. Er zeigt ausschliesslich:
@@ -194,6 +212,97 @@ Diese Phase ist **kein** Checkout/Payment. Noch offen (spätere Phasen):
 - [ ] Korrekte **MwSt-Ausweisung** und Preisangaben-Wording
 - [ ] Rechtliche Grundlagen: AGB, Widerruf/Retouren, Versand- & Zahlungsinfos
 
-> ⚠️ **Nicht live schalten**, bevor Produktdaten, Preise, Lagerbestände,
-> MwSt-Wording, Versand und rechtliche Bedingungen vollständig geprüft und
-> verbindlich sind.
+> ⚠️ **Checkout nicht aktivieren** (`checkoutEnabled` in
+> `data/shop-config.ts` bleibt `false`), bevor echte Preise, Produktdaten,
+> Lagerbestände, MwSt-Wording, Versand, Retouren, rechtliche Bedingungen
+> **und** die Stripe-/TWINT-Integration vollständig geprüft und verbindlich
+> sind. Vor jeder Freigabe zusätzlich `npm run validate:shop` ausführen.
+
+---
+
+## 9. Shop-Konfiguration (`data/shop-config.ts`)
+
+Zentrale Konfiguration für wiederkehrende Shop-Texte und den Checkout-Gate.
+Komponenten lesen diese Werte, statt Texte zu duplizieren:
+
+| Feld                        | Bedeutung                                              |
+| --------------------------- | ------------------------------------------------------ |
+| `currency` / `locale`       | `"CHF"` / `"de-CH"` — Referenzwerte für Anzeige und künftige Formatierung (`formatChf` nutzt derzeit ein festes Format) |
+| `vatDisplayText`            | „inkl. MwSt.“ neben konkreten Preisen                  |
+| `checkoutEnabled`           | **`false`** bis zum verifizierten Launch               |
+| `checkoutDisabledMessage`   | Hinweis beim Klick auf „Checkout“                      |
+| `shippingNotice`            | Neutraler Versandhinweis im Warenkorb                  |
+| `freeShippingThresholdCents`| Gratisversand-Schwelle in Rappen; `null` = offen       |
+| `defaultShippingCountry`    | `"CH"`                                                 |
+| `shopStatus`                | `"prelaunch"` → später `"live"` / `"paused"`           |
+| `prelaunchNotice`           | Neutraler Satz „Produktdaten … werden finalisiert.“    |
+
+Verwendet in: `ProductCard`, `ProductPurchasePanel`, `CartDrawer`,
+`ShopExperience` (Grid-Hinweis) und im „Gut zu wissen“-Panel der
+Detailseiten. Die Validierung schlägt fehl, wenn `checkoutEnabled: true`
+gesetzt wird, solange `shopStatus` noch `"prelaunch"` ist.
+
+---
+
+## 10. Produktdaten-Readiness (interne Felder)
+
+Interne Felder pro Produkt — **nie öffentlich sichtbar**, aber Grundlage für
+Validierung und Launch-Freigabe:
+
+| Feld             | Werte                                            | Bedeutung                                                   |
+| ---------------- | ------------------------------------------------ | ----------------------------------------------------------- |
+| `dataStatus`     | `draft` → `needs-review` → `ready`               | Redaktioneller Stand des Eintrags. Nur `ready` = final.     |
+| `pricingStatus`  | `missing` / `placeholder` / `final`              | `missing` = kein Preis („Preis folgt“), `placeholder` = Test-Preis (vor Launch ersetzen!), `final` = verbindlich. |
+| `imageStatus`    | `placeholder` / `provided` / `final`             | CSS-Platzhalter → echte Fotos vorhanden → final freigegeben. |
+| `stockStatus`    | `unknown` / `limited` / `in-stock` / `out-of-stock` | Was wir über den physischen Bestand **wissen**.          |
+| `legalStatus`    | `needs-review` / `reviewed`                      | Rechtliche Prüfung des Produkt-Wordings.                    |
+| `productDataNote`| Freitext                                         | Interne Notiz, was noch fehlt.                              |
+
+**`availability` vs. `stockStatus`:** `availability` steuert, was der Shop
+*tut* (kaufbar / „Bald verfügbar“ / „Nicht verfügbar“); `stockStatus`
+dokumentiert, was wir über den Bestand *wissen*. Ein Produkt kann z. B.
+`availability: "coming-soon"` und `stockStatus: "in-stock"` haben, solange
+der Verkauf noch nicht freigegeben ist.
+
+**Freigabe-Regel:** `dataStatus: "ready"` verlangt `pricingStatus: "final"`,
+`imageStatus: "provided"`/`"final"` und `legalStatus: "reviewed"` — sonst
+schlägt die Validierung fehl. Kein Platzhalter-Produkt darf `ready` sein.
+
+> Hinweis: „Intern“ heisst *nicht angezeigt*. Die Felder sind Teil der
+> statischen Katalogdaten und damit technisch im Seitenquelltext enthalten —
+> **keine vertraulichen Inhalte** (Einkaufspreise, Lieferanten, interna) in
+> `productDataNote` & Co. eintragen.
+
+---
+
+## 11. Katalog-Validierung
+
+```bash
+npm run validate:shop
+```
+
+Prüft `data/shop.ts` und `data/shop-config.ts` (Skript:
+`scripts/validate-shop-catalog.mjs`, keine zusätzlichen Abhängigkeiten):
+
+- **Fehler** (Exit-Code 1): doppelte IDs/Slugs, fehlende Varianten, doppelte
+  Varianten-IDs, unbekannte `categoryId`, verfügbare Produkte/Varianten ohne
+  Preis, ungültige Preise (müssen positive Ganzzahlen in Rappen sein),
+  fehlende Bilddateien unter `public/`, inkonsistente Readiness-Status
+  (z. B. `ready` ohne `legalStatus: "reviewed"`), `checkoutEnabled` im
+  Prelaunch.
+- **Warnungen** (nicht blockierend): verkäufliche Produkte mit
+  Platzhalter-Preisen, unbekanntem Bestand oder ungeprüftem Legal-Status;
+  fehlende `dataStatus`-Angaben.
+
+Empfohlen nach **jeder** Katalog-Änderung; vor einem späteren Launch Pflicht.
+
+---
+
+## 12. Neue Produkte erfassen
+
+Für jedes echte Produkt das Intake-Template ausfüllen:
+[`docs/shop-product-intake-template.md`](./shop-product-intake-template.md)
+
+Es enthält alle Pflicht- und Optionalfelder, ein fertiges Code-Snippet für
+`data/shop.ts` und die Checkliste vor Veröffentlichung (Preis, MwSt,
+Bestand, Foto, Sicherheitstexte, Versand/Retouren/AGB, Validierung).

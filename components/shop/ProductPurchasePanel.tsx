@@ -8,10 +8,12 @@ import {
   getAddToCartState,
   getProductAvailabilityLabel,
   isProductPurchasable,
+  isProductReady,
   isVariantPurchasable,
   variantPriceLabel,
   type Product,
 } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 /** Compact cart toggle for the product detail page. */
 function CartButton() {
@@ -109,9 +111,13 @@ function PurchasePanel({ product }: { product: Product }) {
           {variantPriceLabel(variant)}
         </div>
         <div className="mt-1 text-xs text-navy-500">
-          {priced && variant.vatIncluded
-            ? "inkl. MwSt."
-            : "Der Preis wird vor dem Live-Verkauf festgelegt."}
+          {/* "Preis folgt" explanation only when there is truly no price —
+              a priced, VAT-exclusive variant must not claim otherwise. */}
+          {!priced
+            ? "Der Preis wird vor dem Live-Verkauf festgelegt."
+            : variant.vatIncluded
+              ? shopConfig.vatDisplayText
+              : " "}
         </div>
         {typeof variant.compareAtPriceCents === "number" ? (
           <div className="mt-1 text-sm text-navy-400 line-through">
@@ -148,11 +154,16 @@ function PurchasePanel({ product }: { product: Product }) {
         {buttonLabel}
       </button>
 
-      {/* Preparation note for not-yet-purchasable products */}
+      {/* Neutral prelaunch notice: not-yet-purchasable products explain why;
+          purchasable-but-not-ready entries still flag non-final data. */}
       {!purchasable ? (
         <p className="mt-3 text-xs leading-5 text-navy-500">
-          Dieses Produkt ist noch nicht online bestellbar. Produktdaten,
-          Verfügbarkeit und Preise werden vor dem Live-Verkauf finalisiert.
+          Dieses Produkt ist noch nicht online bestellbar.{" "}
+          {shopConfig.prelaunchNotice}
+        </p>
+      ) : !isProductReady(product) ? (
+        <p className="mt-3 text-xs leading-5 text-navy-500">
+          {shopConfig.prelaunchNotice}
         </p>
       ) : null}
     </div>

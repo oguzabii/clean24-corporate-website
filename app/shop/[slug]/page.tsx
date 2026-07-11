@@ -16,6 +16,7 @@ import {
   variantPriceLabel,
   type Product,
 } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 /** Pre-render every catalog product at build time. */
 export function generateStaticParams() {
@@ -248,6 +249,26 @@ export default async function ProductDetailPage({
             </DetailCard>
           ) : null}
 
+          {/* Public-safe readiness fields — rendered only when maintained.
+              Internal statuses (dataStatus, pricingStatus, …) are never shown. */}
+          {product.careInstructions ? (
+            <DetailCard title="Pflegehinweise">
+              <p>{product.careInstructions}</p>
+            </DetailCard>
+          ) : null}
+
+          {product.ingredientsOrMaterials ? (
+            <DetailCard title="Material / Inhalt">
+              <p>{product.ingredientsOrMaterials}</p>
+            </DetailCard>
+          ) : null}
+
+          {product.warningNotes ? (
+            <DetailCard title="Wichtige Hinweise">
+              <p>{product.warningNotes}</p>
+            </DetailCard>
+          ) : null}
+
           <DetailCard title="Lieferung & Verfügbarkeit">
             <ul className="space-y-2">
               {product.variants.map((variant) => (
@@ -265,16 +286,21 @@ export default async function ProductDetailPage({
                 </li>
               ))}
             </ul>
+            {product.shippingNotes ? (
+              <p className="mt-4 border-t border-navy-100 pt-4">
+                {product.shippingNotes}
+              </p>
+            ) : null}
           </DetailCard>
 
           {/* Trust / status panel — neutral, verified statements only */}
           <DetailCard title="Gut zu wissen">
             <ul className="space-y-2">
-              <li>Preise in CHF inkl. MwSt., sofern angegeben.</li>
               <li>
-                Produktdaten, Verfügbarkeit und Preise werden vor dem
-                Live-Verkauf finalisiert.
+                Preise in {shopConfig.currency} {shopConfig.vatDisplayText},
+                sofern angegeben.
               </li>
+              <li>{shopConfig.prelaunchNotice}</li>
               <li>Der Online-Checkout wird aktuell vorbereitet.</li>
             </ul>
           </DetailCard>

@@ -5,6 +5,7 @@ import { CartProvider, useCart } from "./CartContext";
 import { ProductCard } from "./ProductCard";
 import { CartDrawer } from "./CartDrawer";
 import { categories, products, sortedProducts } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 /** Sticky cart toggle showing the current item count. */
 function CartButton() {
@@ -97,8 +98,7 @@ export function ShopExperience() {
 
       {/* Catalog / checkout status note */}
       <p className="mt-10 max-w-3xl text-sm leading-6 text-navy-500">
-        Der Online-Checkout wird vorbereitet. Produktdaten, Verfügbarkeit und
-        Preise werden vor dem Live-Verkauf finalisiert.
+        Der Online-Checkout wird vorbereitet. {shopConfig.prelaunchNotice}
       </p>
 
       <CartDrawer />

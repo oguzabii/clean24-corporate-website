@@ -17,11 +17,43 @@
  *  - Real product photos go in `public/shop/products/` and are referenced via
  *    the `image` field. Until then the branded CSS placeholder (`visual`) is
  *    used — see components/shop/ProductVisual.tsx.
+ *  - Run `npm run validate:shop` after editing to catch catalog mistakes.
+ *
+ * NOTE: This module is intentionally import-free so tooling
+ * (scripts/validate-shop-catalog.mjs) can load it standalone.
  * ---------------------------------------------------------------------------
  */
 
 /** Availability of a product or a single variant. */
 export type Availability = "available" | "coming-soon" | "out-of-stock";
+
+/* ---------------------------------------------------------------------------
+ * Internal catalog-readiness states (NOT shown publicly — used by docs and
+ * scripts/validate-shop-catalog.mjs to track how launch-ready each entry is).
+ * ------------------------------------------------------------------------- */
+
+/** Editorial state of the product entry as a whole. */
+export type ProductDataStatus = "draft" | "needs-review" | "ready";
+
+/** State of the product imagery. */
+export type ProductImageStatus = "placeholder" | "provided" | "final";
+
+/** State of the pricing data. */
+export type ProductPricingStatus = "missing" | "placeholder" | "final";
+
+/**
+ * Internal stock knowledge. Independent of `availability`: `availability`
+ * controls what the SHOP does (purchasable / coming-soon / out-of-stock),
+ * `stockStatus` records what we actually KNOW about physical stock.
+ */
+export type ProductStockStatus =
+  | "unknown"
+  | "limited"
+  | "in-stock"
+  | "out-of-stock";
+
+/** Whether legal/compliance wording for this product has been reviewed. */
+export type ProductLegalStatus = "needs-review" | "reviewed";
 
 /**
  * Visual style key for the branded CSS product placeholder, used until a real
@@ -100,6 +132,32 @@ export interface Product {
   featured?: boolean;
   /** Lower numbers sort first in the grid. */
   sortOrder?: number;
+
+  /* --- Public-safe optional detail fields (shown on /shop/[slug]) --------- */
+
+  /** Product-specific shipping note, shown under "Lieferung & Verfügbarkeit". */
+  shippingNotes?: string;
+  /** Care instructions — shown as "Pflegehinweise". */
+  careInstructions?: string;
+  /** Materials / contents — shown as "Material / Inhalt". */
+  ingredientsOrMaterials?: string;
+  /** Important warnings — shown as "Wichtige Hinweise". */
+  warningNotes?: string;
+
+  /* --- Internal readiness fields (NEVER rendered publicly) ---------------- */
+
+  /** Editorial state of this catalog entry. Only "ready" counts as final. */
+  dataStatus?: ProductDataStatus;
+  /** Free-form internal note on what is still missing/unverified. */
+  productDataNote?: string;
+  /** Imagery state: placeholder visual vs. provided vs. final photos. */
+  imageStatus?: ProductImageStatus;
+  /** Pricing state: missing vs. editable placeholder vs. final. */
+  pricingStatus?: ProductPricingStatus;
+  /** Internal stock knowledge — see ProductStockStatus. */
+  stockStatus?: ProductStockStatus;
+  /** Legal/compliance review state of the product wording. */
+  legalStatus?: ProductLegalStatus;
 }
 
 /**
@@ -155,6 +213,12 @@ export const products: Product[] = [
     availability: "coming-soon",
     sortOrder: 10,
     featured: true,
+    // Internal readiness (see docs/shop-catalog.md) — not rendered publicly.
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       // Prices intentionally omitted until final → UI shows "Preis folgt".
       { id: "standard", label: "Standard Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
@@ -171,6 +235,11 @@ export const products: Product[] = [
     visual: "box",
     availability: "coming-soon",
     sortOrder: 20,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "starter", label: "Starter Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
       { id: "komplett", label: "Komplett Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
@@ -185,6 +254,11 @@ export const products: Product[] = [
     visual: "glass",
     availability: "coming-soon",
     sortOrder: 30,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "set", label: "1 Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
       { id: "nachfuellung", label: "Nachfüllung", unit: "Nachfüllung", vatIncluded: true, availability: "coming-soon" },
@@ -200,6 +274,11 @@ export const products: Product[] = [
     visual: "kitchen",
     availability: "coming-soon",
     sortOrder: 40,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "standard", label: "Standard Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
       { id: "nachfuellung", label: "Nachfüllung", unit: "Nachfüllung", vatIncluded: true, availability: "coming-soon" },
@@ -214,6 +293,11 @@ export const products: Product[] = [
     visual: "bath",
     availability: "coming-soon",
     sortOrder: 50,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "standard", label: "Standard Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
       { id: "nachfuellung", label: "Nachfüllung", unit: "Nachfüllung", vatIncluded: true, availability: "coming-soon" },
@@ -229,6 +313,11 @@ export const products: Product[] = [
     visual: "tools",
     availability: "coming-soon",
     sortOrder: 60,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "zubehoer", label: "Zubehör Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
       { id: "profi", label: "Profi Set", unit: "Set", vatIncluded: true, availability: "coming-soon" },
@@ -246,6 +335,15 @@ export const products: Product[] = [
     availability: "available",
     featured: true,
     sortOrder: 70,
+    // Demo entry: placeholder prices exist, so pricing is "placeholder", not
+    // "missing" — still NOT ready and NOT legally reviewed.
+    dataStatus: "needs-review",
+    productDataNote:
+      "Demo-Produkt mit editierbaren Platzhalterpreisen — vor dem Live-Verkauf ersetzen.",
+    imageStatus: "placeholder",
+    pricingStatus: "placeholder",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       // Editable placeholder price — replace before production checkout.
       { id: "5er", label: "5 Stück", unit: "Packung", priceCents: 1490, vatIncluded: true, availability: "available" },
@@ -263,6 +361,11 @@ export const products: Product[] = [
     visual: "checklist",
     availability: "coming-soon",
     sortOrder: 80,
+    dataStatus: "draft",
+    imageStatus: "placeholder",
+    pricingStatus: "missing",
+    stockStatus: "unknown",
+    legalStatus: "needs-review",
     variants: [
       { id: "digital", label: "Digital", unit: "Download", vatIncluded: true, availability: "coming-soon" },
       { id: "print-digital", label: "Print + Digital", unit: "Set", vatIncluded: true, availability: "coming-soon" },
@@ -341,6 +444,15 @@ export function getVariantAvailabilityLabel(variant: ProductVariant): string {
 /** A product is purchasable if at least one of its variants is. */
 export function isProductPurchasable(product: Product): boolean {
   return product.variants.some((v) => isVariantPurchasable(product, v));
+}
+
+/**
+ * Internal readiness gate: true only when the catalog entry has been fully
+ * verified (`dataStatus: "ready"`). Non-ready products show a neutral
+ * prelaunch notice on their detail page. Not the same as `availability`.
+ */
+export function isProductReady(product: Product): boolean {
+  return product.dataStatus === "ready";
 }
 
 /**

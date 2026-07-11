@@ -13,6 +13,7 @@ import {
   variantPriceLabel,
   type Product,
 } from "@/data/shop";
+import { shopConfig } from "@/data/shop-config";
 
 /** A single shop product with variant selector and availability-aware cart. */
 export function ProductCard({ product }: { product: Product }) {
@@ -98,7 +99,7 @@ export function ProductCard({ product }: { product: Product }) {
               {variantPriceLabel(variant)}
             </div>
             <div className="text-xs text-navy-500">
-              {priced && variant.vatIncluded ? "inkl. MwSt." : " "}
+              {priced && variant.vatIncluded ? shopConfig.vatDisplayText : " "}
             </div>
           </div>
           <Link
