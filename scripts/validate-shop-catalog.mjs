@@ -225,10 +225,28 @@ for (const p of products) {
 }
 
 /* --- Shop config guardrails ------------------------------------------------ */
-if (shopConfig.checkoutEnabled && shopConfig.shopStatus === "prelaunch") {
-  err(`shopConfig: checkoutEnabled is true while shopStatus is "prelaunch" — do not enable checkout before launch verification.`);
-}
 if (shopConfig.checkoutEnabled) {
+  // Full launch gate: EVERY condition below must hold before payments may
+  // be created. Keep checkoutEnabled false until then.
+  if (shopConfig.shopStatus !== "live") {
+    err(`shopConfig: checkoutEnabled is true while shopStatus is "${shopConfig.shopStatus}" (must be "live").`);
+  }
+  if (shopConfig.checkoutMode !== "test" && shopConfig.checkoutMode !== "live") {
+    err(`shopConfig: checkoutEnabled is true but checkoutMode is not configured ("test" or "live").`);
+  }
+  if (shopConfig.checkoutProvider !== "stripe") {
+    err(`shopConfig: checkoutEnabled is true but checkoutProvider is not configured.`);
+  }
+  if (shopConfig.currency !== "CHF") {
+    err(`shopConfig: checkoutEnabled is true but currency is "${shopConfig.currency}" (must be "CHF").`);
+  }
+  if (!shopConfig.orderPersistenceEnabled) {
+    err(`shopConfig: checkoutEnabled is true but orderPersistenceEnabled is false — payments without durable orders are forbidden.`);
+  }
+  if (!shopConfig.webhookFulfilmentEnabled) {
+    err(`shopConfig: checkoutEnabled is true but webhookFulfilmentEnabled is false — fulfilment cannot be confirmed.`);
+  }
+
   // A live checkout needs something real to sell: at least one available
   // product whose pricing has been finalized.
   const sellable = products.filter(
@@ -236,6 +254,34 @@ if (shopConfig.checkoutEnabled) {
   );
   if (sellable.length === 0) {
     err(`shopConfig: checkoutEnabled is true but no product is "available" with pricingStatus "final".`);
+  }
+  for (const p of products) {
+    if (p.availability !== "available") continue;
+    if (p.pricingStatus !== "final") {
+      err(`Product "${p.id}": available while checkout is enabled but pricingStatus is "${p.pricingStatus}" (must be "final").`);
+    }
+    for (const v of p.variants) {
+      if (v.availability === "available" && typeof v.priceCents !== "number") {
+        err(`Product "${p.id}", variant "${v.id}": purchasable but has no final price while checkout is enabled.`);
+      }
+      if (v.availability === "available" && !v.stripePriceId) {
+        warn(`Product "${p.id}", variant "${v.id}": no stripePriceId — sessions will use dynamic price_data (fine, but set real Stripe Prices if intended).`);
+      }
+    }
+  }
+}
+
+/* --- Shipping / safety readiness warnings (available products) ------------- */
+for (const p of products) {
+  if (p.availability !== "available") continue;
+  for (const v of p.variants) {
+    const ships = v.requiresShipping !== false;
+    if (ships && v.weightGrams === undefined && v.shippingClass === undefined) {
+      warn(`Product "${p.id}", variant "${v.id}": shipping product without weightGrams or shippingClass — needed for shipping rates.`);
+    }
+  }
+  if (p.pricingStatus === "final" && !p.safetyNote && !p.warningNotes) {
+    warn(`Product "${p.id}": final pricing but no safetyNote/warningNotes — verify whether safety text is required.`);
   }
 }
 if (

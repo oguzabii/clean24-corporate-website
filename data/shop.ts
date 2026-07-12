@@ -97,6 +97,22 @@ export interface ProductVariant {
   availability: Availability;
   /** Optional shipping class hint for future shipping-rate logic. */
   shippingClass?: string;
+  /**
+   * Stripe identifiers — set ONLY with real values from the Stripe
+   * dashboard (test mode first). Never invent IDs. While undefined, the
+   * checkout backbone builds Stripe line items from server-resolved
+   * `priceCents` via price_data instead.
+   */
+  stripePriceId?: string;
+  stripeProductId?: string;
+  /** Shipping weight in grams (for future shipping-rate calculation). */
+  weightGrams?: number;
+  /**
+   * Whether this variant needs a shipping address. Undefined is treated as
+   * `true` (physical product) by the server checkout resolver — set `false`
+   * explicitly for digital-only variants.
+   */
+  requiresShipping?: boolean;
 }
 
 export interface Product {

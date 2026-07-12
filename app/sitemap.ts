@@ -33,6 +33,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Shop info pages + checkout scaffold, from shopConfig (single source).
+  // Deliberately NOT listed: /checkout/success and /checkout/cancel
+  // (transaction-state pages, noindex) and all /api/* routes.
   for (const link of shopConfig.shopInfoLinks) {
     entries.push({ path: link.href, changeFrequency: "monthly", priority: 0.4 });
   }

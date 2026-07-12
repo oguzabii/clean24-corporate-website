@@ -58,6 +58,22 @@ export interface ShopConfig {
   checkoutDisabledCtaLabel: string;
   /** Target of the primary CTA on the disabled-checkout page. */
   checkoutDisabledCtaHref: string;
+  /** Payment provider of the (future) checkout backbone. */
+  checkoutProvider: "stripe";
+  /** Stripe mode. Keep "test" until the launch checklist is complete. */
+  checkoutMode: "test" | "live";
+  /**
+   * Confirms that paid orders can be stored durably (database/order system).
+   * Phase 13B. While false, /api/checkout refuses to create payment sessions
+   * — a payment without a durable order record must be impossible.
+   */
+  orderPersistenceEnabled: boolean;
+  /**
+   * Confirms that verified webhook events can safely trigger order
+   * fulfilment (idempotent, durable). While false, the webhook route only
+   * verifies signatures and explicitly refuses fulfilment.
+   */
+  webhookFulfilmentEnabled: boolean;
 }
 
 export const shopConfig: ShopConfig = {
@@ -84,4 +100,13 @@ export const shopConfig: ShopConfig = {
   checkoutDisabledTitle: "Online-Checkout in Vorbereitung",
   checkoutDisabledCtaLabel: "Zurück zum Shop",
   checkoutDisabledCtaHref: "/shop",
+  checkoutProvider: "stripe",
+  checkoutMode: "test",
+  // checkoutEnabled (above) allows CREATION of payment sessions.
+  // orderPersistenceEnabled confirms paid orders can be stored durably.
+  // webhookFulfilmentEnabled confirms verified webhooks may trigger
+  // fulfilment. NO checkout may become active while either of these is
+  // false — /api/checkout and the validator both enforce this.
+  orderPersistenceEnabled: false,
+  webhookFulfilmentEnabled: false,
 };

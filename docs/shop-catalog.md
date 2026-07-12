@@ -241,6 +241,9 @@ Komponenten lesen diese Werte, statt Texte zu duplizieren:
 | `shopInfoLinks`             | Links zu Versand & Zahlung / Retoure / Shop FAQ        |
 | `checkoutSteps`             | Schritt-Labels der künftigen Checkout-Strecke          |
 | `checkoutDisabledTitle` / `…CtaLabel` / `…CtaHref` | Texte/Ziel der Scaffold-Seite   |
+| `checkoutProvider` / `checkoutMode` | `"stripe"` / `"test"` bis zum verifizierten Launch |
+| `orderPersistenceEnabled`   | **`false`** bis Phase 13B (durable Order-Speicherung)  |
+| `webhookFulfilmentEnabled`  | **`false`** bis Phase 13B (idempotentes Fulfilment)    |
 
 Verwendet in: `ProductCard`, `ProductPurchasePanel`, `CartDrawer`,
 `ShopExperience` (Grid-Hinweis) und im „Gut zu wissen“-Panel der
@@ -325,10 +328,20 @@ Checkout. Der Warenkorb-Button „Zum Checkout“ führt dorthin. Solange
 - CTAs zurück zum Shop und zum Kontakt.
 
 Es werden **keine** Kundendaten erfasst, keine Zahlungen verarbeitet und
-keine Bestellungen bestätigt. Die spätere echte Strecke (Kundendaten →
-Versand → Zahlung via `/api/checkout` + Stripe/TWINT) wird diese Seite
-ersetzen — **Zahlung ist weiterhin nicht implementiert; Stripe/TWINT bleibt
-zukünftige Arbeit.**
+keine Bestellungen bestätigt.
+
+Seit Phase 13A existiert das **deaktivierte Stripe-Test-Backbone**:
+`/api/checkout` (server-autoritative Preisauflösung, lehnt alles ab, solange
+`checkoutEnabled: false`), `/api/webhooks/stripe` (Signaturprüfung, verweigert
+Fulfilment) sowie `/checkout/success` und `/checkout/cancel` (noindex, ehrlich:
+Redirect ≠ Zahlungsbestätigung, Warenkorb bleibt erhalten). Details und
+Aktivierungs-Checkliste:
+[`docs/stripe-checkout-architecture.md`](./stripe-checkout-architecture.md).
+
+**Der Checkout bleibt deaktiviert.** Phase 13B muss zuerst durable
+Order-Persistenz und idempotentes Webhook-Fulfilment liefern
+(`orderPersistenceEnabled` / `webhookFulfilmentEnabled`), bevor eine
+Aktivierung überhaupt validierbar ist.
 
 **Shop-Informationsseiten** (verlinkt via `shopConfig.shopInfoLinks` auf
 `/shop`, den Produkt-Detailseiten und im Footer):
