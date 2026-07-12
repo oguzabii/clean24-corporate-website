@@ -74,6 +74,13 @@ export interface ShopConfig {
    * verifies signatures and explicitly refuses fulfilment.
    */
   webhookFulfilmentEnabled: boolean;
+  /** Database provider for durable order persistence (Phase 13B1). */
+  databaseProvider: "supabase";
+  /**
+   * Declared shop-order schema version. Must match the applied migration in
+   * supabase/migrations/ before checkout may be enabled (validator-gated).
+   */
+  orderSchemaVersion: number;
 }
 
 export const shopConfig: ShopConfig = {
@@ -109,4 +116,7 @@ export const shopConfig: ShopConfig = {
   // false — /api/checkout and the validator both enforce this.
   orderPersistenceEnabled: false,
   webhookFulfilmentEnabled: false,
+  databaseProvider: "supabase",
+  // Schema version 1 = supabase/migrations/20260711120000_create_shop_orders.sql
+  orderSchemaVersion: 1,
 };

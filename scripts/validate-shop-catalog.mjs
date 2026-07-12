@@ -246,6 +246,12 @@ if (shopConfig.checkoutEnabled) {
   if (!shopConfig.webhookFulfilmentEnabled) {
     err(`shopConfig: checkoutEnabled is true but webhookFulfilmentEnabled is false — fulfilment cannot be confirmed.`);
   }
+  if (shopConfig.databaseProvider !== "supabase") {
+    err(`shopConfig: checkoutEnabled is true but databaseProvider is not configured.`);
+  }
+  if (!Number.isInteger(shopConfig.orderSchemaVersion) || shopConfig.orderSchemaVersion < 1) {
+    err(`shopConfig: checkoutEnabled is true but orderSchemaVersion is not declared (must be an integer >= 1 matching the applied migration).`);
+  }
 
   // A live checkout needs something real to sell: at least one available
   // product whose pricing has been finalized.

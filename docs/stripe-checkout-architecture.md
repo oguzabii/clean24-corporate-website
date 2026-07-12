@@ -1,10 +1,15 @@
-# Clean24 Shop – Stripe Checkout Architektur (Phase 13A)
+# Clean24 Shop – Stripe Checkout Architektur (Phase 13A/13B1)
 
 > **Aktueller Status: DEAKTIVIERTES Test-Mode-Scaffold.**
-> `checkoutEnabled: false`, `checkoutMode: "test"`, `shopStatus: "prelaunch"`.
-> Es können keine Zahlungen erstellt werden. Diese Datei beschreibt den
-> Backend-Vertrag, damit Phase 13B (Order-Persistenz) und die spätere
-> Aktivierung ohne Umbau möglich sind.
+> `checkoutEnabled: false`, `checkoutMode: "test"`, `shopStatus: "prelaunch"`,
+> `orderPersistenceEnabled: false`, `webhookFulfilmentEnabled: false`.
+> Es können keine Zahlungen erstellt werden.
+>
+> Seit **Phase 13B1** existiert zusätzlich die durable Order-Persistenz
+> (Supabase-Migrationsdatei, atomare Order-Anlage, idempotente Webhook-
+> Verarbeitung über `shop_stripe_events`) — Implementierung vorhanden,
+> Aktivierungs-Flags weiterhin `false`, Migration **nicht** automatisch
+> angewendet. Details: [`docs/shop-order-persistence.md`](./shop-order-persistence.md).
 
 ## Sicherheitsmodell (nicht aufweichen)
 
@@ -68,13 +73,12 @@ für CHF) werden über das Stripe-Dashboard konfiguriert — die UI behauptet
   Fulfilment-Aktion, Antwort `{ received: true, fulfilled: false }` (200).
   Das ist sicher, weil bei deaktiviertem Checkout keine legitimen Sessions
   dieses Shops existieren können.
-- `handleVerifiedCheckoutEvent(event)` ist die einzige Stelle, die je
-  Fulfilment auslösen darf — sie verweigert explizit, bis Persistenz
-  existiert.
-- **Idempotenz:** Stripes `event.id` ist der künftige, durable
-  Idempotenz-Schlüssel (Dedup im Order-Store, Phase 13B). Bewusst **keine**
-  In-Memory-Idempotenz — sie wäre über Neustarts/Instanzen hinweg nicht
-  durable und würde Sicherheit vortäuschen.
+- Sind beide Flags `true`, verarbeitet
+  `lib/shop/stripe-webhook-processor.ts` verifizierte Events **durable und
+  idempotent**: Stripes `event.id` ist Primärschlüssel im Ledger
+  `shop_stripe_events` (Dedup, Retry-Übernahme, Fehlerprotokoll). Bewusst
+  **keine** In-Memory-Idempotenz — sie wäre über Neustarts/Instanzen hinweg
+  nicht durable. Details: [`docs/shop-order-persistence.md`](./shop-order-persistence.md).
 
 ## Umgebungsvariablen
 
@@ -115,10 +119,13 @@ gitignored; **nie** echte Keys committen oder loggen.
 3. [ ] Bestand verifiziert
 4. [ ] Versand verifiziert (Kosten, Gebiete, Gewichte)
 5. [ ] Retouren/AGB/Rechtstexte verbindlich
-6. [ ] **Phase 13B: durable Order-Persistenz** (`orderPersistenceEnabled`)
-7. [ ] **Phase 13B: idempotentes Webhook-Fulfilment** (`webhookFulfilmentEnabled`)
+6. [ ] **Order-Migration angewendet + DB-Integrationstests grün**
+      (13B1-Code existiert; siehe `docs/shop-order-persistence.md`), dann
+      `orderPersistenceEnabled: true`
+7. [ ] **Webhook-Fulfilment geprüft** (idempotenter Ledger verifiziert),
+      dann `webhookFulfilmentEnabled: true`
 8. [ ] Stripe konfiguriert (Keys, Zahlarten, Webhook-Endpoint)
-9. [ ] Testbestellung im Test-Modus erfolgreich (inkl. Webhook)
+9. [ ] Testbestellung im Test-Modus erfolgreich (inkl. Webhook + Order-Status)
 10. [ ] `shopStatus: "live"`, dann `checkoutEnabled: true`
 11. [ ] `npm run validate:shop` fehlerfrei
 

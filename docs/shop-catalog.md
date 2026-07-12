@@ -338,10 +338,15 @@ Redirect ≠ Zahlungsbestätigung, Warenkorb bleibt erhalten). Details und
 Aktivierungs-Checkliste:
 [`docs/stripe-checkout-architecture.md`](./stripe-checkout-architecture.md).
 
-**Der Checkout bleibt deaktiviert.** Phase 13B muss zuerst durable
-Order-Persistenz und idempotentes Webhook-Fulfilment liefern
-(`orderPersistenceEnabled` / `webhookFulfilmentEnabled`), bevor eine
-Aktivierung überhaupt validierbar ist.
+**Der Checkout bleibt deaktiviert.** Seit Phase 13B1 existiert die durable
+Order-Persistenz als Code (Supabase-Migrationsdatei, atomare Order-Anlage,
+idempotente Webhook-Verarbeitung — siehe
+[`docs/shop-order-persistence.md`](./shop-order-persistence.md)), aber die
+Aktivierungs-Flags bleiben `false`, die Migration wurde **nicht**
+automatisch angewendet, und ohne konfigurierte Test-Datenbank wurde keine
+echte Bestellung gespeichert. Kein Checkout darf aktiviert werden, bevor
+Migration und Integrationstests bestanden sind (der Validator erzwingt
+zusätzlich `databaseProvider` + `orderSchemaVersion`).
 
 **Shop-Informationsseiten** (verlinkt via `shopConfig.shopInfoLinks` auf
 `/shop`, den Produkt-Detailseiten und im Footer):

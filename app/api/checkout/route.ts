@@ -5,6 +5,11 @@ import {
   sanitizeCheckoutItems,
 } from "@/lib/shop/catalog-server";
 import { getCheckoutEnvStatus, getSiteUrl } from "@/lib/shop/env";
+import {
+  attachStripeCheckoutSession,
+  createPendingOrder,
+  markOrderCheckoutFailed,
+} from "@/lib/shop/order-repository";
 import { getStripe } from "@/lib/stripe/server";
 import type {
   CheckoutErrorCode,
@@ -103,6 +108,30 @@ export async function POST(request: Request) {
     );
   }
 
+  // Gate 7 — durable pending order FIRST (atomic order + immutable item
+  // snapshots via RPC). If the order cannot be persisted, Stripe is never
+  // called: a payment without a durable order record must be impossible.
+  const pending = await createPendingOrder({
+    lines: resolved.lines,
+    currency: shopConfig.currency,
+    metadata: { source: "clean24-shop" },
+  });
+  if (!pending.ok) {
+    if (pending.code === "ORDER_DATABASE_NOT_CONFIGURED") {
+      return errorResponse(
+        503,
+        "CHECKOUT_NOT_CONFIGURED",
+        "Der Zahlungsanbieter ist nicht konfiguriert.",
+      );
+    }
+    return errorResponse(
+      503,
+      "ORDER_CREATE_FAILED",
+      "Die Bestellung konnte nicht angelegt werden.",
+    );
+  }
+  const order = pending.value;
+
   // Create the Stripe Checkout Session from SERVER-resolved lines only.
   // Payment methods (card, TWINT for CHF) are governed by the Stripe
   // dashboard configuration — CHF keeps the session TWINT-compatible.
@@ -136,24 +165,39 @@ export async function POST(request: Request) {
         : {}),
       success_url: `${siteUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout/cancel`,
-      // Internal mapping for webhook-side verification (Phase 13B). Values
-      // stay well under Stripe's 500-char metadata limit (≤ 50 lines capped
-      // in sanitizeCheckoutItems, small catalog ids).
+      // Order linkage for durable webhook processing. The webhook resolves
+      // the order via metadata.order_id / client_reference_id and verifies
+      // it against the stored session id.
+      client_reference_id: order.orderId,
       metadata: {
         source: "clean24-shop",
-        lineCount: String(resolved.lines.length),
+        order_id: order.orderId,
+        order_number: order.orderNumber,
         totalCents: String(resolved.totalCents),
       },
     });
 
     if (!session.url) {
+      await markOrderCheckoutFailed(order.orderId, "STRIPE_SESSION_NO_URL");
       return errorResponse(502, "PROVIDER_ERROR", "Zahlungsanbieter nicht erreichbar.");
     }
-    // URL only — no session object, no secrets.
+
+    // Link the session and move pending_checkout → checkout_created. If
+    // linking fails we FAIL CLOSED: the customer never gets a payment URL
+    // whose order cannot be matched by the webhook later.
+    const attached = await attachStripeCheckoutSession(order.orderId, session.id);
+    if (!attached.ok) {
+      await markOrderCheckoutFailed(order.orderId, "SESSION_LINK_FAILED");
+      console.error("[checkout] session created but not linked — failing closed");
+      return errorResponse(502, "PROVIDER_ERROR", "Zahlungsanbieter nicht erreichbar.");
+    }
+
+    // URL only — no session object, no internal order UUIDs, no secrets.
     return NextResponse.json({ url: session.url });
   } catch {
     // Never surface provider error details (may contain request internals).
     console.error("[checkout] provider error while creating session");
+    await markOrderCheckoutFailed(order.orderId, "STRIPE_SESSION_CREATE_FAILED");
     return errorResponse(502, "PROVIDER_ERROR", "Zahlungsanbieter nicht erreichbar.");
   }
 }

@@ -26,6 +26,7 @@ const checkoutErrorMessages: Partial<Record<CheckoutErrorCode, string>> = {
   PRICE_NOT_FINAL: "Ein Preis im Warenkorb ist noch nicht final.",
   CHECKOUT_NOT_CONFIGURED: "Der Checkout ist derzeit nicht möglich.",
   ORDER_PERSISTENCE_DISABLED: "Der Checkout ist derzeit nicht möglich.",
+  ORDER_CREATE_FAILED: "Die Bestellung konnte nicht angelegt werden. Bitte versuchen Sie es erneut.",
   PROVIDER_ERROR: "Der Zahlungsanbieter ist derzeit nicht erreichbar.",
 };
 

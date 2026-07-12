@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { shopConfig } from "@/data/shop-config";
 import { getStripeWebhookSecret } from "@/lib/shop/env";
+import { processVerifiedStripeEvent } from "@/lib/shop/stripe-webhook-processor";
 import { getStripe } from "@/lib/stripe/server";
 
 /**
@@ -17,15 +18,15 @@ import { getStripe } from "@/lib/stripe/server";
  *  - THE WEBHOOK IS THE ONLY SOURCE OF PAYMENT CONFIRMATION. The success
  *    page redirect proves nothing.
  *
- * FULFILMENT BOUNDARY (Phase 13B)
+ * PROCESSING BOUNDARY (Phase 13B1)
  *  - While shopConfig.webhookFulfilmentEnabled / orderPersistenceEnabled are
- *    false, handleVerifiedCheckoutEvent refuses fulfilment: no order is
- *    stored, no email sent, no stock updated. We still acknowledge with 200
- *    (a controlled non-fulfilment): while checkout is disabled no legitimate
- *    session from this shop can exist, so there is nothing to retry.
- *  - Idempotency: Stripe's event.id is the FUTURE durable idempotency key.
- *    Do NOT add in-memory dedup here — it would falsely look durable across
- *    restarts/instances. Phase 13B must dedup on event.id in the order store.
+ *    false, this route refuses processing: no order is stored or updated, no
+ *    email sent, no stock changed. It acknowledges with 200 (controlled
+ *    non-fulfilment): while checkout is disabled no legitimate session from
+ *    this shop can exist, so there is nothing to retry.
+ *  - Once both flags are true, verified events are processed DURABLY and
+ *    idempotently via lib/shop/stripe-webhook-processor.ts, keyed on
+ *    Stripe's event.id in shop_stripe_events. No in-memory dedup exists.
  */
 
 /** Only these event types are relevant to the checkout flow. */
@@ -35,28 +36,6 @@ const SUPPORTED_EVENTS = new Set<string>([
   "checkout.session.async_payment_failed",
   "checkout.session.expired",
 ]);
-
-interface FulfilmentDecision {
-  fulfilled: false;
-  reason: "fulfilment-disabled" | "persistence-not-implemented";
-}
-
-/**
- * Phase 13B boundary: the single entry point that may ever trigger
- * fulfilment for a signature-verified event. It must refuse while the
- * safety flags are off — and refuses even after they flip until durable
- * order persistence actually exists.
- */
-function handleVerifiedCheckoutEvent(event: Stripe.Event): FulfilmentDecision {
-  if (!shopConfig.webhookFulfilmentEnabled || !shopConfig.orderPersistenceEnabled) {
-    return { fulfilled: false, reason: "fulfilment-disabled" };
-  }
-  // Phase 13B: load-or-create order keyed on event.id (idempotent), persist
-  // durably, then fulfil. Until that exists, refuse — never pretend an
-  // order was stored.
-  void event;
-  return { fulfilled: false, reason: "persistence-not-implemented" };
-}
 
 export async function POST(request: Request) {
   const signature = request.headers.get("stripe-signature");
@@ -82,20 +61,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid signature." }, { status: 400 });
   }
 
-  // Acknowledge (but ignore) event types we do not handle, so Stripe does
-  // not retry them against us.
-  if (!SUPPORTED_EVENTS.has(event.type)) {
-    return NextResponse.json({ received: true, handled: false });
+  // Processing boundary: while the safety flags are off, verified events are
+  // acknowledged but nothing is stored, updated or fulfilled.
+  if (!shopConfig.webhookFulfilmentEnabled || !shopConfig.orderPersistenceEnabled) {
+    // Acknowledge (but ignore) unsupported event types either way.
+    if (!SUPPORTED_EVENTS.has(event.type)) {
+      return NextResponse.json({ received: true, handled: false });
+    }
+    // Sanitized development-only trace: id + type, nothing else.
+    if (process.env.NODE_ENV !== "production") {
+      console.log(
+        `[stripe-webhook] verified ${event.type} (${event.id}) — fulfilled=false (fulfilment-disabled)`,
+      );
+    }
+    return NextResponse.json({ received: true, fulfilled: false });
   }
 
-  const decision = handleVerifiedCheckoutEvent(event);
-
-  // Sanitized development-only trace: id + type, nothing else.
+  // Durable, idempotent processing (shop_stripe_events keyed on event.id).
+  // Unsupported events are recorded as ignored inside the processor.
+  const result = await processVerifiedStripeEvent(event);
   if (process.env.NODE_ENV !== "production") {
     console.log(
-      `[stripe-webhook] verified ${event.type} (${event.id}) — fulfilled=${decision.fulfilled} (${decision.reason})`,
+      `[stripe-webhook] verified ${event.type} (${event.id}) — status=${result.status}`,
     );
   }
-
-  return NextResponse.json({ received: true, fulfilled: decision.fulfilled });
+  return NextResponse.json(result.body, { status: result.status });
 }

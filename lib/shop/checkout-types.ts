@@ -48,6 +48,7 @@ export type CheckoutErrorCode =
   | "PRICE_NOT_FINAL"
   | "CHECKOUT_NOT_CONFIGURED"
   | "ORDER_PERSISTENCE_DISABLED"
+  | "ORDER_CREATE_FAILED"
   | "PROVIDER_ERROR";
 
 export interface CheckoutErrorResponse {

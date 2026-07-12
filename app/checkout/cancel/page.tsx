@@ -14,6 +14,13 @@ export const metadata: Metadata = {
 /**
  * Stripe cancel-redirect landing page. The cart is NOT touched — it lives in
  * localStorage and this page never clears or modifies it.
+ *
+ * PERSISTENCE RULE (Phase 13B1): visiting this page NEVER marks an order
+ * `cancelled`. Browser navigation to a cancel URL is not durable proof of
+ * cancellation (users can abandon, retry, or share URLs). A cancellation
+ * state may only ever come from a verified Stripe event
+ * (checkout.session.expired), a controlled server action, or an explicit
+ * administrative action — see docs/shop-order-persistence.md.
  */
 export default function CheckoutCancelPage() {
   return (
