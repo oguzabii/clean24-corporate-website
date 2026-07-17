@@ -5,16 +5,17 @@
 -- must NOT be applied to, or reference, Lead Autopilot / Sales Engine
 -- projects or tables.
 --
--- STATUS: migration FILE only — it has NOT been applied automatically.
--- Apply deliberately (test project first), e.g.:
---   supabase db push            (linked local CLI)  or
---   psql "$DB_URL" -f supabase/migrations/20260711120000_create_shop_orders.sql
+-- Provider-neutral PostgreSQL, hosted on Neon via the Vercel Marketplace
+-- resource connected to the clean24-corporate-website project.
+-- Apply deliberately, never automatically:
+--   npm run db:migrate      (scripts/apply-shop-migration.mjs, DATABASE_URL)
+--   psql "$DATABASE_URL" -f migrations/20260711120000_create_shop_orders.sql
 --
 -- SECURITY MODEL
---   * RLS is ENABLED on every table and NO policies are created:
---     anon/authenticated roles can read or write NOTHING.
---   * All access in this phase goes through the server-side SERVICE ROLE,
---     which BYPASSES RLS — therefore that key must remain server-only.
+--   * The application connects server-side only via DATABASE_URL (owner
+--     role). No client-facing database roles exist.
+--   * RLS is ENABLED on every table with NO policies as defense-in-depth:
+--     any future non-owner/limited role can read or write NOTHING.
 --   * Order items are IMMUTABLE sales snapshots: future catalog edits in
 --     data/shop.ts must never rewrite historical prices or names.
 -- ===========================================================================
@@ -78,10 +79,10 @@ create trigger shop_orders_set_updated_at
   for each row execute function public.shop_set_updated_at();
 
 alter table public.shop_orders enable row level security;
--- Deliberately NO policies: anon/authenticated get no access at all.
+-- Deliberately NO policies: non-owner roles get no access at all.
 
 comment on table public.shop_orders is
-  'Clean24 shop orders. Server-only access via service role (bypasses RLS); no browser policies by design.';
+  'Clean24 shop orders. Server-only access via DATABASE_URL (owner bypasses RLS); no client policies by design.';
 
 -- ---------------------------------------------------------------------------
 -- shop_order_items — immutable per-line sales snapshot
@@ -219,5 +220,5 @@ begin
 end;
 $$;
 
--- Service-role-only execution: revoke from client-facing roles.
-revoke execute on function public.create_shop_pending_order(text, text, jsonb, jsonb) from public, anon, authenticated;
+-- Owner/server-only execution: no PUBLIC grant survives.
+revoke execute on function public.create_shop_pending_order(text, text, jsonb, jsonb) from public;

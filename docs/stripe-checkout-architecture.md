@@ -5,11 +5,12 @@
 > `orderPersistenceEnabled: false`, `webhookFulfilmentEnabled: false`.
 > Es können keine Zahlungen erstellt werden.
 >
-> Seit **Phase 13B1** existiert zusätzlich die durable Order-Persistenz
-> (Supabase-Migrationsdatei, atomare Order-Anlage, idempotente Webhook-
-> Verarbeitung über `shop_stripe_events`) — Implementierung vorhanden,
-> Aktivierungs-Flags weiterhin `false`, Migration **nicht** automatisch
-> angewendet. Details: [`docs/shop-order-persistence.md`](./shop-order-persistence.md).
+> Seit **Phase 13B1/13B1-N** existiert zusätzlich die durable
+> Order-Persistenz (Neon PostgreSQL via Vercel Marketplace, atomare
+> Order-Anlage, idempotente Webhook-Verarbeitung über `shop_stripe_events`)
+> — Migration angewendet und integrationsgetestet, Aktivierungs-Flags
+> weiterhin `false`. Details:
+> [`docs/shop-order-persistence.md`](./shop-order-persistence.md).
 
 ## Sicherheitsmodell (nicht aufweichen)
 

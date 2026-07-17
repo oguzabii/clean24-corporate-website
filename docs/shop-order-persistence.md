@@ -1,24 +1,27 @@
-# Clean24 Shop – Order-Persistenz & Webhook-Idempotenz (Phase 13B1)
+# Clean24 Shop – Order-Persistenz & Webhook-Idempotenz (Phase 13B1/13B1-N)
 
-> **Status:** Code und Migrationsdatei existieren; **alle Aktivierungs-Flags
-> bleiben `false`** (`checkoutEnabled`, `orderPersistenceEnabled`,
-> `webhookFulfilmentEnabled`). Die Migration wurde **nicht** automatisch
-> angewendet. Ohne konfigurierte Test-Datenbank wurde keine echte Bestellung
-> gespeichert.
+> **Status:** **Alle Aktivierungs-Flags bleiben `false`** (`checkoutEnabled`,
+> `orderPersistenceEnabled`, `webhookFulfilmentEnabled`). Die Migration wurde
+> bewusst und einmalig auf die Neon-Datenbank der Marketplace-Ressource
+> `clean24-corporate-website` angewendet; Integrationstests laufen gegen
+> diese Datenbank und räumen ihre Testdaten vollständig wieder ab.
 
 ## Architektur
 
-- **Datenbank:** Supabase/PostgreSQL — ein **eigenes, isoliertes** Projekt
-  bzw. Schema für den Shop. Keine Verbindung zu Lead-Autopilot- oder
+- **Datenbank:** Neon PostgreSQL über die **Vercel-Marketplace-Ressource**
+  `clean24-corporate-website` (Team `oguzabiis-projects`, Free-Plan),
+  verbunden **ausschliesslich** mit dem Vercel-Projekt
+  `clean24-corporate-website`. Keine Verbindung zu Lead-Autopilot- oder
   Sales-Engine-Tabellen; deren Repositories/Migrationen bleiben unberührt.
-- **Zugriff:** ausschliesslich serverseitig über den **Service-Role-Key**
-  (`lib/supabase/server.ts`, `import "server-only"`, lazy). Der Service-Role
-  **umgeht RLS** — deshalb darf er nie in den Browser, nie in Logs, nie mit
-  `NEXT_PUBLIC_`-Präfix existieren.
-- **RLS:** auf allen Shop-Tabellen aktiviert, **ohne** Policies →
-  anon/authenticated können nichts lesen oder schreiben.
+- **Zugriff:** ausschliesslich serverseitig über `DATABASE_URL`
+  (`lib/db/server.ts`, node-postgres-Pool, `import "server-only"`, lazy).
+  Der Connection-String enthält Credentials — er darf nie in den Browser,
+  nie in Logs, nie mit `NEXT_PUBLIC_`-Präfix existieren.
+- **RLS:** auf allen Shop-Tabellen aktiviert, **ohne** Policies
+  (Defense-in-Depth): die App verbindet als Tabellen-Owner (umgeht RLS);
+  jede künftige eingeschränkte Rolle kann nichts lesen oder schreiben.
 
-## Tabellen (`supabase/migrations/20260711120000_create_shop_orders.sql`)
+## Tabellen (`migrations/20260711120000_create_shop_orders.sql`)
 
 | Tabelle | Zweck |
 | --- | --- |
@@ -121,9 +124,11 @@ Gate → durable Verarbeitung:
 
 | Variable | Sichtbarkeit | Zweck |
 | --- | --- | --- |
-| `SUPABASE_URL` | Server (hier) | URL des Shop-eigenen Supabase-Projekts |
-| `SUPABASE_SERVICE_ROLE_KEY` | **nur Server** | Order-Schreibzugriff; umgeht RLS |
+| `DATABASE_URL` | **nur Server** | Gepoolter Neon-Connection-String (Laufzeit-Queries) |
+| `DATABASE_URL_UNPOOLED` | **nur Server** | Direktverbindung, für Migrations-DDL |
 
+Beide werden von der Neon-Marketplace-Ressource für **Production, Preview
+und Development** bereitgestellt; lokal via `vercel env pull .env.local`.
 Plus die Stripe-Variablen aus
 [`docs/stripe-checkout-architecture.md`](./stripe-checkout-architecture.md).
 Vorlage: [`.env.example`](../.env.example). Fehlende Konfiguration führt zu
@@ -133,10 +138,11 @@ zu einem stillen Fallback.
 ## Migration anwenden (bewusst, nie automatisch)
 
 ```bash
-# Test-Projekt zuerst! Entweder via Supabase CLI (verlinktes Projekt):
-supabase db push
+# nutzt DATABASE_URL_UNPOOLED (Fallback DATABASE_URL) aus .env.local,
+# läuft in EINER Transaktion und druckt nur den Ziel-Hostnamen:
+npm run db:migrate
 # oder direkt:
-psql "$DATABASE_URL" -f supabase/migrations/20260711120000_create_shop_orders.sql
+psql "$DATABASE_URL" -f migrations/20260711120000_create_shop_orders.sql
 ```
 
 **Rollback-Überlegungen:** Die Migration ist additiv (nur neue Objekte).
@@ -148,18 +154,20 @@ Stale-`processing`-Claims im Event-Ledger werden nach 5 Minuten automatisch
 
 ## Lokales/Test-Setup
 
-1. Eigenes Supabase-**Testprojekt** anlegen (nie das Produktions- oder
-   Lead-Autopilot-Projekt).
-2. Migration anwenden (oben), `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`
-   in `.env.local`.
-3. `npm test` — die DB-Integrationstests laufen nur, wenn diese Variablen
-   gesetzt sind, und werden sonst **ehrlich übersprungen**.
+1. `vercel env pull .env.local` (verlinktes Projekt
+   `clean24-corporate-website`) — lädt `DATABASE_URL` +
+   `DATABASE_URL_UNPOOLED` der Neon-Ressource.
+2. Migration anwenden (oben), falls noch nicht geschehen.
+3. `npm test` — die DB-Integrationstests laufen nur, wenn `DATABASE_URL`
+   gesetzt ist, werden sonst **ehrlich übersprungen** und löschen ihre
+   Testdaten (Orders mit `metadata.source = "db-integration-test"`,
+   Events mit Präfix `evt_test_integration_`) vollständig wieder.
 4. Stripe-Test-Modus + `stripe listen` gemäss Architektur-Dokument.
 
 ## Was vor der Aktivierung noch fehlt
 
-- [ ] Migration auf einem echten (Test-)Projekt angewendet und verifiziert
-- [ ] DB-Integrationstests gegen das Testprojekt grün
+- [x] Migration angewendet und verifiziert (Neon, Phase 13B1-N)
+- [x] DB-Integrationstests gegen die Neon-Datenbank grün (Phase 13B1-N)
 - [ ] Stripe-Test-Credentials + End-to-End-Testbestellung inkl. Webhook
 - [ ] Entscheidung Warenkorb-Leerung nach bestätigter Zahlung
 - [ ] Fulfilment-Phase (E-Mail, Bestand, Versand) — separat geprüft

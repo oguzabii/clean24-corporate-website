@@ -8,12 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "validate:shop": "node scripts/validate-shop-catalog.mjs",
-    "test": "node --conditions=react-server --import tsx --test \"tests/*.test.ts\""
+    "test": "node --env-file-if-exists=.env.local --conditions=react-server --import tsx --test \"tests/*.test.ts\"",
+    "db:migrate": "node --env-file-if-exists=.env.local scripts/apply-shop-migration.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.2",
     "motion": "^12.42.2",
     "next": "16.2.9",
+    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "server-only": "^0.0.1",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

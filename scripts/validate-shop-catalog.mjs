@@ -246,7 +246,7 @@ if (shopConfig.checkoutEnabled) {
   if (!shopConfig.webhookFulfilmentEnabled) {
     err(`shopConfig: checkoutEnabled is true but webhookFulfilmentEnabled is false — fulfilment cannot be confirmed.`);
   }
-  if (shopConfig.databaseProvider !== "supabase") {
+  if (shopConfig.databaseProvider !== "neon") {
     err(`shopConfig: checkoutEnabled is true but databaseProvider is not configured.`);
   }
   if (!Number.isInteger(shopConfig.orderSchemaVersion) || shopConfig.orderSchemaVersion < 1) {

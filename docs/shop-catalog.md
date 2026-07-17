@@ -338,15 +338,15 @@ Redirect ≠ Zahlungsbestätigung, Warenkorb bleibt erhalten). Details und
 Aktivierungs-Checkliste:
 [`docs/stripe-checkout-architecture.md`](./stripe-checkout-architecture.md).
 
-**Der Checkout bleibt deaktiviert.** Seit Phase 13B1 existiert die durable
-Order-Persistenz als Code (Supabase-Migrationsdatei, atomare Order-Anlage,
-idempotente Webhook-Verarbeitung — siehe
-[`docs/shop-order-persistence.md`](./shop-order-persistence.md)), aber die
-Aktivierungs-Flags bleiben `false`, die Migration wurde **nicht**
-automatisch angewendet, und ohne konfigurierte Test-Datenbank wurde keine
-echte Bestellung gespeichert. Kein Checkout darf aktiviert werden, bevor
-Migration und Integrationstests bestanden sind (der Validator erzwingt
-zusätzlich `databaseProvider` + `orderSchemaVersion`).
+**Der Checkout bleibt deaktiviert.** Seit Phase 13B1/13B1-N existiert die durable
+Order-Persistenz (Neon PostgreSQL via Vercel Marketplace, atomare
+Order-Anlage, idempotente Webhook-Verarbeitung — siehe
+[`docs/shop-order-persistence.md`](./shop-order-persistence.md)); die
+Migration ist angewendet und integrationsgetestet, aber die
+Aktivierungs-Flags bleiben `false`. Kein Checkout darf aktiviert werden,
+bevor auch Stripe-Tests und die restliche Launch-Checkliste bestanden sind
+(der Validator erzwingt zusätzlich `databaseProvider` +
+`orderSchemaVersion`).
 
 **Shop-Informationsseiten** (verlinkt via `shopConfig.shopInfoLinks` auf
 `/shop`, den Produkt-Detailseiten und im Footer):
