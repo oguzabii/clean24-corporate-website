@@ -1,82 +1,117 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Section } from "@/components/layout/Section";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FeatureGrid } from "@/components/ui/FeatureGrid";
+import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 
 export const metadata: Metadata = {
   title: "Qualität",
   description:
-    "Qualität mit System: Clean24 arbeitet mit klarer Einsatzplanung, Checklisten, Kontrolle und transparenter Kommunikation – Dokumentation auf Wunsch.",
+    "Qualität bei Clean24 entsteht durch klare Planung, definierte Zuständigkeiten, strukturierte Einsätze, direkte Kommunikation und saubere Ausführung.",
 };
 
-const items = [
+const process = [
   {
-    title: "Einsatzplanung",
-    text: "Umfang, Intervalle und Zuständigkeiten werden vor dem ersten Einsatz festgelegt – damit klar ist, was wann gereinigt wird.",
+    title: "Planen",
+    text: "Umfang, Objekt und Zuständigkeiten werden vor dem Einsatz geklärt.",
   },
   {
-    title: "Checklisten",
-    text: "Objektbezogene Checklisten sorgen dafür, dass keine Arbeiten vergessen gehen und die Qualität wiederholbar bleibt.",
+    title: "Ausführen",
+    text: "Die Reinigung folgt einem strukturierten Einsatz und einer klaren Erwartung.",
   },
   {
-    title: "Kontrolle",
-    text: "Ergebnisse werden systematisch geprüft. Abweichungen sprechen wir offen an und beheben sie direkt.",
+    title: "Abstimmen",
+    text: "Rückfragen und Beobachtungen werden direkt kommuniziert.",
   },
   {
-    title: "Kommunikation",
-    text: "Feste Ansprechpartner und klare Rückmeldungen – vor, während und nach dem Einsatz.",
-  },
-  {
-    title: "Dokumentation auf Wunsch",
-    text: "Auf Wunsch halten wir Einsätze und Kontrollen nachvollziehbar fest – für Ihre Unterlagen und Abnahmen.",
+    title: "Nachvollziehen",
+    text: "Abläufe bleiben verständlich, damit Qualität wiederholbar wird.",
   },
 ];
 
 export default function QualitaetPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Qualität"
-        title="Qualität mit System."
-        lead="Qualität entsteht nicht zufällig, sondern durch klare Abläufe, Kontrolle und Kommunikation. So stellen wir bei Clean24 konstante Ergebnisse sicher."
-      />
+      <section className="bg-navy-950 py-24 text-white sm:py-32 lg:py-44">
+        <Container className="max-w-[88rem]">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
+            Qualität
+          </p>
+          <h1 className="mt-7 max-w-6xl text-[clamp(3.2rem,11vw,7rem)] font-semibold leading-[0.92] tracking-tight">
+            Qualität entsteht nicht im Versprechen.
+            <span className="block text-navy-400">Sie entsteht im Ablauf.</span>
+          </h1>
+          <p className="mt-8 max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
+            Clean24 setzt auf klare Planung, definierte Zuständigkeiten,
+            strukturierte Einsätze und direkte Kommunikation.
+          </p>
+        </Container>
+      </section>
 
-      <Section tone="white">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
-          <div>
-            <SectionHeading
-              eyebrow="Unser Qualitätsverständnis"
-              title="Fünf Bausteine für verlässliche Ergebnisse."
+      <section className="bg-white py-16 sm:py-24 lg:py-32">
+        <Container className="max-w-[90rem]">
+          <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[620px] lg:min-h-[720px]">
+            <Image
+              src="/media/clean24/stairwell-cleaning.jpg"
+              alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Reinigungsqualität."
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
             />
-            <div className="mt-10 overflow-hidden rounded-xl">
-              <Image
-                src="/media/clean24/stairwell-cleaning.jpg"
-                alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Objektpflege"
-                width={900}
-                height={680}
-                priority
-                className="aspect-[4/3] w-full object-cover"
-              />
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-mist py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-[82rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Ablauf
+              </p>
+              <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
+                Saubere Ausführung braucht klare Reihenfolge.
+              </h2>
+            </div>
+            <div className="divide-y divide-navy-200 border-y border-navy-200">
+              {process.map((item, index) => (
+                <section
+                  key={item.title}
+                  className="grid gap-4 py-7 sm:grid-cols-[5rem_0.8fr_1.2fr] sm:items-start"
+                >
+                  <span className="text-sm font-semibold tabular-nums text-teal-700">
+                    0{index + 1}
+                  </span>
+                  <h3 className="text-2xl font-semibold tracking-tight text-navy-950">
+                    {item.title}
+                  </h3>
+                  <p className="text-base leading-7 text-navy-600 sm:text-lg sm:leading-8">
+                    {item.text}
+                  </p>
+                </section>
+              ))}
             </div>
           </div>
-          <div className="lg:pt-3">
-            <FeatureGrid items={items} columns={1} />
-          </div>
-        </div>
+        </Container>
+      </section>
 
-        <div className="mt-14 flex flex-col items-start gap-4 border-t border-navy-100 pt-8 sm:flex-row sm:items-center">
-          <Button href={cta.primary.href} variant="primary" size="lg">
-            {cta.primary.label}
-          </Button>
-          <Button href={cta.secondary.href} variant="outline" size="lg">
-            {cta.secondary.label}
-          </Button>
-        </div>
-      </Section>
+      <section className="bg-white py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-[clamp(2.6rem,7vw,5rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
+            Qualität mit System.
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-600">
+            Sagen Sie uns, welches Objekt gereinigt werden soll. Wir klären den
+            passenden Ablauf.
+          </p>
+          <div className="mt-9">
+            <Button href={cta.primary.href} variant="primary" size="lg">
+              Offerte anfordern
+            </Button>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }
