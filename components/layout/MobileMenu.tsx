@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { mainNav } from "@/data/navigation";
 import { cta } from "@/data/cta";
 import { contact } from "@/data/contact";
+import { cn } from "@/lib/cn";
 
 /**
  * Mobile navigation: a hamburger button that opens a full-height drawer with
@@ -15,6 +17,13 @@ import { contact } from "@/data/contact";
  */
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const pathname = usePathname();
+
+  const closeMenu = () => {
+    setOpen(false);
+    setExpanded({});
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -33,7 +42,10 @@ export function MobileMenu() {
     <div className="lg:hidden">
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setExpanded({});
+          setOpen(true);
+        }}
         aria-label="Menü öffnen"
         aria-expanded={open}
         className="inline-flex h-10 w-10 items-center justify-center rounded-md text-navy-800 transition-colors hover:bg-navy-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
@@ -50,7 +62,7 @@ export function MobileMenu() {
         <div className="fixed inset-0 z-[60]">
           <div
             className="absolute inset-0 bg-navy-950/50 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
+            onClick={closeMenu}
             aria-hidden
           />
           <div
@@ -64,7 +76,7 @@ export function MobileMenu() {
               </span>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+              onClick={closeMenu}
                 aria-label="Menü schliessen"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md text-navy-800 transition-colors hover:bg-navy-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
               >
@@ -77,33 +89,58 @@ export function MobileMenu() {
             <nav className="flex-1 overflow-y-auto px-4 py-5" aria-label="Mobile Navigation">
               {mainNav.map((item) =>
                 item.items ? (
-                  <details key={item.label} className="group border-b border-navy-100/70">
-                    <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-base font-medium text-navy-900 marker:content-none">
+                  <div key={item.label} className="border-b border-navy-100/70">
+                    <button
+                      type="button"
+                      className={cn(
+                        "flex min-h-14 w-full items-center justify-between py-4 text-left text-base font-medium text-navy-900 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400",
+                        isActive(pathname, item.href) && "text-teal-700",
+                      )}
+                      aria-expanded={expanded[item.label] ?? false}
+                      onClick={() =>
+                        setExpanded((current) => ({
+                          ...current,
+                          [item.label]: !(current[item.label] ?? false),
+                        }))
+                      }
+                    >
                       {item.label}
-                      <svg viewBox="0 0 12 12" className="h-3.5 w-3.5 text-navy-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <svg viewBox="0 0 12 12" className={cn("h-3.5 w-3.5 text-navy-400 transition-transform", (expanded[item.label] ?? false) && "rotate-180")} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                         <path d="M2.5 4.5 6 8l3.5-3.5" />
                       </svg>
-                    </summary>
-                    <ul className="pb-2">
-                      {item.items.map((link, i) => (
-                        <li key={`${link.label}-${i}`}>
-                          <Link
-                            href={link.href}
-                            onClick={() => setOpen(false)}
-                            className="block rounded-md px-4 py-2.5 text-sm text-navy-600 transition-colors hover:bg-mist hover:text-navy-900"
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
+                    </button>
+                    {expanded[item.label] ? (
+                      <ul className="pb-2">
+                        {item.items.map((link, i) => (
+                          <li key={`${link.label}-${i}`}>
+                            <Link
+                              href={link.href}
+                              onClick={closeMenu}
+                              className={cn(
+                                "block min-h-11 rounded-md px-4 py-3 text-sm hyphens-auto break-words transition-colors hover:bg-mist hover:text-navy-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400",
+                                isExactActive(pathname, link.href)
+                                  ? "bg-mist font-medium text-teal-700"
+                                  : "text-navy-600",
+                              )}
+                              aria-current={isExactActive(pathname, link.href) ? "page" : undefined}
+                            >
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 ) : (
                   <Link
                     key={item.label}
                     href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block border-b border-navy-100/70 py-4 text-base font-medium text-navy-900 transition-colors hover:text-teal-600"
+                    onClick={closeMenu}
+                    className={cn(
+                      "block min-h-14 border-b border-navy-100/70 py-4 text-base font-medium transition-colors hover:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400",
+                      isActive(pathname, item.href) ? "text-teal-700" : "text-navy-900",
+                    )}
+                    aria-current={isActive(pathname, item.href) ? "page" : undefined}
                   >
                     {item.label}
                   </Link>
@@ -116,7 +153,7 @@ export function MobileMenu() {
                 href={cta.primary.href}
                 size="md"
                 className="w-full"
-                onClick={() => setOpen(false)}
+                onClick={closeMenu}
               >
                 {cta.primary.label}
               </Button>
@@ -136,4 +173,15 @@ export function MobileMenu() {
         : null}
     </div>
   );
+}
+
+function isActive(pathname: string, href: string) {
+  if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return false;
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isExactActive(pathname: string, href: string) {
+  return !href.startsWith("http") && pathname === href;
 }

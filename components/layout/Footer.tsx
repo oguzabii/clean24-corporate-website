@@ -11,7 +11,7 @@ const compactGroups: { title: string; links: { label: string; href: string }[] }
   {
     title: "Verwaltungen",
     links: [
-      { label: "Verwaltungen & Liegenschaften", href: "/#verwaltungen" },
+      { label: "Verwaltungen & Liegenschaften", href: "/verwaltungen" },
       { label: "Anfrage für Verwaltungen", href: cta.verwaltungen.href },
     ],
   },
@@ -29,6 +29,37 @@ const compactGroups: { title: string; links: { label: string; href: string }[] }
     links: [
       { label: "Impressum", href: "/impressum" },
       { label: "Datenschutz", href: "/datenschutz" },
+    ],
+  },
+];
+
+const mobileFooterGroups: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: "Leistungen",
+    links: [{ label: "Alle Leistungen", href: "/leistungen" }],
+  },
+  {
+    title: "Branchen",
+    links: [{ label: "Alle Branchen", href: "/branchen" }],
+  },
+  {
+    title: "Clean24",
+    links: [
+      { label: "Unternehmen", href: "/unternehmen" },
+      { label: "Arbeiten bei Clean24", href: "/arbeiten-bei-clean24" },
+      { label: "Jobs", href: "/jobs" },
+      { label: "Qualität", href: "/qualitaet" },
+      { label: "Innovation", href: "/innovation" },
+      { label: "Nachhaltigkeit", href: "/nachhaltigkeit" },
+    ],
+  },
+  {
+    title: "Kontakt",
+    links: [
+      { label: "Kontakt", href: "/kontakt" },
+      { label: "Offerte anfordern", href: cta.primary.href },
+      { label: "Jetzt anrufen", href: contact.phoneHref },
+      { label: "E-Mail schreiben", href: contact.emailHref },
     ],
   },
 ];
@@ -85,7 +116,7 @@ export function Footer() {
             ) : null}
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="hidden gap-10 sm:grid-cols-2 lg:grid lg:grid-cols-4">
             {footerNav.map((group) => (
               <FooterColumn key={group.title} title={group.title}>
                 {group.links.map((link, i) => (
@@ -109,6 +140,35 @@ export function Footer() {
           </div>
         </div>
 
+        <div className="mt-12 border-y border-white/10 lg:hidden">
+          {mobileFooterGroups.map((group) => (
+            <details key={group.title} className="group border-b border-white/10 last:border-b-0">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between py-4 text-sm font-semibold uppercase tracking-wider text-white marker:content-none">
+                {group.title}
+                <svg
+                  viewBox="0 0 12 12"
+                  className="h-3.5 w-3.5 text-navy-400 transition-transform group-open:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M2.5 4.5 6 8l3.5-3.5" />
+                </svg>
+              </summary>
+              <ul className="pb-4">
+                {group.links.map((link) => (
+                  <FooterLink key={link.href} href={link.href}>
+                    {link.label}
+                  </FooterLink>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
+
         {/* Partner — only rendered when real partners exist (no fake logos). */}
         {site.partners.length > 0 ? (
           <div className="mt-12 border-t border-white/10 pt-8">
@@ -125,10 +185,24 @@ export function Footer() {
           </div>
         ) : null}
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
           <p>
             © {year} {contact.company}. Alle Rechte vorbehalten.
           </p>
+          <div className="flex gap-4 lg:hidden">
+            <Link
+              href="/impressum"
+              className="transition-colors hover:text-teal-300"
+            >
+              Impressum
+            </Link>
+            <Link
+              href="/datenschutz"
+              className="transition-colors hover:text-teal-300"
+            >
+              Datenschutz
+            </Link>
+          </div>
           <p>{site.badge}</p>
         </div>
       </Container>

@@ -14,21 +14,21 @@ const serviceStories = [
     text: "Arbeitsräume, Empfangsbereiche und Geschäftsumgebungen, die täglich repräsentativ funktionieren müssen.",
     image: "/media/clean24/office-cleaning.jpg",
     alt: "Professionelle Reinigung in einem modernen Büro.",
-    href: "/kontakt",
+    href: "/leistungen/bueroreinigung",
   },
   {
     title: "Immobilien & Verwaltungen",
     text: "Treppenhäuser, Eingänge, Nebenräume und Liegenschaften mit klarer Planung und festen Ansprechpartnern.",
     image: "/media/clean24/stairwell-cleaning.jpg",
     alt: "Gepflegtes Treppenhaus in einer Schweizer Liegenschaft.",
-    href: "#verwaltungen",
+    href: "/verwaltungen",
   },
   {
     title: "Spezial- & Objektpflege",
     text: "Glas, Garagen, Bau- und Sonderreinigungen, abgestimmt auf Objekt, Timing und Anspruch.",
     image: "/media/clean24/glass-cleaning.jpg",
     alt: "Sorgfältige Glasreinigung mit klarem Blick auf die Fläche.",
-    href: "/kontakt",
+    href: "/leistungen/spezialreinigung",
   },
 ];
 
@@ -190,16 +190,24 @@ export default function Home() {
               className="border-y border-navy-200"
             >
               {industries.map((industry) => (
-                <StaggerItem
-                  key={industry.slug}
-                  className="grid gap-3 border-b border-navy-100 py-6 last:border-b-0 sm:grid-cols-[1fr_1.05fr] sm:gap-10"
-                >
-                  <h3 className="text-2xl font-semibold tracking-tight text-navy-950 sm:text-3xl">
-                    {industry.name}
-                  </h3>
-                  <p className="text-base leading-7 text-navy-600">
-                    {industry.description}
-                  </p>
+                <StaggerItem key={industry.slug}>
+                  <Link
+                    href={`/branchen/${industry.slug}`}
+                    className="group grid min-h-20 gap-3 border-b border-navy-100 py-6 transition-colors last:border-b-0 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[1fr_1.05fr_auto] sm:items-center sm:gap-10"
+                  >
+                    <h3 className="text-2xl font-semibold tracking-tight text-navy-950 sm:text-3xl">
+                      {industry.name}
+                    </h3>
+                    <p className="text-base leading-7 text-navy-600">
+                      {industry.description}
+                    </p>
+                    <span
+                      className="text-sm font-semibold text-navy-400 transition-transform group-hover:translate-x-1 group-hover:text-teal-700"
+                      aria-hidden
+                    >
+                      →
+                    </span>
+                  </Link>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -234,8 +242,8 @@ export default function Home() {
                 ))}
               </div>
               <div className="mt-10">
-                <Button href={cta.verwaltungen.href} variant="accent" size="lg">
-                  Für Verwaltungen anfragen
+                <Button href="/verwaltungen" variant="accent" size="lg">
+                  Mehr für Verwaltungen
                 </Button>
               </div>
             </SectionReveal>

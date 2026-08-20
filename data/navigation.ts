@@ -1,9 +1,9 @@
 /**
  * Primary site navigation with mega-menu structure.
  *
- * Service and industry dropdown items point at the homepage anchors
- * (`/#leistungen`, `/#branchen`) so no link is ever broken; "Über uns" items
- * point at dedicated routes created in this phase.
+ * Service and industry dropdown items point at real overview/detail routes.
+ * Named leaf links must never masquerade as unique destinations while routing
+ * to a shared homepage anchor.
  */
 import { services } from "./services";
 import { industries } from "./industries";
@@ -25,22 +25,37 @@ export interface NavItem {
 export const mainNav: NavItem[] = [
   {
     label: "Leistungen",
-    href: "/#leistungen",
-    items: services.map((service) => ({
-      label: service.name,
-      href: "/#leistungen",
-    })),
+    href: "/leistungen",
+    items: [
+      {
+        label: "Alle Leistungen",
+        href: "/leistungen",
+        description: "Überblick über Reinigungsleistungen.",
+      },
+      ...services.map((service) => ({
+        label: service.name,
+        href: `/leistungen/${service.slug}`,
+        description: service.description,
+      })),
+    ],
   },
   {
     label: "Branchen",
-    href: "/#branchen",
-    items: industries.map((industry) => ({
-      label: industry.name,
-      href: "/#branchen",
-      description: industry.description,
-    })),
+    href: "/branchen",
+    items: [
+      {
+        label: "Alle Branchen",
+        href: "/branchen",
+        description: "Umgebungen und Kundensegmente.",
+      },
+      ...industries.map((industry) => ({
+        label: industry.name,
+        href: `/branchen/${industry.slug}`,
+        description: industry.description,
+      })),
+    ],
   },
-  { label: "Verwaltungen", href: "/#verwaltungen" },
+  { label: "Verwaltungen", href: "/verwaltungen" },
   {
     label: "Über uns",
     href: "/unternehmen",
@@ -63,14 +78,14 @@ export const footerNav: { title: string; links: NavLink[] }[] = [
     title: "Leistungen",
     links: services.map((service) => ({
       label: service.name,
-      href: "/#leistungen",
+      href: `/leistungen/${service.slug}`,
     })),
   },
   {
     title: "Branchen",
     links: industries.map((industry) => ({
       label: industry.name,
-      href: "/#branchen",
+      href: `/branchen/${industry.slug}`,
     })),
   },
   {
