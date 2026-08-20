@@ -5,7 +5,6 @@ import { site } from "@/data/site";
 import { contact } from "@/data/contact";
 import { cta } from "@/data/cta";
 import { footerNav } from "@/data/navigation";
-import { shopConfig } from "@/data/shop-config";
 
 /** Small footer link groups placed in the compact fourth column. */
 const compactGroups: { title: string; links: { label: string; href: string }[] }[] = [
@@ -14,14 +13,6 @@ const compactGroups: { title: string; links: { label: string; href: string }[] }
     links: [
       { label: "Verwaltungen & Liegenschaften", href: "/#verwaltungen" },
       { label: "Anfrage für Verwaltungen", href: cta.verwaltungen.href },
-    ],
-  },
-  {
-    title: "Shop",
-    links: [
-      { label: "Zum Shop", href: "/shop" },
-      // Shop info pages come from shopConfig (single source of truth).
-      ...shopConfig.shopInfoLinks,
     ],
   },
   {

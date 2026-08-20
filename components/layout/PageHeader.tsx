@@ -19,17 +19,16 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <section className="bg-navy-950">
-      <Container className="py-20 sm:py-24 lg:py-32">
-        <p className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-teal-300">
-          <span className="h-px w-8 bg-teal-300/60" aria-hidden />
+    <section className="bg-navy-950 text-white">
+      <Container className="py-24 sm:py-32 lg:py-40">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
           {eyebrow}
         </p>
-          <h1 className="mt-6 max-w-4xl break-words text-[clamp(2.9rem,8vw,5.8rem)] font-semibold leading-[0.98] tracking-tight text-white">
+        <h1 className="mt-7 max-w-5xl break-words text-[clamp(3.4rem,9vw,6.8rem)] font-semibold leading-[0.9] tracking-tight">
           {title}
         </h1>
         {lead ? (
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-navy-200 sm:text-xl sm:leading-9">
+          <p className="mt-8 max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
             {lead}
           </p>
         ) : null}

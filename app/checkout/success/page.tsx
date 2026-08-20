@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { getPublicOrderStatusForSession } from "@/lib/shop/order-repository";
 import type { PublicOrderStatus } from "@/lib/shop/order-types";
+import { shopConfig } from "@/data/shop-config";
 
 export const metadata: Metadata = {
   title: "Checkout-Status",
@@ -94,6 +96,8 @@ export default async function CheckoutSuccessPage({
 }: {
   searchParams: Promise<{ session_id?: string }>;
 }) {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   const { session_id } = await searchParams;
   const status = await getPublicOrderStatusForSession(session_id);
   const content = statusContent(status);

@@ -23,6 +23,11 @@ export interface ShopInfoLink {
 }
 
 export interface ShopConfig {
+  /**
+   * Public website visibility gate. Keep false until the ecommerce launch is
+   * separately approved; when false, shop and checkout pages fail closed.
+   */
+  shopPublicEnabled: boolean;
   /** ISO 4217 currency code shown with prices. */
   currency: "CHF";
   /** BCP 47 locale for formatting. */
@@ -84,6 +89,7 @@ export interface ShopConfig {
 }
 
 export const shopConfig: ShopConfig = {
+  shopPublicEnabled: false,
   currency: "CHF",
   locale: "de-CH",
   vatDisplayText: "inkl. MwSt.",

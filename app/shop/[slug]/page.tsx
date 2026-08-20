@@ -21,6 +21,7 @@ import { shopConfig } from "@/data/shop-config";
 
 /** Pre-render every catalog product at build time. */
 export function generateStaticParams() {
+  if (!shopConfig.shopPublicEnabled) return [];
   return products.map((product) => ({ slug: product.slug }));
 }
 
@@ -29,6 +30,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  if (!shopConfig.shopPublicEnabled) {
+    return {
+      title: "Produkt nicht gefunden",
+      robots: { index: false, follow: false },
+    };
+  }
+
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) return { title: "Produkt nicht gefunden" };
@@ -179,6 +187,8 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) notFound();

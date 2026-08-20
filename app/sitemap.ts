@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", changeFrequency: "monthly", priority: 1 },
     { path: "/unternehmen", changeFrequency: "monthly", priority: 0.7 },
     { path: "/kontakt", changeFrequency: "yearly", priority: 0.7 },
-    { path: "/shop", changeFrequency: "monthly", priority: 0.6 },
     { path: "/qualitaet", changeFrequency: "yearly", priority: 0.5 },
     { path: "/innovation", changeFrequency: "yearly", priority: 0.5 },
     { path: "/nachhaltigkeit", changeFrequency: "yearly", priority: 0.5 },
@@ -25,8 +24,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // (transaction-state pages, noindex), /checkout (prelaunch noindex),
   // /agb (draft noindex), product detail pages (prelaunch noindex) and
   // all /api/* routes.
-  for (const link of shopConfig.shopInfoLinks) {
-    entries.push({ path: link.href, changeFrequency: "monthly", priority: 0.4 });
+  if (shopConfig.shopPublicEnabled) {
+    entries.push({ path: "/shop", changeFrequency: "monthly", priority: 0.6 });
+    for (const link of shopConfig.shopInfoLinks) {
+      entries.push({ path: link.href, changeFrequency: "monthly", priority: 0.4 });
+    }
   }
   void shopConfig.checkoutPath;
 

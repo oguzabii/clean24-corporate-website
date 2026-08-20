@@ -40,9 +40,10 @@ export default function DatenschutzPage() {
               Newsletter-Anmeldung.
             </p>
             <p>
-              Der Shop befindet sich in Vorbereitung. Der Warenkorb kann lokal
-              im Browser gespeichert werden; es werden darüber derzeit keine
-              Bestellungen ausgelöst und keine Zahlungen verarbeitet.
+              Die Shop- und Checkout-Architektur befindet sich in Vorbereitung,
+              ist auf der öffentlichen Website jedoch derzeit nicht
+              freigeschaltet. Es werden darüber keine Bestellungen ausgelöst
+              und keine Zahlungen verarbeitet.
             </p>
           </LegalSection>
 
@@ -145,10 +146,10 @@ export default function DatenschutzPage() {
               entsprechende Einwilligung eingeholt.
             </p>
             <p>
-              Der Warenkorb des vorbereiteten Shops kann im lokalen Speicher
-              Ihres Browsers abgelegt werden. Diese Information bleibt auf Ihrem
-              Gerät und dient nur dazu, den Warenkorb beim erneuten Besuch
-              wieder anzuzeigen.
+              Der vorbereitete Warenkorb ist auf der öffentlichen Website
+              derzeit nicht freigeschaltet. Während des normalen Besuchs der
+              Unternehmenswebsite wird deshalb kein Shop-Warenkorb im lokalen
+              Speicher Ihres Browsers angelegt.
             </p>
           </LegalSection>
 

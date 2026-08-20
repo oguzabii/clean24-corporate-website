@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
@@ -27,6 +28,8 @@ export const metadata: Metadata = {
  * webhook-confirmed orders. See docs/shop-catalog.md, section 13.
  */
 export default function CheckoutPage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader

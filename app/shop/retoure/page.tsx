@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 
 /** Shop info page — no invented return periods, no final legal claims. */
 export default function RetourePage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader

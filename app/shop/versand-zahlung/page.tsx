@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 
 /** Shop info page — honest prelaunch state, no shipping/payment claims. */
 export default function VersandZahlungPage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader

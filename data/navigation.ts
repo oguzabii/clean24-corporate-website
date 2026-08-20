@@ -52,11 +52,8 @@ export const mainNav: NavItem[] = [
       { label: "Qualität", href: "/qualitaet" },
       { label: "Innovation", href: "/innovation" },
       { label: "Nachhaltigkeit", href: "/nachhaltigkeit" },
-      { label: "Shop", href: "/shop" },
     ],
   },
-  { label: "Jobs", href: "/jobs" },
-  { label: "Shop", href: "/shop" },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
@@ -86,7 +83,6 @@ export const footerNav: { title: string; links: NavLink[] }[] = [
       { label: "Innovation", href: "/innovation" },
       { label: "Nachhaltigkeit", href: "/nachhaltigkeit" },
       { label: "Aktuelles & Angebote", href: "/aktuelles-angebote" },
-      { label: "Shop", href: "/shop" },
     ],
   },
 ];

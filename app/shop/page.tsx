@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Section } from "@/components/layout/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ShopExperience } from "@/components/shop/ShopExperience";
 import { ShopInfoLinks } from "@/components/shop/ShopInfoLinks";
+import { shopConfig } from "@/data/shop-config";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -11,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default function ShopPage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader

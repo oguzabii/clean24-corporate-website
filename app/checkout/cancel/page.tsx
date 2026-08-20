@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
+import { shopConfig } from "@/data/shop-config";
 
 export const metadata: Metadata = {
   title: "Zahlung nicht abgeschlossen",
@@ -23,6 +25,8 @@ export const metadata: Metadata = {
  * administrative action — see docs/shop-order-persistence.md.
  */
 export default function CheckoutCancelPage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader

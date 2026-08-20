@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { ShopInfoLinks } from "@/components/shop/ShopInfoLinks";
+import { shopConfig } from "@/data/shop-config";
 
 export const metadata: Metadata = {
   title: "Shop FAQ",
@@ -40,6 +42,8 @@ const faqItems: { question: string; answer: string }[] = [
 ];
 
 export default function ShopFaqPage() {
+  if (!shopConfig.shopPublicEnabled) notFound();
+
   return (
     <>
       <PageHeader
