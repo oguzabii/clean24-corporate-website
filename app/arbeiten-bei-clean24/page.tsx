@@ -1,78 +1,223 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/layout/Section";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FeatureGrid } from "@/components/ui/FeatureGrid";
+import Image from "next/image";
+import Link from "next/link";
+import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { contact } from "@/data/contact";
 
 export const metadata: Metadata = {
   title: "Arbeiten bei Clean24",
   description:
-    "Arbeiten bei Clean24 bedeutet klare Einsätze, zuverlässige Planung und respektvollen Umgang. Erfahren Sie, wie wir zusammenarbeiten.",
+    "Arbeiten bei Clean24 bedeutet klare Einsätze, zuverlässige Planung, respektvolle Zusammenarbeit und Verantwortung vor Ort.",
 };
 
 const mailtoApply = `${contact.emailHref}?subject=Bewerbung%20Clean24`;
 
-const points = [
+const principles = [
   {
     title: "Klare Einsätze",
-    text: "Jeder Einsatz wird vorbereitet: Objekt, Umfang und Zuständigkeit sind vor dem Start klar. So weiss jedes Teammitglied, was zu tun ist.",
+    text: "Objekt, Umfang und Zuständigkeit werden vor dem Einsatz geklärt. Gute Arbeit beginnt mit Orientierung.",
   },
   {
     title: "Zuverlässige Planung",
-    text: "Wir planen Einsätze vorausschauend und fair. Verlässliche Abläufe geben Sicherheit – für unsere Kunden und für unser Team.",
+    text: "Einsätze brauchen Struktur. Wir planen so, dass Kundinnen, Kunden und Team wissen, worauf sie sich verlassen können.",
   },
   {
     title: "Respektvoller Umgang",
-    text: "Ehrliche Kommunikation, faire Zusammenarbeit und gegenseitiger Respekt sind für uns die Grundlage guter Arbeit.",
+    text: "Direkte Kommunikation und fairer Umgang gehören für uns zur täglichen Zusammenarbeit.",
   },
   {
     title: "Verantwortung vor Ort",
-    text: "Wir vertrauen darauf, dass unsere Mitarbeitenden mitdenken und Verantwortung übernehmen – dort, wo die Arbeit geschieht.",
+    text: "Wer bei Clean24 arbeitet, übernimmt Verantwortung dort, wo Qualität sichtbar wird: im Objekt.",
   },
+];
+
+const applicationSteps = [
+  "Bewerbung senden",
+  "Persönliches Kennenlernen",
+  "Passender Einsatz, wenn Bedarf und Profil zusammenpassen",
+];
+
+const roleAreas = [
+  "Reinigungskraft",
+  "Teamleitung",
+  "Objektbetreuung",
 ];
 
 export default function ArbeitenBeiClean24Page() {
   return (
     <>
-      <PageHeader
-        eyebrow="Karriere"
-        title="Arbeiten bei Clean24."
-        lead="Clean24 lebt von Menschen, die zuverlässig arbeiten und Verantwortung übernehmen. Was das für die Zusammenarbeit bedeutet, lesen Sie hier."
-      />
+      <section className="bg-white py-24 text-navy-950 sm:py-32 lg:py-40">
+        <Container className="max-w-[90rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Karriere
+              </p>
+              <h1 className="mt-7 max-w-5xl text-[clamp(3rem,10vw,6.6rem)] font-semibold leading-[0.92] tracking-tight">
+                Saubere Arbeit.
+                <span className="block">Klare Einsätze.</span>
+                <span className="block text-navy-400">
+                  Ein Team, das zählt.
+                </span>
+              </h1>
+              <p className="mt-8 max-w-2xl text-xl leading-8 text-navy-600 sm:text-2xl sm:leading-9">
+                Clean24 arbeitet organisiert, direkt und mit Respekt. Für
+                Menschen, die zuverlässig arbeiten und Verantwortung übernehmen
+                wollen.
+              </p>
+              <div className="mt-10">
+                <Button href="/jobs" variant="primary" size="lg">
+                  Aktuelle Möglichkeiten ansehen
+                </Button>
+              </div>
+            </div>
 
-      <Section tone="white">
-        <SectionHeading
-          eyebrow="Zusammenarbeit"
-          title="Wie wir bei Clean24 arbeiten."
-          lead="Gute Reinigung entsteht durch gute Organisation und ein Team, das sich aufeinander verlassen kann."
-        />
-        <div className="mt-12">
-          <FeatureGrid items={points} columns={2} />
-        </div>
-      </Section>
+            <div className="relative min-h-[420px] overflow-hidden bg-navy-100 sm:min-h-[620px] lg:min-h-[720px]">
+              <Image
+                src="/media/clean24/office-cleaning.jpg"
+                alt="Professionelle Reinigung in einer modernen Arbeitsumgebung."
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
+        </Container>
+      </section>
 
-      <Section tone="mist">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-navy-900 sm:text-3xl">
-            Interesse an einer Mitarbeit?
+      <section className="bg-navy-950 py-24 text-white sm:py-32 lg:py-44">
+        <Container className="max-w-[80rem]">
+          <div className="max-w-5xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
+              Zusammenarbeit
+            </p>
+            <h2 className="mt-6 text-[clamp(2.7rem,7vw,5.6rem)] font-semibold leading-[0.94] tracking-tight">
+              Gute Reinigung braucht Menschen, die wissen, was zu tun ist.
+            </h2>
+          </div>
+          <div className="mt-16 divide-y divide-white/15 border-y border-white/15">
+            {principles.map((item, index) => (
+              <section
+                key={item.title}
+                className="grid gap-5 py-8 sm:grid-cols-[7rem_1fr] sm:gap-8 lg:grid-cols-[10rem_0.8fr_1.2fr] lg:items-start"
+              >
+                <span className="text-sm font-semibold tabular-nums text-teal-300">
+                  0{index + 1}
+                </span>
+                <h3 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                  {item.title}
+                </h3>
+                <p className="max-w-2xl text-lg leading-8 text-navy-200">
+                  {item.text}
+                </p>
+              </section>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-mist py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-[86rem]">
+          <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
+            <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[560px]">
+              <Image
+                src="/media/clean24/stairwell-cleaning.jpg"
+                alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Reinigungsarbeit."
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Einsatzbereiche
+              </p>
+              <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
+                Rollen mit Verantwortung.
+              </h2>
+              <p className="mt-6 max-w-xl text-xl leading-8 text-navy-600">
+                Je nach Bedarf arbeitet Clean24 mit Menschen in Reinigung,
+                Teamleitung und Objektbetreuung. Partnerbetriebe werden separat
+                betrachtet.
+              </p>
+              <div className="mt-10 divide-y divide-navy-200 border-y border-navy-200">
+                {roleAreas.map((role) => (
+                  <Link
+                    key={role}
+                    href="/jobs"
+                    className="group flex min-h-20 items-center justify-between gap-6 py-5 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+                  >
+                    <span className="text-2xl font-semibold tracking-tight text-navy-950">
+                      {role}
+                    </span>
+                    <span
+                      className="text-sm font-semibold text-navy-500 transition-transform group-hover:translate-x-1"
+                      aria-hidden
+                    >
+                      →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-white py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-[76rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Bewerbung
+              </p>
+              <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
+                Einfach anfangen.
+              </h2>
+            </div>
+            <div className="divide-y divide-navy-200 border-y border-navy-200">
+              {applicationSteps.map((step, index) => (
+                <div
+                  key={step}
+                  className="grid gap-4 py-6 sm:grid-cols-[5rem_1fr] sm:items-center"
+                >
+                  <span className="text-sm font-semibold tabular-nums text-teal-700">
+                    0{index + 1}
+                  </span>
+                  <p className="text-2xl font-semibold leading-tight tracking-tight text-navy-950">
+                    {step}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-14 border-t border-navy-200 pt-8">
+            <p className="max-w-3xl text-lg leading-8 text-navy-600">
+              Eine Bewerbung führt nicht automatisch zu einem Einsatz. Wir
+              prüfen gemeinsam, ob aktueller Bedarf und Profil zusammenpassen.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-navy-950 py-20 text-white sm:py-28 lg:py-36">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-[clamp(2.6rem,7vw,5.2rem)] font-semibold leading-[0.96] tracking-tight">
+            Bereit für klare Einsätze?
           </h2>
-          <p className="mt-3 text-[0.95rem] leading-7 text-navy-600">
-            Wir freuen uns über Menschen, die zuverlässig arbeiten und sorgfältig
-            mit Objekten umgehen. Schreiben Sie uns – auch eine Initiativbewerbung
-            ist willkommen.
+          <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-200">
+            Senden Sie uns Ihre Initiativbewerbung. Wir melden uns, wenn eine
+            passende Möglichkeit entsteht.
           </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button href={mailtoApply} variant="primary" size="lg">
+          <div className="mt-9">
+            <Button href={mailtoApply} variant="accent" size="lg">
               Initiativbewerbung senden
             </Button>
-            <Button href="/jobs" variant="outline" size="lg">
-              Offene Bereiche ansehen
-            </Button>
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
     </>
   );
 }
