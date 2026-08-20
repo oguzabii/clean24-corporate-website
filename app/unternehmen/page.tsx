@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/layout/Section";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FounderCard } from "@/components/ui/FounderCard";
+import Image from "next/image";
+import Link from "next/link";
+import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 import { founders } from "@/data/founders";
@@ -10,152 +9,207 @@ import { founders } from "@/data/founders";
 export const metadata: Metadata = {
   title: "Unternehmen",
   description:
-    "Clean24 wurde 2022 von den Brüdern Oğuzhan und Yavuz Memis gegründet. Lernen Sie die Geschichte, Werte und Vision hinter Clean24 kennen.",
+    "Clean24 wurde 2022 von den Brüdern Oğuzhan und Yavuz Memis gegründet. Professionelle Reinigung mit Planung, Verantwortung und direkter Kommunikation.",
 };
 
-const story = [
-  "Clean24 Memis GmbH steht für professionelle Reinigung mit klaren Abläufen, direkter Kommunikation und Verantwortung vor Ort.",
-  "Gegründet wurde Clean24 im Jahr 2022 von den Brüdern Oğuzhan und Yavuz Memis. Aus der täglichen Arbeit mit Wohnungen, Liegenschaften, Unternehmen und Verwaltungen entstand die Überzeugung, dass gute Reinigung mehr braucht als nur Arbeitskraft. Sie braucht Planung, Verlässlichkeit, klare Zuständigkeiten und Menschen, die Verantwortung übernehmen.",
-  "Was als praktischer Reinigungsbetrieb begann, entwickelte sich Schritt für Schritt zu einem breiter aufgestellten Reinigungs- und Facility-Service-Unternehmen. Heute unterstützt Clean24 private Kunden, Unternehmen, Immobilienverwaltungen und gewerbliche Objekte in Zürich und Umgebung – von der Unterhaltsreinigung über Treppenhäuser, Büros, Praxen und Parkhäuser bis hin zu Spezial- und Umzugsreinigungen.",
-  "Unser Anspruch ist einfach: Kunden sollen wissen, was vereinbart wurde, wann gereinigt wird, wer zuständig ist und was sie erwarten können. Deshalb arbeiten wir mit klaren Abläufen, transparenten Offerten und persönlicher Betreuung.",
-  "Als Brüder führen wir Clean24 mit einem gemeinsamen Verständnis: Qualität entsteht nicht durch grosse Versprechen, sondern durch saubere Arbeit, gute Organisation und ehrliche Kommunikation. Jeder Auftrag soll so geplant und ausgeführt werden, dass Kunden sich darauf verlassen können – vor, während und nach dem Einsatz.",
-  "Clean24 ist kein anonymer Dienstleister. Hinter dem Unternehmen stehen Menschen, die erreichbar sind, mitdenken und Verantwortung übernehmen. Genau daraus entstand unser Leitgedanke:",
-];
-
-const warum = [
-  "Viele Reinigungsaufträge scheitern nicht an der Reinigung selbst, sondern an fehlender Organisation: unklare Absprachen, wechselnde Zuständigkeiten, unvollständige Informationen oder fehlende Kontrolle.",
-  "Clean24 setzt genau dort an. Wir verbinden praktische Reinigungserfahrung mit klaren Prozessen. Für Kunden bedeutet das: weniger Aufwand, bessere Planbarkeit und ein Ansprechpartner, der Verantwortung übernimmt.",
-  "Ob regelmässige Unterhaltsreinigung, Liegenschaftsbetreuung, Büroreinigung, Praxisreinigung, Parkhausreinigung oder Umzugsreinigung – jedes Objekt braucht einen passenden Ablauf. Unser Ziel ist es, für jeden Auftrag die richtige Struktur zu schaffen.",
-];
-
-const values = [
+const processPoints = [
   {
-    title: "Verlässlichkeit",
-    text: "Wir halten uns an Abmachungen, Termine und vereinbarte Leistungen. Kunden sollen sich darauf verlassen können, dass ein Auftrag nicht nur angenommen, sondern sauber umgesetzt wird.",
+    title: "Planung",
+    text: "Objekt, Umfang und Zuständigkeiten werden vor dem Einsatz geklärt.",
   },
   {
-    title: "Klare Kommunikation",
-    text: "Gute Reinigung beginnt vor dem Einsatz. Deshalb legen wir Wert auf verständliche Offerten, klare Rückfragen und direkte Kommunikation.",
+    title: "Ausführung",
+    text: "Die Arbeit vor Ort folgt einem klaren Auftrag und einem passenden Ablauf.",
   },
   {
-    title: "Verantwortung vor Ort",
-    text: "Jedes Objekt ist anders. Deshalb übernehmen wir Verantwortung nicht nur im Büro, sondern auch dort, wo die Arbeit ausgeführt wird.",
+    title: "Kommunikation",
+    text: "Rückfragen, Erwartungen und nächste Schritte werden direkt besprochen.",
   },
-  {
-    title: "Qualität mit System",
-    text: "Qualität entsteht durch Wiederholung, Kontrolle und klare Abläufe. Wir arbeiten daran, Reinigung planbarer und nachvollziehbarer zu machen.",
-  },
-  {
-    title: "Weiterentwicklung",
-    text: "Clean24 entwickelt sich laufend weiter – mit besseren Prozessen, digitalen Abläufen und einem breiteren Serviceverständnis für private und gewerbliche Kunden.",
-  },
-];
-
-const vision = [
-  "Clean24 soll in Zürich und Umgebung als moderner Reinigungs- und Facility-Service-Partner wahrgenommen werden – für Kunden, die nicht einfach irgendeine Reinigung suchen, sondern einen Betrieb, der mitdenkt, sauber plant und Verantwortung übernimmt.",
-  "Wir möchten Reinigung einfacher, klarer und zuverlässiger machen: für private Kunden, für Unternehmen und besonders für Immobilienverwaltungen, die regelmässig auf saubere Objekte, funktionierende Abläufe und verlässliche Ansprechpartner angewiesen sind.",
-  "Unser Ziel ist nicht, der lauteste Anbieter zu sein. Unser Ziel ist, dass Kunden nach einem Auftrag sagen können: Es war klar, es war zuverlässig, es war sauber.",
 ];
 
 export default function UnternehmenPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Über uns"
-        title="Zwei Brüder. Ein Anspruch: Sauberkeit mit System."
-        lead="Clean24 wurde 2022 von den Brüdern Oğuzhan und Yavuz Memis aufgebaut – mit dem Ziel, Reinigung verlässlicher, klarer und professioneller zu organisieren."
-      />
-
-      {/* Unsere Geschichte */}
-      <Section tone="white">
-        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
-          <SectionHeading eyebrow="Unsere Geschichte" title="Wie Clean24 entstanden ist." />
-          <div className="max-w-3xl space-y-6 text-lg leading-8 text-navy-600">
-            {story.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-            <p className="pt-2 text-3xl font-semibold tracking-tight text-navy-900">
-              Sauberkeit mit System.
+      <section className="bg-navy-950 py-24 text-white sm:py-32 lg:py-40">
+        <Container className="max-w-[90rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
+                Unternehmen
+              </p>
+              <h1 className="mt-7 max-w-5xl text-[clamp(3.2rem,11vw,7rem)] font-semibold leading-[0.92] tracking-tight">
+                Zwei Brüder.
+                <span className="block">Ein gemeinsamer</span>
+                <span className="block text-navy-400">Anspruch.</span>
+              </h1>
+            </div>
+            <p className="max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
+              Clean24 wurde 2022 von Oğuzhan Memis und Yavuz Memis gegründet.
+              Ihr Anspruch: professionelle Reinigung mit klarer Planung,
+              Verantwortung und direkter Kommunikation.
             </p>
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
 
-      {/* Gründer */}
-      <Section tone="mist">
-        <SectionHeading
-          eyebrow="Gründer"
-          title="Die Menschen hinter Clean24."
-          lead="Oğuzhan und Yavuz Memis führen Clean24 gemeinsam – mit klaren Zuständigkeiten und persönlicher Betreuung."
-        />
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:max-w-5xl">
-          {founders.map((founder) => (
-            <FounderCard key={founder.slug} founder={founder} showBio />
-          ))}
-        </div>
-      </Section>
-
-      {/* Warum Clean24 */}
-      <Section tone="white">
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
-          <SectionHeading eyebrow="Warum Clean24" title="Struktur schlägt Zufall." />
-          <div className="max-w-3xl space-y-6 text-lg leading-8 text-navy-600">
-            {warum.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
+      <section className="bg-white py-16 sm:py-24 lg:py-32">
+        <Container className="max-w-[88rem]">
+          <div className="grid gap-6 sm:grid-cols-2">
+            {founders.map((founder) => (
+              <figure key={founder.slug}>
+                <div className="relative aspect-[4/5] overflow-hidden bg-navy-100 sm:aspect-[5/6]">
+                  <Image
+                    src={founder.image}
+                    alt={founder.imageAlt}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+                <figcaption className="pt-6">
+                  <h2 className="text-3xl font-semibold tracking-tight text-navy-950">
+                    {founder.name}
+                  </h2>
+                  <p className="mt-1 text-sm font-medium text-teal-700">
+                    {founder.role}
+                  </p>
+                  <p className="mt-4 max-w-2xl text-base leading-7 text-navy-600">
+                    {founder.bio}
+                  </p>
+                </figcaption>
+              </figure>
             ))}
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
 
-      {/* Unsere Werte */}
-      <Section tone="mist">
-        <SectionHeading eyebrow="Unsere Werte" title="Woran wir uns messen lassen." />
-        <div className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
-          {values.map((value, i) => (
-            <div
-              key={value.title}
-              className="border-t border-navy-100 pt-5"
-            >
-              <span className="text-sm font-semibold tabular-nums text-teal-600">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2 text-lg font-semibold tracking-tight text-navy-900">
-                {value.title}
-              </h3>
-              <p className="mt-2 text-sm leading-7 text-navy-600">
-                {value.text}
+      <section className="bg-mist py-20 sm:py-28 lg:py-40">
+        <Container className="max-w-[82rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Geschichte
+              </p>
+              <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
+                Aus praktischer Arbeit entstand ein System.
+              </h2>
+            </div>
+            <div className="max-w-3xl space-y-7 text-xl leading-8 text-navy-600">
+              <p>
+                Clean24 begann als Reinigungsbetrieb mit direktem Bezug zur
+                Arbeit vor Ort. Wohnungen, Liegenschaften, Unternehmen und
+                Verwaltungen zeigten früh, dass gute Reinigung mehr braucht als
+                Arbeitskraft.
+              </p>
+              <p>
+                Sie braucht saubere Absprachen, verlässliche Planung, klare
+                Zuständigkeiten und Menschen, die Verantwortung übernehmen.
+                Daraus entstand der Leitgedanke von Clean24:
+              </p>
+              <p className="pt-2 text-[clamp(2rem,5vw,3.8rem)] font-semibold leading-[0.98] tracking-tight text-navy-950">
+                Sauberkeit mit System.
               </p>
             </div>
-          ))}
-        </div>
-      </Section>
+          </div>
+        </Container>
+      </section>
 
-      {/* Unsere Vision */}
-      <Section tone="navyDeep">
-        <SectionHeading dark eyebrow="Unsere Vision" title="Reinigung, auf die man sich verlässt." />
-        <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-navy-200">
-          {vision.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
-      </Section>
+      <section className="bg-white py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-[84rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Arbeitsweise
+              </p>
+              <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
+                Qualität entsteht im Ablauf.
+              </h2>
+            </div>
+            <div className="divide-y divide-navy-200 border-y border-navy-200">
+              {processPoints.map((point, index) => (
+                <section
+                  key={point.title}
+                  className="grid gap-4 py-7 sm:grid-cols-[5rem_0.8fr_1.2fr] sm:items-start"
+                >
+                  <span className="text-sm font-semibold tabular-nums text-teal-700">
+                    0{index + 1}
+                  </span>
+                  <h3 className="text-2xl font-semibold tracking-tight text-navy-950">
+                    {point.title}
+                  </h3>
+                  <p className="text-base leading-7 text-navy-600 sm:text-lg sm:leading-8">
+                    {point.text}
+                  </p>
+                </section>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
 
-      {/* Final CTA */}
-      <Section tone="white">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-navy-900 sm:text-4xl">
+      <section className="bg-navy-950 py-20 text-white sm:py-28 lg:py-36">
+        <Container className="max-w-[80rem]">
+          <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
+                Heute
+              </p>
+              <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight">
+                Reinigung und Facility Services mit Verantwortung.
+              </h2>
+              <p className="mt-6 max-w-2xl text-xl leading-8 text-navy-200">
+                Clean24 unterstützt private Kunden, Unternehmen,
+                Immobilienverwaltungen und gewerbliche Objekte in Zürich und
+                Umgebung. Nicht mit lauten Versprechen, sondern mit klaren
+                Abläufen und direkter Erreichbarkeit.
+              </p>
+            </div>
+            <div className="divide-y divide-white/15 border-y border-white/15">
+              {[
+                { label: "Gegründet", value: "2022" },
+                { label: "Gründer", value: "Oğuzhan & Yavuz Memis" },
+                { label: "Leitgedanke", value: "Sauberkeit mit System." },
+              ].map((item) => (
+                <div key={item.label} className="py-6">
+                  <div className="text-sm font-semibold text-teal-300">
+                    {item.label}
+                  </div>
+                  <div className="mt-2 text-2xl font-semibold tracking-tight">
+                    {item.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-white py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-4xl text-center">
+          <h2 className="text-[clamp(2.6rem,7vw,5rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
             Lernen Sie Clean24 kennen.
           </h2>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button href={cta.primary.href} variant="accent" size="lg">
-              {cta.primary.label}
+          <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-600">
+            Ob Offerte, Verwaltung oder allgemeine Frage: Wir führen Ihre
+            Anfrage in den passenden Ablauf.
+          </p>
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <Button href={cta.primary.href} variant="primary" size="lg">
+              Offerte anfordern
             </Button>
-            <Button href={cta.secondary.href} variant="outline" size="lg">
-              {cta.secondary.label}
+            <Button href="/kontakt" variant="outline" size="lg">
+              Kontakt aufnehmen
             </Button>
           </div>
-        </div>
-      </Section>
+          <Link
+            href="/leistungen"
+            className="mt-8 inline-flex text-sm font-semibold text-navy-600 underline underline-offset-8 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+          >
+            Leistungen ansehen
+          </Link>
+        </Container>
+      </section>
     </>
   );
 }

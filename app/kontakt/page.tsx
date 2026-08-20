@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/layout/Section";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { FounderCard } from "@/components/ui/FounderCard";
+import type { ReactNode } from "react";
+import Image from "next/image";
+import { Container } from "@/components/layout/Container";
+import { Button } from "@/components/ui/Button";
 import { contact } from "@/data/contact";
 import { cta } from "@/data/cta";
 import { founders } from "@/data/founders";
@@ -9,184 +10,204 @@ import { founders } from "@/data/founders";
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Kontaktieren Sie Clean24 Memis GmbH in Dietikon. Offerten über das Online-Formular, Verwaltungen und Objektbetreuung per E-Mail oder telefonische Rückfrage – persönlich betreut von den Gründern.",
+    "Kontaktieren Sie Clean24 Memis GmbH in Dietikon. Offerten über das Formular, Verwaltungsanfragen per E-Mail sowie Telefon und allgemeine Fragen.",
 };
 
-const mailtoGeneral = contact.emailHref;
-const mailtoJobs = `${contact.emailHref}?subject=Jobs%20/%20Zusammenarbeit`;
-
-/** Vertical inquiry rows (left column). */
-const inquiryRows = [
+const contactPaths = [
   {
-    title: "Offerte anfordern",
-    text: "Für konkrete Reinigungsanfragen und verbindliche Offerten.",
+    label: "01",
+    title: "Ich brauche eine Offerte",
+    text: "Für konkrete Reinigungsanfragen, Objektangaben und verbindliche Offerten.",
     href: cta.primary.href,
+    action: "Offerte anfordern",
+    primary: true,
   },
   {
-    title: "Verwaltungen & Liegenschaften",
-    text: "Für Treppenhäuser, Allgemeinflächen, Tiefgaragen und regelmässige Objektpflege.",
+    label: "02",
+    title: "Ich vertrete eine Verwaltung",
+    text: "Für Liegenschaften, Treppenhäuser, Parkhäuser und wiederkehrende Objektpflege.",
     href: cta.verwaltungen.href,
+    action: "Verwaltungsanfrage senden",
+    primary: false,
   },
   {
-    title: "Unterhaltsreinigung",
-    text: "Für regelmässige Reinigung von Büros, Praxen und Objekten.",
-    href: cta.primary.href,
-  },
-  {
-    title: "Umzugsreinigung",
-    text: "Für Wohnungsabgaben und Reinigung mit Abgabegarantie.",
-    href: cta.primary.href,
-  },
-  {
-    title: "Allgemeine Anfrage",
-    text: "Für Fragen zu Clean24, Verfügbarkeit oder Abläufen.",
-    href: mailtoGeneral,
-  },
-  {
-    title: "Jobs / Zusammenarbeit",
-    text: "Für Bewerbungen, Partner und Zusammenarbeit.",
-    href: mailtoJobs,
+    label: "03",
+    title: "Ich habe eine allgemeine Frage",
+    text: "Für Rückfragen zu Clean24, Abläufen, Erreichbarkeit oder Zusammenarbeit.",
+    href: contact.emailHref,
+    action: "E-Mail schreiben",
+    primary: false,
   },
 ];
 
 export default function KontaktPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Kontakt"
-        title="Kontakt aufnehmen."
-        lead="Für Offerten nutzen Sie bitte unser Online-Formular. Für Verwaltungen, Objektbetreuung und allgemeine Fragen erreichen Sie Clean24 direkt per Telefon oder E-Mail."
-      >
-        <div className="mt-8 flex flex-col gap-3 text-sm text-navy-200 sm:flex-row sm:gap-8">
-          <a
-            href={contact.phoneHref}
-            className="font-medium text-white transition-colors hover:text-teal-300"
-          >
-            {contact.phone}
-          </a>
-          <a
-            href={contact.emailHref}
-            className="font-medium text-white transition-colors hover:text-teal-300"
-          >
-            {contact.email}
-          </a>
-          <span className="text-navy-300">
-            {contact.street}, {contact.zip} {contact.city}
-          </span>
-        </div>
-      </PageHeader>
-
-      {/* Main premium contact section: inquiry rows + founder panel */}
-      <Section tone="white">
-        <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          {/* Left: direct contact routing */}
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-navy-900 sm:text-3xl">
-              Ihr direkter Kontakt
-            </h2>
-            <p className="mt-3 max-w-xl text-[0.95rem] leading-7 text-navy-600">
-              Wählen Sie den passenden Weg – wir leiten Ihre Anfrage direkt in
-              den richtigen Ablauf.
+      <section className="bg-white py-24 text-navy-950 sm:py-32 lg:py-40">
+        <Container className="max-w-[90rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-end lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Kontakt
+              </p>
+              <h1 className="mt-7 max-w-5xl text-[clamp(3rem,10vw,6.6rem)] font-semibold leading-[0.92] tracking-tight">
+                Der richtige Weg zu Clean24.
+              </h1>
+            </div>
+            <p className="max-w-2xl text-xl leading-8 text-navy-600 sm:text-2xl sm:leading-9">
+              Offerte, Verwaltung oder allgemeine Frage: Wählen Sie den
+              passenden Kontaktweg. Ihre Anfrage landet direkt im richtigen
+              Ablauf.
             </p>
+          </div>
+        </Container>
+      </section>
 
-            <div className="mt-10 divide-y divide-navy-100 border-y border-navy-100">
-              {inquiryRows.map((row) => (
-                <a
-                  key={row.title}
-                  href={row.href}
-                  className="group flex items-center gap-4 py-5 transition-colors hover:text-teal-700"
-                >
-                  <span className="flex-1">
-                    <span className="block text-base font-semibold text-navy-900 transition-colors group-hover:text-teal-600">
-                      {row.title}
-                    </span>
-                    <span className="mt-1 block text-sm leading-6 text-navy-600">
-                      {row.text}
-                    </span>
+      <section className="bg-mist py-16 sm:py-24 lg:py-32">
+        <Container className="max-w-[84rem]">
+          <div className="divide-y divide-navy-200 border-y border-navy-200">
+            {contactPaths.map((path) => (
+              <a
+                key={path.title}
+                href={path.href}
+                className="group grid gap-5 py-7 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[5rem_1fr] lg:grid-cols-[7rem_1fr_auto] lg:items-center"
+              >
+                <span className="text-sm font-semibold tabular-nums text-teal-700">
+                  {path.label}
+                </span>
+                <span>
+                  <span className="block text-3xl font-semibold leading-tight tracking-tight text-navy-950 sm:text-4xl">
+                    {path.title}
                   </span>
-                  <ArrowIcon className="shrink-0 text-navy-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-teal-500" />
-                </a>
-              ))}
-            </div>
+                  <span className="mt-3 block max-w-2xl text-base leading-7 text-navy-600 sm:text-lg sm:leading-8">
+                    {path.text}
+                  </span>
+                </span>
+                <span
+                  className={
+                    path.primary
+                      ? "inline-flex h-12 items-center justify-center rounded-md bg-navy-800 px-5 text-sm font-medium text-white transition-colors group-hover:bg-navy-700"
+                      : "inline-flex text-sm font-semibold text-navy-700 underline underline-offset-8 transition-colors group-hover:text-teal-700"
+                  }
+                >
+                  {path.action}
+                </span>
+              </a>
+            ))}
           </div>
+        </Container>
+      </section>
 
-          {/* Right: founder panel */}
-          <div>
-            <div className="grid grid-cols-2 gap-5">
+      <section className="bg-navy-950 py-20 text-white sm:py-28 lg:py-36">
+        <Container className="max-w-[88rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
+                Persönlich
+              </p>
+              <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.96] tracking-tight">
+                Zwei Gründer.
+                <span className="block text-navy-400">Direkte Wege.</span>
+              </h2>
+              <p className="mt-6 max-w-xl text-xl leading-8 text-navy-200">
+                Clean24 wird von Oğuzhan und Yavuz Memis geführt. Anfragen
+                werden persönlich eingeordnet und in den passenden Ablauf
+                geleitet.
+              </p>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
               {founders.map((founder) => (
-                <FounderCard key={founder.slug} founder={founder} />
+                <figure key={founder.slug}>
+                  <div className="relative aspect-[4/5] overflow-hidden bg-navy-900">
+                    <Image
+                      src={founder.image}
+                      alt={founder.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 360px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <figcaption className="pt-5">
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      {founder.name}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-teal-300">
+                      {founder.role}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-navy-200">
+                      {founder.focus}
+                    </p>
+                  </figcaption>
+                </figure>
               ))}
             </div>
-            <p className="mt-8 border-t border-navy-100 pt-6 text-sm leading-7 text-navy-600">
-              Clean24 wird von den Brüdern Oğuzhan und Yavuz Memis geführt. Ihre
-              Anfrage wird persönlich geprüft und in den passenden Ablauf
-              geleitet – ob Online-Offerte, Verwaltung, Objektbetreuung oder
-              direkte Rückfrage.
-            </p>
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
 
-      <Section tone="mist">
-        <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-          <div>
-            <h2 className="text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
-              Direkt. Persönlich. Klar geroutet.
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-navy-600">
-              Online-Offerten laufen über das Formular. Verwaltungen und
-              Rückfragen erreichen Clean24 direkt.
-            </p>
+      <section className="bg-white py-20 sm:py-28 lg:py-36">
+        <Container className="max-w-[76rem]">
+          <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
+                Direkter Kontakt
+              </p>
+              <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
+                Telefon, E-Mail und Adresse.
+              </h2>
+            </div>
+            <div className="divide-y divide-navy-200 border-y border-navy-200">
+              <ContactRow label="Telefon">
+                <a
+                  href={contact.phoneHref}
+                  className="font-semibold text-navy-950 transition-colors hover:text-teal-700"
+                >
+                  {contact.phone}
+                </a>
+              </ContactRow>
+              <ContactRow label="E-Mail">
+                <a
+                  href={contact.emailHref}
+                  className="font-semibold text-navy-950 transition-colors hover:text-teal-700"
+                >
+                  {contact.email}
+                </a>
+              </ContactRow>
+              <ContactRow label="Adresse">
+                <address className="not-italic">
+                  <span className="block font-semibold text-navy-950">
+                    {contact.company}
+                  </span>
+                  <span className="block">{contact.street}</span>
+                  <span className="block">
+                    {contact.zip} {contact.city}
+                  </span>
+                </address>
+              </ContactRow>
+            </div>
           </div>
-          <div className="grid gap-8 border-y border-navy-100 py-8 sm:grid-cols-3">
-            <div>
-              <div className="text-sm font-medium text-navy-500">Adresse</div>
-              <div className="mt-1 text-sm not-italic text-navy-900">
-                <div className="font-semibold">{contact.company}</div>
-                <div>{contact.street}</div>
-                <div>
-                  {contact.zip} {contact.city}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-navy-500">E-Mail</div>
-              <a
-                href={contact.emailHref}
-                className="mt-1 block text-sm font-semibold text-navy-900 transition-colors hover:text-teal-600"
-              >
-                {contact.email}
-              </a>
-            </div>
-            <div>
-              <div className="text-sm font-medium text-navy-500">Telefon</div>
-              <a
-                href={contact.phoneHref}
-                className="mt-1 block text-sm font-semibold text-navy-900 transition-colors hover:text-teal-600"
-              >
-                {contact.phone}
-              </a>
-            </div>
+          <div className="mt-14">
+            <Button href={cta.primary.href} variant="primary" size="lg">
+              Offerte anfordern
+            </Button>
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
     </>
   );
 }
 
-function ArrowIcon({ className = "" }: { className?: string }) {
+function ContactRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
   return (
-    <svg
-      viewBox="0 0 16 16"
-      className={`h-4 w-4 ${className}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M2 8h11M9 3.5 13.5 8 9 12.5" />
-    </svg>
+    <div className="grid gap-3 py-6 sm:grid-cols-[9rem_1fr] sm:items-start">
+      <div className="text-sm font-semibold text-navy-500">{label}</div>
+      <div className="text-lg leading-8 text-navy-700">{children}</div>
+    </div>
   );
 }
