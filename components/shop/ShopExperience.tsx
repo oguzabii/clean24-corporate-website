@@ -49,8 +49,9 @@ export function ShopExperience() {
     <CartProvider>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-2xl text-sm leading-6 text-navy-600">
-          Produkte, Preise und Verfügbarkeit sind editierbare Katalogangaben –
-          der Online-Checkout wird aktuell vorbereitet.
+          Unser Clean24 Shop befindet sich in Vorbereitung. Produkte können
+          bereits angesehen werden; Online-Bestellungen und Zahlungen sind noch
+          nicht aktiv.
         </p>
         <div className="shrink-0">
           <CartButton />

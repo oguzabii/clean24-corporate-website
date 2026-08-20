@@ -39,7 +39,6 @@ const compactGroups: { title: string; links: { label: string; href: string }[] }
     links: [
       { label: "Impressum", href: "/impressum" },
       { label: "Datenschutz", href: "/datenschutz" },
-      { label: "AGB", href: "/agb" },
     ],
   },
 ];

@@ -55,7 +55,12 @@ export default function Home() {
             className="max-w-2xl"
           >
             <StaggerItem>
-              <Eyebrow dark>Schweizer Reinigungs- & Facility-Services</Eyebrow>
+              <Eyebrow dark>
+                <span className="sm:hidden">Reinigungsservices</span>
+                <span className="hidden sm:inline">
+                  Schweizer Reinigungs- & Facility-Services
+                </span>
+              </Eyebrow>
             </StaggerItem>
             <StaggerItem className="mt-6">
               <h1 className="text-5xl font-semibold leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl">
@@ -453,7 +458,7 @@ function Eyebrow({
 }) {
   return (
     <p
-      className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] ${
+      className={`flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] ${
         dark ? "text-teal-300" : "text-teal-600"
       } ${className}`}
     >
@@ -461,7 +466,7 @@ function Eyebrow({
         className={`h-px w-8 ${dark ? "bg-teal-300/60" : "bg-teal-500/60"}`}
         aria-hidden
       />
-      {children}
+      <span className="min-w-0 flex-1 break-words">{children}</span>
     </p>
   );
 }

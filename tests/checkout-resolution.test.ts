@@ -37,6 +37,25 @@ const FIXTURE_CATALOG: Product[] = [
   },
 ];
 
+const PLACEHOLDER_PRICED_CATALOG: Product[] = [
+  {
+    ...FIXTURE_CATALOG[0],
+    id: "placeholder-set",
+    slug: "placeholder-set",
+    pricingStatus: "placeholder",
+    variants: [
+      {
+        id: "demo",
+        label: "Demo",
+        unit: "Set",
+        priceCents: 1490,
+        vatIncluded: true,
+        availability: "available",
+      },
+    ],
+  },
+];
+
 describe("sanitizeCheckoutItems — payload guardrails", () => {
   it("rejects non-object payloads and missing items", () => {
     assert.equal(sanitizeCheckoutItems(null).ok, false);
@@ -130,16 +149,10 @@ describe("resolveCheckoutLines — server-authoritative pricing", () => {
     if (!r.ok) assert.equal(r.code, "VARIANT_UNAVAILABLE");
   });
 
-  it("REAL catalog: placeholder pricing can never become payable", () => {
-    // The only available product in the real catalog has placeholder prices;
-    // the resolver must refuse it until pricingStatus is "final".
-    const available = products.find((p) => p.availability === "available");
-    assert.ok(available, "expected the demo available product");
-    const variant = available.variants.find((v) => v.availability === "available");
-    assert.ok(variant);
+  it("placeholder pricing can never become payable", () => {
     const r = resolveCheckoutLines([
-      { productId: available.id, variantId: variant.id, quantity: 1 },
-    ]);
+      { productId: "placeholder-set", variantId: "demo", quantity: 1 },
+    ], PLACEHOLDER_PRICED_CATALOG);
     assert.equal(r.ok, false);
     if (!r.ok) assert.equal(r.code, "PRICE_NOT_FINAL");
   });

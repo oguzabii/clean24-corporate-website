@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Checkout",
   description:
     "Der Online-Checkout von Clean24 wird aktuell vorbereitet. Produktdaten, Versand und Zahlung werden vor dem Live-Verkauf finalisiert.",
+  robots: { index: false, follow: false },
 };
 
 /**
@@ -60,8 +61,8 @@ export default function CheckoutPage() {
             </h2>
             <p className="mt-3 text-sm leading-6 text-navy-600">
               Produktdaten, Preise, Versand und Zahlung werden vor dem
-              Live-Verkauf finalisiert. Für Fragen oder Bestellungen ausserhalb
-              des Online-Shops erreichen Sie uns jederzeit direkt.
+              Live-Verkauf finalisiert. Für Fragen zum geplanten Sortiment
+              erreichen Sie uns jederzeit direkt.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button

@@ -25,7 +25,7 @@ const faqItems: { question: string; answer: string }[] = [
   {
     question: "Gibt es bereits einen Online-Checkout?",
     answer:
-      "Noch nicht. Der Online-Checkout wird aktuell vorbereitet. Sie können Produkte bereits in den Warenkorb legen, eine Bestellung mit Zahlung ist aber noch nicht möglich.",
+      "Noch nicht. Der Online-Checkout wird aktuell vorbereitet. Produkte können bereits angesehen werden, eine Bestellung mit Zahlung ist aber noch nicht möglich.",
   },
   {
     question: "Wie werden Produktdaten und Preise finalisiert?",

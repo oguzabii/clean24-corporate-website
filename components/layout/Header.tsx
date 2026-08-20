@@ -47,13 +47,11 @@ export function Header() {
           <DesktopNav />
 
           <div className="flex items-center gap-2">
-            <Button
-              href={cta.primary.href}
-              size="sm"
-              className="hidden sm:inline-flex"
-            >
-              {cta.primary.label}
-            </Button>
+            <div className="hidden sm:block">
+              <Button href={cta.primary.href} size="sm">
+                {cta.primary.label}
+              </Button>
+            </div>
             <MobileMenu />
           </div>
         </Container>

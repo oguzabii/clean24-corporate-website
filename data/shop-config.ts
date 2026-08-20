@@ -96,7 +96,7 @@ export const shopConfig: ShopConfig = {
   defaultShippingCountry: "CH",
   shopStatus: "prelaunch",
   prelaunchNotice:
-    "Produktdaten, Verfügbarkeit und Preise werden vor dem Live-Verkauf finalisiert.",
+    "Unser Clean24 Shop befindet sich in Vorbereitung. Produktdaten, Verfügbarkeit und Preise werden vor dem Live-Verkauf finalisiert.",
   checkoutPath: "/checkout",
   shopInfoLinks: [
     { label: "Versand & Zahlung", href: "/shop/versand-zahlung" },

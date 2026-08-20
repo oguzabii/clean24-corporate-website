@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { isVariantPurchasable, products } from "@/data/shop";
 
 export interface CartLine {
   key: string; // `${productId}:${variantId}`
@@ -39,6 +40,25 @@ interface CartApi {
 const CartContext = createContext<CartApi | null>(null);
 const STORAGE_KEY = "clean24-cart-v1";
 
+function resolvePurchasableLine(line: CartLine): CartLine | null {
+  const product = products.find((p) => p.id === line.productId);
+  const variant = product?.variants.find((v) => v.id === line.variantId);
+  if (!product || !variant || !isVariantPurchasable(product, variant)) {
+    return null;
+  }
+  return {
+    ...line,
+    key: `${product.id}:${variant.id}`,
+    productSlug: product.slug,
+    name: product.name,
+    variantLabel: variant.label,
+    priceCents: variant.priceCents as number,
+    visual: product.visual,
+    image: product.image,
+    qty: Math.max(1, Math.min(99, Number.isInteger(line.qty) ? line.qty : 1)),
+  };
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -50,8 +70,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration load
-      if (raw) setLines(JSON.parse(raw) as CartLine[]);
+      if (raw) {
+        const parsed = JSON.parse(raw) as CartLine[];
+        const cleaned = parsed.map(resolvePurchasableLine).filter(Boolean) as CartLine[];
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration load
+        setLines(cleaned);
+      }
     } catch {
       /* ignore malformed storage */
     }
@@ -91,7 +115,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // always over real, addable items.
   const addLine = useCallback(
     (line: Omit<CartLine, "key" | "qty">, qty = 1) => {
-      const key = `${line.productId}:${line.variantId}`;
+      const product = products.find((p) => p.id === line.productId);
+      const variant = product?.variants.find((v) => v.id === line.variantId);
+      if (!product || !variant || !isVariantPurchasable(product, variant)) return;
+      const key = `${product.id}:${variant.id}`;
+      const normalizedLine = {
+        productId: product.id,
+        productSlug: product.slug,
+        variantId: variant.id,
+        name: product.name,
+        variantLabel: variant.label,
+        priceCents: variant.priceCents as number,
+        visual: product.visual,
+        image: product.image,
+      };
       setLines((prev) => {
         const existing = prev.find((l) => l.key === key);
         if (existing) {
@@ -99,7 +136,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             l.key === key ? { ...l, qty: l.qty + qty } : l,
           );
         }
-        return [...prev, { ...line, key, qty }];
+        return [...prev, { ...normalizedLine, key, qty }];
       });
       setIsOpen(true);
     },

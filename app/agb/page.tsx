@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "AGB",
   description:
     "Allgemeine Geschäftsbedingungen (AGB) der Clean24 Memis GmbH für Reinigungs- und Facility-Dienstleistungen – Entwurf zur Prüfung.",
+  robots: { index: false, follow: false },
 };
 
 export default function AgbPage() {

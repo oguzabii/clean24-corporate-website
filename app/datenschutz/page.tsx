@@ -39,6 +39,11 @@ export default function DatenschutzPage() {
               derzeit keine Benutzerkonten, keine Bezahlfunktionen und keine
               Newsletter-Anmeldung.
             </p>
+            <p>
+              Der Shop befindet sich in Vorbereitung. Der Warenkorb kann lokal
+              im Browser gespeichert werden; es werden darüber derzeit keine
+              Bestellungen ausgelöst und keine Zahlungen verarbeitet.
+            </p>
           </LegalSection>
 
           <LegalSection title="Verantwortliche Stelle">
@@ -123,9 +128,14 @@ export default function DatenschutzPage() {
               Datenquellen zusammengeführt, um einzelne Personen zu
               identifizieren.
             </p>
+            <p>
+              Die Website wird derzeit über Vercel bereitgestellt. Dabei kann
+              Vercel technisch erforderliche Zugriffsdaten verarbeiten, um die
+              Website auszuliefern, zu schützen und betriebsfähig zu halten.
+            </p>
           </LegalSection>
 
-          <LegalSection title="Cookies">
+          <LegalSection title="Cookies und lokale Speicherung">
             <p>
               Diese Website verwendet derzeit keine Cookies zu Analyse-,
               Tracking- oder Marketingzwecken. Es ist kein Cookie-Banner
@@ -133,6 +143,12 @@ export default function DatenschutzPage() {
               werden. Sollten künftig Cookies eingesetzt werden, wird diese
               Datenschutzerklärung angepasst und – soweit erforderlich – eine
               entsprechende Einwilligung eingeholt.
+            </p>
+            <p>
+              Der Warenkorb des vorbereiteten Shops kann im lokalen Speicher
+              Ihres Browsers abgelegt werden. Diese Information bleibt auf Ihrem
+              Gerät und dient nur dazu, den Warenkorb beim erneuten Besuch
+              wieder anzuzeigen.
             </p>
           </LegalSection>
 

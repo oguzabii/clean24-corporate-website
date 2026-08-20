@@ -72,9 +72,8 @@ export default function VersandZahlungPage() {
 
         <div className="mt-6 rounded-2xl border border-teal-200 bg-teal-50/60 p-6 sm:p-8">
           <p className="text-sm leading-6 text-navy-700">
-            {shopConfig.checkoutDisabledMessage} Für Fragen zu Produkten oder
-            Bestellungen ausserhalb des Online-Shops erreichen Sie uns
-            jederzeit direkt.
+            {shopConfig.checkoutDisabledMessage} Für Fragen zum geplanten
+            Sortiment erreichen Sie uns jederzeit direkt.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Button href="/shop" variant="primary" size="md">

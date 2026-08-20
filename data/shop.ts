@@ -211,11 +211,9 @@ export const categories: ProductCategory[] = [
 /**
  * Editable product catalog.
  *
- * NOTE ON AVAILABILITY: most products are intentionally set to "coming-soon".
- * They are NOT purchasable and cannot be added to the cart. Exactly one product
- * (Mikrofasertücher Set) is set to "available" with clearly-marked editable
- * placeholder prices, so the add-to-cart flow can be exercised before real
- * catalog data lands. Replace / re-flag everything before the live sale.
+ * NOTE ON AVAILABILITY: all products are intentionally set to "coming-soon"
+ * for the corporate launch. They are NOT purchasable and cannot be added to
+ * the cart until real stock, final prices, fulfilment and legal review exist.
  */
 export const products: Product[] = [
   {
@@ -347,24 +345,19 @@ export const products: Product[] = [
     description:
       "Mehrzwecktücher für Oberflächen, Glas und Pflegebereiche.",
     visual: "cloth",
-    // Intentionally available so the cart flow is testable before real data.
-    availability: "available",
+    availability: "coming-soon",
     featured: true,
     sortOrder: 70,
-    // Demo entry: placeholder prices exist, so pricing is "placeholder", not
-    // "missing" — still NOT ready and NOT legally reviewed.
     dataStatus: "needs-review",
     productDataNote:
-      "Demo-Produkt mit editierbaren Platzhalterpreisen — vor dem Live-Verkauf ersetzen.",
+      "Demo-Produkt aus der Katalogvorbereitung — vor dem Live-Verkauf mit finalen Produktdaten, Preisen und Bestand ersetzen.",
     imageStatus: "placeholder",
-    pricingStatus: "placeholder",
+    pricingStatus: "missing",
     stockStatus: "unknown",
     legalStatus: "needs-review",
     variants: [
-      // Editable placeholder price — replace before production checkout.
-      { id: "5er", label: "5 Stück", unit: "Packung", priceCents: 1490, vatIncluded: true, availability: "available" },
-      // Editable placeholder price — replace before production checkout.
-      { id: "10er", label: "10 Stück", unit: "Packung", priceCents: 2490, vatIncluded: true, availability: "available" },
+      { id: "5er", label: "5 Stück", unit: "Packung", vatIncluded: true, availability: "coming-soon" },
+      { id: "10er", label: "10 Stück", unit: "Packung", vatIncluded: true, availability: "coming-soon" },
     ],
   },
   {
@@ -425,9 +418,10 @@ export function sortedProducts(list: Product[] = products): Product[] {
 
 /**
  * A variant is purchasable only if BOTH the product and the variant are
- * `available` AND a concrete price exists. This is the single source of truth
- * for "can this be added to the cart?" — the UI and the cart both rely on it,
- * so unavailable / price-less items can never enter the cart.
+ * `available`, a concrete price exists AND the product pricing has been
+ * finalized. This is the single source of truth for "can this be added to the
+ * cart?" — the UI and the cart both rely on it, so unavailable / price-less /
+ * placeholder-priced items can never enter the cart.
  */
 export function isVariantPurchasable(
   product: Product,
@@ -436,7 +430,8 @@ export function isVariantPurchasable(
   return (
     product.availability === "available" &&
     variant.availability === "available" &&
-    typeof variant.priceCents === "number"
+    typeof variant.priceCents === "number" &&
+    product.pricingStatus === "final"
   );
 }
 
