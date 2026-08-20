@@ -13,7 +13,7 @@ export function FounderCard({
   showBio?: boolean;
 }) {
   return (
-    <figure className="overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-sm">
+    <figure className="overflow-hidden rounded-xl bg-white">
       <div className="relative aspect-[4/5]">
         <Image
           src={founder.image}
@@ -23,7 +23,7 @@ export function FounderCard({
           className="object-cover object-top"
         />
       </div>
-      <figcaption className="p-6">
+      <figcaption className="pt-5">
         <h3 className="text-lg font-semibold tracking-tight text-navy-900">
           {founder.name}
         </h3>

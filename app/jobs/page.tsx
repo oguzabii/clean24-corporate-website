@@ -42,30 +42,34 @@ export default function JobsPage() {
       />
 
       <Section tone="white">
-        <div className="rounded-2xl border border-teal-200 bg-teal-50/50 p-6 sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">
-            Aktueller Stand
-          </p>
-          <p className="mt-2 text-lg font-medium leading-8 text-navy-900">
-            Initiativbewerbung willkommen.
-          </p>
-          <p className="mt-2 max-w-2xl text-[0.95rem] leading-7 text-navy-600">
-            Wir schreiben Stellen situativ aus. Wenn Sie zuverlässig arbeiten und
-            sorgfältig mit Objekten umgehen, freuen wir uns über Ihre Bewerbung –
-            auch ohne konkretes Inserat.
-          </p>
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">
+              Aktueller Stand
+            </p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
+              Initiativbewerbung willkommen.
+            </h2>
+          </div>
+          <div className="max-w-3xl text-lg leading-8 text-navy-600">
+            <p>
+              Wir schreiben Stellen situativ aus. Wenn Sie zuverlässig arbeiten
+              und sorgfältig mit Objekten umgehen, freuen wir uns über Ihre
+              Bewerbung – auch ohne konkretes Inserat.
+            </p>
+          </div>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-20">
           <SectionHeading
             eyebrow="Mögliche Rollen"
             title="Wo Sie bei Clean24 mitarbeiten können."
           />
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          <div className="mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2">
             {roles.map((role) => (
               <div
                 key={role.title}
-                className="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm"
+                className="border-t border-navy-100 pt-5"
               >
                 <h3 className="text-lg font-semibold tracking-tight text-navy-900">
                   {role.title}
@@ -78,7 +82,7 @@ export default function JobsPage() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start gap-4 border-t border-navy-100 pt-8 sm:flex-row sm:items-center">
           <Button href={mailtoApply} variant="primary" size="lg">
             Jetzt bewerben
           </Button>

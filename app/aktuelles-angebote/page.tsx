@@ -41,19 +41,21 @@ export default function AktuellesAngebotePage() {
           title="Was hier bald zu finden ist."
           lead="Wir bauen diesen Bereich sorgfältig auf. Statt Platzhalter zeigen wir nur, was tatsächlich kommt."
         />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 divide-y divide-navy-100 border-y border-navy-100">
           {upcoming.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col rounded-2xl border border-navy-100 bg-white p-6 shadow-sm"
+              className="grid gap-4 py-7 sm:grid-cols-[0.72fr_1.28fr] sm:items-start"
             >
-              <span className="inline-flex w-fit items-center rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-wide text-navy-500">
-                Bald verfügbar
-              </span>
-              <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy-900">
-                {item.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-7 text-navy-600">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
+                  Bald verfügbar
+                </span>
+                <h3 className="mt-2 text-xl font-semibold tracking-tight text-navy-900">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-sm leading-7 text-navy-600 sm:text-base">
                 {item.text}
               </p>
             </div>

@@ -34,7 +34,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("py-20 sm:py-28", tones[tone], className)}
+      className={cn("py-20 sm:py-28 lg:py-32", tones[tone], className)}
     >
       {bare ? (
         children

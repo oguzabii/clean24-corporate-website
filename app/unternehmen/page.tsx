@@ -68,14 +68,16 @@ export default function UnternehmenPage() {
 
       {/* Unsere Geschichte */}
       <Section tone="white">
-        <SectionHeading eyebrow="Unsere Geschichte" title="Wie Clean24 entstanden ist." />
-        <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-navy-600">
-          {story.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-          <p className="pt-2 text-2xl font-semibold tracking-tight text-navy-900">
-            Sauberkeit mit System.
-          </p>
+        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <SectionHeading eyebrow="Unsere Geschichte" title="Wie Clean24 entstanden ist." />
+          <div className="max-w-3xl space-y-6 text-lg leading-8 text-navy-600">
+            {story.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+            <p className="pt-2 text-3xl font-semibold tracking-tight text-navy-900">
+              Sauberkeit mit System.
+            </p>
+          </div>
         </div>
       </Section>
 
@@ -86,7 +88,7 @@ export default function UnternehmenPage() {
           title="Die Menschen hinter Clean24."
           lead="Oğuzhan und Yavuz Memis führen Clean24 gemeinsam – mit klaren Zuständigkeiten und persönlicher Betreuung."
         />
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:max-w-4xl">
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:max-w-5xl">
           {founders.map((founder) => (
             <FounderCard key={founder.slug} founder={founder} showBio />
           ))}
@@ -95,22 +97,24 @@ export default function UnternehmenPage() {
 
       {/* Warum Clean24 */}
       <Section tone="white">
-        <SectionHeading eyebrow="Warum Clean24" title="Struktur schlägt Zufall." />
-        <div className="mt-8 max-w-3xl space-y-5 text-base leading-8 text-navy-600">
-          {warum.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+          <SectionHeading eyebrow="Warum Clean24" title="Struktur schlägt Zufall." />
+          <div className="max-w-3xl space-y-6 text-lg leading-8 text-navy-600">
+            {warum.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </Section>
 
       {/* Unsere Werte */}
       <Section tone="mist">
         <SectionHeading eyebrow="Unsere Werte" title="Woran wir uns messen lassen." />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
           {values.map((value, i) => (
             <div
               key={value.title}
-              className="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm"
+              className="border-t border-navy-100 pt-5"
             >
               <span className="text-sm font-semibold tabular-nums text-teal-600">
                 {String(i + 1).padStart(2, "0")}

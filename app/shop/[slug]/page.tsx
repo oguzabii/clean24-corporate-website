@@ -82,7 +82,7 @@ function Breadcrumb({ product }: { product: Product }) {
 function ProductMedia({ product }: { product: Product }) {
   return (
     <div>
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-navy-100 bg-white">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-navy-100 bg-white">
         {product.image ? (
           <Image
             src={product.image}
@@ -127,7 +127,7 @@ function DetailCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-navy-100 bg-white p-6 sm:p-7">
+    <div className="border-t border-navy-100 pt-6">
       <h2 className="text-base font-semibold tracking-tight text-navy-900">
         {title}
       </h2>
@@ -141,7 +141,7 @@ function RelatedProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+      className="group flex flex-col overflow-hidden rounded-xl border border-navy-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
     >
       <div className="relative aspect-[4/3]">
         {product.image ? (
@@ -222,7 +222,7 @@ export default async function ProductDetailPage({
 
       {/* Detail sections — only fields that actually exist are shown */}
       <Section tone="mist" className="py-12 sm:py-16">
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-x-12 gap-y-10 lg:grid-cols-2">
           {product.longDescription ? (
             <DetailCard title="Beschreibung">
               <p>{product.longDescription}</p>

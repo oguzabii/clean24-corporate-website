@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Container } from "./Container";
 import { Logo } from "@/components/ui/Logo";
-import { Button } from "@/components/ui/Button";
 import { site } from "@/data/site";
 import { contact } from "@/data/contact";
 import { cta } from "@/data/cta";
@@ -48,13 +47,12 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-navy-950 text-navy-200">
-      <Container className="py-16">
-        {/* Brand + newsletter-style CTA block */}
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
-          <div className="space-y-4">
+    <footer className="bg-navy-950 text-navy-200">
+      <Container className="py-[4.5rem] sm:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1.15fr_1.35fr] lg:gap-20">
+          <div className="space-y-5">
             <Logo tone="light" className="h-11" />
-            <p className="max-w-xs text-sm leading-6 text-navy-300">
+            <p className="max-w-sm text-base leading-7 text-navy-300">
               {site.slogan} {site.secondary}
             </p>
             <address className="space-y-1 text-sm not-italic text-navy-300">
@@ -96,41 +94,8 @@ export function Footer() {
             ) : null}
           </div>
 
-          {/* Bleiben Sie informiert */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
-            <h3 className="text-lg font-semibold tracking-tight text-white">
-              Bleiben Sie informiert
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-navy-300">
-              Erfahren Sie mehr über Clean24, Angebote, Checklisten und
-              hilfreiche Informationen rund um Reinigung, Objektpflege und
-              Wohnungsabgaben.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href="/aktuelles-angebote" variant="accent" size="md">
-                Aktuelles & Angebote
-              </Button>
-              <Button href={cta.primary.href} variant="outlineLight" size="md">
-                Offerte anfordern
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Link columns */}
-        <div className="mt-14 grid gap-10 border-t border-white/10 pt-12 sm:grid-cols-2 lg:grid-cols-4">
-          {footerNav.map((group) => (
-            <FooterColumn key={group.title} title={group.title}>
-              {group.links.map((link, i) => (
-                <FooterLink key={`${link.label}-${i}`} href={link.href}>
-                  {link.label}
-                </FooterLink>
-              ))}
-            </FooterColumn>
-          ))}
-
-          <div className="space-y-8">
-            {compactGroups.map((group) => (
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {footerNav.map((group) => (
               <FooterColumn key={group.title} title={group.title}>
                 {group.links.map((link, i) => (
                   <FooterLink key={`${link.label}-${i}`} href={link.href}>
@@ -139,6 +104,17 @@ export function Footer() {
                 ))}
               </FooterColumn>
             ))}
+            <div className="space-y-8">
+              {compactGroups.map((group) => (
+                <FooterColumn key={group.title} title={group.title}>
+                  {group.links.map((link, i) => (
+                    <FooterLink key={`${link.label}-${i}`} href={link.href}>
+                      {link.label}
+                    </FooterLink>
+                  ))}
+                </FooterColumn>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -158,7 +134,7 @@ export function Footer() {
           </div>
         ) : null}
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {contact.company}. Alle Rechte vorbehalten.
           </p>

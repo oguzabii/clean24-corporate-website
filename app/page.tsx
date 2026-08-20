@@ -1,32 +1,33 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { FounderCard } from "@/components/ui/FounderCard";
 import { contact } from "@/data/contact";
 import { cta } from "@/data/cta";
 import { services } from "@/data/services";
 import { industries } from "@/data/industries";
 import { competences } from "@/data/competences";
 import { qualityPromise } from "@/data/quality";
-import { processSteps } from "@/data/process";
-import { trustPoints } from "@/data/trust";
+import { founders } from "@/data/founders";
 import { verwaltungenLeistungen } from "@/data/verwaltungen";
 import { SectionReveal } from "@/components/motion/SectionReveal";
 import { StaggerContainer, StaggerItem } from "@/components/motion/Stagger";
-import { AmbientGlow } from "@/components/motion/AmbientGlow";
+
+const featuredServices = services.slice(0, 7);
+const serviceRemainder = Math.max(0, services.length - featuredServices.length);
 
 export default function Home() {
   return (
     <>
-      {/* 1 — Hero: full-bleed evening facility scene, serious operational feel. */}
-      <section className="relative isolate overflow-hidden bg-navy-950">
+      <section className="relative isolate min-h-[720px] overflow-hidden bg-navy-950 sm:min-h-[820px]">
         <SectionReveal
           as="div"
           trigger="mount"
           y={0}
-          scale={1.06}
-          duration={1.2}
+          scale={1.025}
+          duration={1}
           className="absolute inset-0"
         >
           <Image
@@ -35,24 +36,24 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-[62%_center] sm:object-center"
           />
         </SectionReveal>
         <div
-          className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/40"
+          className="absolute inset-0 bg-navy-950/72 sm:bg-gradient-to-r sm:from-navy-950/94 sm:via-navy-950/76 sm:to-navy-950/22"
           aria-hidden
         />
         <div
-          className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy-950/80 to-transparent"
+          className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-navy-950 via-navy-950/55 to-transparent"
           aria-hidden
         />
 
-        <Container className="relative py-24 sm:py-32 lg:py-40">
+        <Container className="relative flex min-h-[720px] items-end pb-20 pt-28 sm:min-h-[820px] sm:pb-32 lg:pb-36">
           <StaggerContainer
             trigger="mount"
-            stagger={0.12}
-            delayChildren={0.15}
-            className="max-w-2xl"
+            stagger={0.1}
+            delayChildren={0.1}
+            className="max-w-3xl"
           >
             <StaggerItem>
               <Eyebrow dark>
@@ -62,390 +63,317 @@ export default function Home() {
                 </span>
               </Eyebrow>
             </StaggerItem>
-            <StaggerItem className="mt-6">
-              <h1 className="text-5xl font-semibold leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Sauberkeit mit System.
+            <StaggerItem className="mt-7">
+              <h1 className="text-[clamp(2.85rem,12vw,5.2rem)] font-semibold leading-[0.96] tracking-tight text-white lg:text-[6.6rem]">
+                <span className="block sm:inline">Sauberkeit</span>
+                <span className="hidden sm:inline"> mit</span>
+                <span className="block sm:hidden">mit System.</span>
+                <span className="hidden sm:block">System.</span>
               </h1>
             </StaggerItem>
-            <StaggerItem className="mt-6">
-              <p className="text-xl font-medium leading-snug text-white sm:text-2xl">
-                Professionelle Reinigung. Klare Abläufe. Verlässliche
-                Ergebnisse.
-              </p>
-            </StaggerItem>
-            <StaggerItem className="mt-5">
-              <p className="max-w-xl text-base leading-7 text-navy-200 sm:text-lg sm:leading-8">
-                Clean24 betreut Unternehmen, Verwaltungen und private Kunden in
-                Zürich und Umgebung — vom regelmässigen Unterhalt bis zur
-                Spezialreinigung.
+            <StaggerItem className="mt-7">
+              <p className="max-w-2xl text-xl leading-8 text-navy-100 sm:text-2xl sm:leading-9">
+                Professionelle Reinigung für Unternehmen, Verwaltungen und
+                private Kunden in Zürich und Umgebung.
               </p>
             </StaggerItem>
             <StaggerItem className="mt-10">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <Button href={cta.primary.href} variant="accent" size="lg">
                   {cta.primary.label}
                 </Button>
-                <Button
-                  href={cta.services.href}
-                  variant="outlineLight"
-                  size="lg"
-                >
-                  {cta.services.label}
+                <Button href="#leistungen" variant="outlineLight" size="lg">
+                  Leistungen ansehen
                 </Button>
-                <a
-                  href={cta.call.href}
-                  className="inline-flex h-14 items-center justify-center gap-2 px-4 text-base font-medium text-white transition-colors hover:text-teal-300"
-                >
-                  <PhoneIcon />
-                  {cta.call.label}
-                </a>
               </div>
             </StaggerItem>
           </StaggerContainer>
         </Container>
       </section>
 
-      {/* Trust strip */}
-      <div className="border-b border-navy-100 bg-white">
-        <Container>
-          <StaggerContainer
-            stagger={0.07}
-            amount={0.4}
-            className="grid grid-cols-2 gap-x-6 gap-y-4 py-6 sm:grid-cols-3 lg:grid-cols-5 lg:py-7"
-          >
-            {trustPoints.map((point) => (
-              <StaggerItem
-                key={point}
-                y={10}
-                className="flex items-center gap-2.5 text-sm font-medium text-navy-800"
-              >
-                <CheckIcon className="shrink-0 text-teal-500" />
-                {point}
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </Container>
-      </div>
-
-      {/* 2 — Kompetenzbereiche */}
-      <Section id="kompetenzen" tone="white">
-        <SectionReveal>
-          <SectionHeader
-            eyebrow="Kompetenzbereiche"
-            title="Vier Bereiche. Ein Anspruch."
-            lead="Clean24 bündelt Reinigungs- und Facility-Leistungen in klaren Kompetenzbereichen — vom regelmässigen Unterhalt bis zur Betreuung ganzer Liegenschaften."
-          />
-        </SectionReveal>
-
+      <Section tone="white" className="py-12 sm:py-16">
         <StaggerContainer
-          stagger={0.1}
-          amount={0.15}
-          className="mt-14 grid gap-6 sm:grid-cols-2 lg:gap-8"
+          stagger={0.06}
+          amount={0.35}
+          className="grid gap-5 border-y border-navy-100 py-7 sm:grid-cols-3 lg:grid-cols-5"
         >
-          {competences.map((area, index) => (
-            <StaggerItem
-              as="article"
-              key={area.slug}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <Image
-                  src={area.image}
-                  alt={area.imageAlt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 45vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/25 to-navy-950/5"
-                  aria-hidden
-                />
-                <span className="absolute left-6 top-5 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="absolute bottom-5 left-6 right-6 text-2xl font-semibold tracking-tight text-white">
-                  {area.name}
-                </h3>
-              </div>
-              <div className="flex flex-1 flex-col p-6 sm:p-7">
-                <p className="flex-1 text-[0.95rem] leading-7 text-navy-600">
-                  {area.description}
-                </p>
-                <Link
-                  href={area.href}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-900 transition-colors group-hover:text-teal-600"
-                >
-                  Bereich entdecken
-                  <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-              </div>
+          {[
+            "Klare Offerten",
+            "Feste Ansprechpartner",
+            "Strukturierte Planung",
+            "Dokumentierte Abläufe",
+            "Persönliche Betreuung",
+          ].map((point) => (
+            <StaggerItem key={point} className="text-sm font-medium text-navy-800">
+              {point}
             </StaggerItem>
           ))}
         </StaggerContainer>
       </Section>
 
-      {/* 3 — Leistungen */}
+      <Section id="kompetenzen" tone="white" className="pt-10">
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+          <SectionReveal>
+            <SectionHeader
+              eyebrow="Kompetenz"
+              title="Vier Bereiche. Ein sauberer Ablauf."
+              lead="Clean24 bündelt Reinigung und Facility Services so, dass jedes Objekt mit der richtigen Struktur betreut wird."
+            />
+          </SectionReveal>
+
+          <StaggerContainer
+            stagger={0.08}
+            amount={0.2}
+            className="divide-y divide-navy-100 border-y border-navy-100"
+          >
+            {competences.map((area, index) => (
+              <StaggerItem key={area.slug}>
+                <Link
+                  href={area.href}
+                  className="group grid gap-6 py-7 sm:grid-cols-[7rem_1fr_auto] sm:items-center"
+                >
+                  <span className="text-sm font-semibold tabular-nums text-teal-600">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>
+                    <span className="block text-2xl font-semibold tracking-tight text-navy-900">
+                      {area.name}
+                    </span>
+                    <span className="mt-2 block max-w-2xl text-sm leading-7 text-navy-600">
+                      {area.description}
+                    </span>
+                  </span>
+                  <ArrowIcon className="hidden text-navy-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-teal-500 sm:block" />
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </Section>
+
       <Section id="leistungen" tone="mist">
         <SectionReveal>
           <SectionHeader
             eyebrow="Leistungen"
-            title="Reinigung für jeden Objekttyp"
-            lead="Zwölf Leistungen, ein System: Jede Reinigung wird strukturiert geplant, fachgerecht ausgeführt und verlässlich kontrolliert."
+            title="Reinigung, passend zum Objekt."
+            lead="Nicht jede Leistung braucht dieselbe Bühne. Wichtig ist der passende Ablauf: klar erfasst, sauber geplant, zuverlässig ausgeführt."
           />
         </SectionReveal>
 
-        <StaggerContainer
-          stagger={0.05}
-          amount={0.1}
-          className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {services.map((service) => (
-            <StaggerItem
-              key={service.slug}
-              className="group rounded-xl border border-navy-100 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-[1.05rem] font-semibold tracking-tight text-navy-900">
-                  {service.name}
-                </h3>
-                <ArrowIcon className="mt-1 shrink-0 text-navy-200 transition-colors group-hover:text-teal-500" />
-              </div>
-              <p className="mt-2 text-sm leading-6 text-navy-600">
-                {service.description}
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+          <div className="relative min-h-[420px] overflow-hidden rounded-xl bg-navy-950">
+            <Image
+              src="/media/clean24/office-cleaning.jpg"
+              alt="Professionelle Reinigung in einem modernen Büro."
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center opacity-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950/82 via-navy-950/20 to-transparent" />
+            <div className="absolute bottom-0 max-w-xl p-7 sm:p-9">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-300">
+                Unterhalt, Spezialreinigung, Objektpflege
               </p>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+              <h3 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+                Für Räume, die täglich funktionieren müssen.
+              </h3>
+            </div>
+          </div>
+
+          <StaggerContainer
+            stagger={0.04}
+            amount={0.2}
+            className="divide-y divide-navy-200/70 border-y border-navy-200/70"
+          >
+            {featuredServices.map((service) => (
+              <StaggerItem key={service.slug}>
+                <Link
+                  href="/kontakt"
+                  className="group flex gap-6 py-5 transition-colors hover:text-teal-700"
+                >
+                  <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-teal-400" />
+                  <span>
+                    <span className="block text-lg font-semibold tracking-tight text-navy-900">
+                      {service.name}
+                    </span>
+                    <span className="mt-1 block text-sm leading-6 text-navy-600">
+                      {service.description}
+                    </span>
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+            {serviceRemainder > 0 ? (
+              <StaggerItem className="py-5 text-sm font-medium text-navy-500">
+                + {serviceRemainder} weitere Leistungen je nach Objekt und
+                Bedarf.
+              </StaggerItem>
+            ) : null}
+          </StaggerContainer>
+        </div>
 
         <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <Button href={cta.primary.href} size="lg">
             Passende Leistung anfragen
           </Button>
-          <p className="text-sm text-navy-500">
-            Unsicher, welche Leistung passt? Wir beraten Sie unverbindlich.
-          </p>
+          <Link
+            href="/kontakt"
+            className="text-sm font-medium text-navy-700 underline-offset-4 hover:text-teal-700 hover:underline"
+          >
+            Beratung und Rückfrage
+          </Link>
         </div>
       </Section>
 
-      {/* 4 — Branchen: editorial index list, institutional weight. */}
       <Section id="branchen" tone="white">
-        <SectionReveal>
-          <SectionHeader
-            eyebrow="Branchen"
-            title="Spezialisiert auf Ihren Bereich"
-            lead="Jedes Objekt stellt eigene Anforderungen an Hygiene, Zeiten und Abläufe. Clean24 richtet Einsatzplanung und Ausführung konsequent nach Ihrem Betrieb."
-          />
-        </SectionReveal>
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+          <SectionReveal>
+            <SectionHeader
+              eyebrow="Branchen"
+              title="Jedes Umfeld hat seinen eigenen Rhythmus."
+              lead="Clean24 richtet Zeiten, Hygieneanforderungen und Kommunikation am jeweiligen Objekt aus."
+            />
+          </SectionReveal>
 
-        <StaggerContainer stagger={0.06} amount={0.1} className="mt-14 border-t border-navy-100">
-          {industries.map((industry, index) => (
-            <StaggerItem key={industry.slug} x={-18} y={0}>
-              <Link
-                href="/kontakt"
-                className="group grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-navy-100 px-2 py-6 transition-colors hover:bg-mist sm:grid-cols-[4rem_16rem_1fr_auto] sm:gap-6 sm:py-7"
-              >
-                <span className="text-sm font-semibold tabular-nums text-teal-600">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="text-lg font-semibold tracking-tight text-navy-900 sm:text-xl">
+          <StaggerContainer
+            stagger={0.05}
+            amount={0.15}
+            className="grid gap-x-10 gap-y-8 sm:grid-cols-2"
+          >
+            {industries.map((industry) => (
+              <StaggerItem key={industry.slug} className="border-t border-navy-100 pt-5">
+                <h3 className="text-xl font-semibold tracking-tight text-navy-900">
                   {industry.name}
-                </span>
-                <span className="hidden text-[0.95rem] text-navy-600 sm:block">
-                  {industry.description}
-                </span>
-                <ArrowIcon className="shrink-0 text-navy-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-teal-500" />
-              </Link>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </Section>
-
-      {/* 5 — Qualitätsversprechen */}
-      <Section tone="navyDeep">
-        <SectionReveal>
-          <SectionHeader
-            dark
-            eyebrow="Qualitätsversprechen"
-            title="Worauf Sie sich verlassen können"
-            lead="Keine Versprechen auf Papier, sondern Abläufe, die im Alltag funktionieren — bei jedem Einsatz, in jedem Objekt."
-          />
-        </SectionReveal>
-
-        <StaggerContainer
-          stagger={0.09}
-          amount={0.15}
-          className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {qualityPromise.map((block) => (
-            <StaggerItem key={block.title} className="border-t border-white/15 pt-6">
-              <div className="flex items-center gap-3">
-                <span
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-teal-400/40 text-teal-300"
-                  aria-hidden
-                >
-                  <CheckIcon />
-                </span>
-                <h3 className="text-lg font-semibold tracking-tight text-white">
-                  {block.title}
                 </h3>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-navy-200">
-                {block.description}
-              </p>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+                <p className="mt-2 text-sm leading-7 text-navy-600">
+                  {industry.description}
+                </p>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
       </Section>
 
-      {/* 6 — Verwaltungen highlight: the commercial B2B offer. */}
-      <Section id="verwaltungen" tone="mist">
-        <div className="overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-sm">
-          <div className="grid lg:grid-cols-[1.08fr_0.92fr]">
-            <SectionReveal x={-24} y={0} className="p-8 sm:p-12 lg:p-14">
-              <Eyebrow>Für Immobilienverwaltungen</Eyebrow>
-              <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight text-navy-900 sm:text-4xl">
-                Reinigungspartner für Immobilienverwaltungen und
-                Liegenschaften.
-              </h2>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-navy-600">
-                Von der wiederkehrenden Objektpflege bis zur Wohnungsabgabe:
-                Clean24 entlastet Verwaltungen mit festen Ansprechpartnern,
-                planbaren Einsätzen und sauber koordinierten Abläufen — über
-                das ganze Portfolio.
-              </p>
-
-              <ul className="mt-9 grid gap-x-8 gap-y-3.5 sm:grid-cols-2">
-                {verwaltungenLeistungen.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2.5 text-sm font-medium text-navy-800"
-                  >
-                    <CheckIcon className="shrink-0 text-teal-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button href={cta.verwaltungen.href} size="lg">
-                  {cta.verwaltungen.label}
-                </Button>
-                <a
-                  href={contact.phoneHref}
-                  className="inline-flex h-14 items-center gap-2 px-4 text-base font-medium text-navy-800 transition-colors hover:text-teal-600"
-                >
-                  <PhoneIcon />
-                  {contact.phone}
-                </a>
-              </div>
-            </SectionReveal>
-
-            <div className="relative min-h-[320px] sm:min-h-[420px] lg:min-h-full">
-              <SectionReveal x={28} y={0} duration={0.8} className="absolute inset-0">
-                <Image
-                  src="/media/clean24/property-building.jpg"
-                  alt="Moderne Schweizer Wohnliegenschaft in der Abenddämmerung mit beleuchtetem Eingang."
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center"
-                />
-              </SectionReveal>
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-navy-950/45 to-transparent lg:bg-gradient-to-l lg:from-transparent lg:to-navy-950/10"
-                aria-hidden
-              />
+      <Section id="verwaltungen" tone="navyDeep" className="overflow-hidden">
+        <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
+          <SectionReveal>
+            <Eyebrow dark>Für Immobilienverwaltungen</Eyebrow>
+            <h2 className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+              Ein Reinigungspartner, der Liegenschaften strukturiert betreut.
+            </h2>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-navy-200">
+              Von Treppenhäusern bis Tiefgaragen: Clean24 entlastet
+              Verwaltungen mit festen Ansprechpartnern, klarer Planung und
+              nachvollziehbaren Einsätzen.
+            </p>
+            <ul className="mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {verwaltungenLeistungen.slice(0, 8).map((item) => (
+                <li key={item} className="flex gap-3 text-sm font-medium text-navy-100">
+                  <CheckIcon className="mt-0.5 shrink-0 text-teal-300" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-10">
+              <Button href={cta.verwaltungen.href} variant="accent" size="lg">
+                {cta.verwaltungen.label}
+              </Button>
             </div>
+          </SectionReveal>
+
+          <SectionReveal x={24} y={0} className="relative min-h-[440px] overflow-hidden rounded-xl lg:min-h-[620px]">
+            <Image
+              src="/media/clean24/property-building.jpg"
+              alt="Moderne Schweizer Wohnliegenschaft in der Abenddämmerung mit beleuchtetem Eingang."
+              fill
+              sizes="(max-width: 1024px) 100vw, 48vw"
+              className="object-cover object-center"
+            />
+          </SectionReveal>
+        </div>
+      </Section>
+
+      <Section tone="white">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-20">
+          <SectionReveal className="relative min-h-[420px] overflow-hidden rounded-xl">
+            <Image
+              src="/media/clean24/glass-cleaning.jpg"
+              alt="Sorgfältige Glasreinigung mit klarem Blick auf die Fläche."
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
+          </SectionReveal>
+          <SectionReveal>
+            <SectionHeader
+              eyebrow="Qualität"
+              title="Qualität mit System."
+              lead="Gute Reinigung ist planbar. Sie entsteht durch klare Zuständigkeiten, wiederholbare Abläufe und offene Rückmeldung."
+            />
+            <div className="mt-10 space-y-7">
+              {qualityPromise.slice(0, 3).map((block) => (
+                <div key={block.title} className="border-t border-navy-100 pt-5">
+                  <h3 className="text-lg font-semibold tracking-tight text-navy-900">
+                    {block.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-navy-600">
+                    {block.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </SectionReveal>
+        </div>
+      </Section>
+
+      <Section tone="mist">
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+          <SectionReveal>
+            <SectionHeader
+              eyebrow="Unternehmen"
+              title="Zwei Brüder. Ein gemeinsamer Anspruch."
+              lead="Oğuzhan und Yavuz Memis haben Clean24 2022 aufgebaut. Persönlich, erreichbar und mit Verantwortung für saubere Abläufe."
+            />
+            <div className="mt-8">
+              <Button href="/unternehmen" variant="outline" size="lg">
+                Unternehmen kennenlernen
+              </Button>
+            </div>
+          </SectionReveal>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {founders.map((founder) => (
+              <FounderCard key={founder.slug} founder={founder} />
+            ))}
           </div>
         </div>
       </Section>
 
-      {/* 7 — Ablauf */}
-      <Section id="ablauf" tone="white">
-        <SectionReveal>
-          <SectionHeader
-            eyebrow="Ablauf"
-            title="In sechs Schritten zur zuverlässigen Reinigung"
-            lead="Klar strukturiert von der ersten Anfrage bis zur Qualitätskontrolle — ohne Umwege und ohne Überraschungen."
-          />
-        </SectionReveal>
-
-        <StaggerContainer
-          as="ol"
-          stagger={0.08}
-          amount={0.15}
-          className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {processSteps.map((step, index) => (
-            <StaggerItem
-              as="li"
-              key={step.title}
-              className="border-t border-navy-100 pt-6"
-            >
-              <span className="text-sm font-semibold tabular-nums text-teal-600">
-                Schritt {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2.5 text-lg font-semibold tracking-tight text-navy-900">
-                {step.title}
-              </h3>
-              <p className="mt-2.5 text-sm leading-7 text-navy-600">
-                {step.description}
-              </p>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </Section>
-
-      {/* 8 — Final CTA */}
-      <Section tone="navyDeep" className="relative overflow-hidden">
-        <AmbientGlow className="pointer-events-none absolute left-1/2 top-0 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-teal-500/10 blur-3xl" />
-        <SectionReveal className="relative mx-auto max-w-3xl text-center">
+      <Section tone="navyDeep" className="text-center">
+        <SectionReveal className="mx-auto max-w-3xl">
           <Eyebrow dark className="justify-center">
             Kontakt
           </Eyebrow>
-          <h2 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
             Bereit für eine Reinigungslösung, die zuverlässig funktioniert?
           </h2>
           <p className="mt-6 text-lg leading-8 text-navy-200">
-            Fordern Sie eine unverbindliche Offerte an — wir melden uns
-            zeitnah, klären den Bedarf und unterbreiten Ihnen ein
-            transparentes Angebot.
+            Fordern Sie eine unverbindliche Offerte an. Wir klären den Bedarf
+            und melden uns mit einem transparenten nächsten Schritt.
           </p>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <Button href={cta.primary.href} variant="accent" size="lg">
               {cta.primary.label}
-            </Button>
-            <Button href={cta.secondary.href} variant="outlineLight" size="lg">
-              {cta.secondary.label}
             </Button>
             <Button href={contact.phoneHref} variant="outlineLight" size="lg">
               <PhoneIcon />
               {cta.call.label}
             </Button>
           </div>
-          <p className="mt-12 text-sm leading-7 text-navy-300">
-            {contact.company} · {contact.street}, {contact.zip} {contact.city}
-            <br />
-            <a
-              href={contact.phoneHref}
-              className="font-medium text-navy-100 transition-colors hover:text-teal-300"
-            >
-              {contact.phone}
-            </a>
-            {" · "}
-            <a
-              href={contact.emailHref}
-              className="font-medium text-navy-100 transition-colors hover:text-teal-300"
-            >
-              {contact.email}
-            </a>
-          </p>
         </SectionReveal>
       </Section>
     </>
   );
 }
-
-/* ---------------------------------------------------------------------- */
 
 function Eyebrow({
   children,
@@ -466,7 +394,7 @@ function Eyebrow({
         className={`h-px w-8 ${dark ? "bg-teal-300/60" : "bg-teal-500/60"}`}
         aria-hidden
       />
-      <span className="min-w-0 flex-1 break-words">{children}</span>
+      <span className="min-w-0 break-words">{children}</span>
     </p>
   );
 }
@@ -483,17 +411,17 @@ function SectionHeader({
   dark?: boolean;
 }) {
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-3xl">
       <Eyebrow dark={dark}>{eyebrow}</Eyebrow>
       <h2
-        className={`mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.75rem] ${
+        className={`mt-5 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl ${
           dark ? "text-white" : "text-navy-900"
         }`}
       >
         {title}
       </h2>
       <p
-        className={`mt-5 text-lg leading-8 ${
+        className={`mt-5 max-w-2xl text-lg leading-8 ${
           dark ? "text-navy-200" : "text-navy-600"
         }`}
       >

@@ -22,7 +22,7 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            "flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em]",
+            "flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em]",
             dark ? "text-teal-300" : "text-teal-600",
           )}
         >
@@ -35,7 +35,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={cn(
-          "text-3xl font-semibold leading-tight tracking-tight sm:text-4xl",
+          "text-4xl font-semibold leading-tight tracking-tight sm:text-5xl",
           eyebrow ? "mt-5" : "",
           dark ? "text-white" : "text-navy-900",
         )}
@@ -45,7 +45,7 @@ export function SectionHeading({
       {lead ? (
         <p
           className={cn(
-            "mt-5 text-lg leading-8",
+            "mt-5 max-w-2xl text-lg leading-8",
             dark ? "text-navy-200" : "text-navy-600",
           )}
         >

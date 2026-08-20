@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -41,16 +42,30 @@ export default function InnovationPage() {
       />
 
       <Section tone="white">
-        <SectionHeading
-          eyebrow="Wie wir arbeiten"
-          title="Technik im Dienst der Zuverlässigkeit."
-          lead="Wir setzen digitale Werkzeuge dort ein, wo sie Kunden und Team konkret entlasten – bodenständig und nachvollziehbar."
-        />
-        <div className="mt-12">
-          <FeatureGrid items={items} columns={2} />
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-16">
+          <div>
+            <SectionHeading
+              eyebrow="Wie wir arbeiten"
+              title="Technik im Dienst der Zuverlässigkeit."
+              lead="Wir setzen digitale Werkzeuge dort ein, wo sie Kunden und Team konkret entlasten – bodenständig und nachvollziehbar."
+            />
+            <div className="mt-12">
+              <FeatureGrid items={items} columns={2} />
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-xl lg:mt-10">
+            <Image
+              src="/media/clean24/office-cleaning.jpg"
+              alt="Professionelle Büroreinigung als Teil klar geplanter Abläufe"
+              width={820}
+              height={1000}
+              priority
+              className="aspect-[4/5] w-full object-cover"
+            />
+          </div>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-14 border-t border-navy-100 pt-8">
           <Button href={cta.primary.href} variant="primary" size="lg">
             Zum Online-Formular
           </Button>

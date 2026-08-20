@@ -47,14 +47,21 @@ export function ShopExperience() {
 
   return (
     <CartProvider>
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-2xl text-sm leading-6 text-navy-600">
-          Unser Clean24 Shop befindet sich in Vorbereitung. Produkte können
-          bereits angesehen werden; Online-Bestellungen und Zahlungen sind noch
-          nicht aktiv.
+      <div className="mb-10 grid gap-6 border-y border-navy-100 py-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+        <p className="text-2xl font-semibold tracking-tight text-navy-900 sm:text-3xl">
+          Unser Clean24 Shop befindet sich in Vorbereitung.
         </p>
-        <div className="shrink-0">
-          <CartButton />
+        <div className="max-w-2xl">
+          <p className="text-base leading-7 text-navy-600">
+            Produkte können bereits angesehen werden. Online-Bestellungen und
+            Zahlungen sind noch nicht aktiv; Preise, Verfügbarkeit und
+            Fulfilment werden vor dem E-Commerce-Start final geprüft.
+          </p>
+          {shopConfig.shopStatus !== "prelaunch" ? (
+          <div className="mt-5">
+            <CartButton />
+          </div>
+          ) : null}
         </div>
       </div>
 
@@ -92,7 +99,7 @@ export function ShopExperience() {
           ))}
         </div>
       ) : (
-        <p className="rounded-2xl border border-navy-100 bg-white p-8 text-center text-sm text-navy-500">
+        <p className="border-y border-navy-100 py-8 text-center text-sm text-navy-500">
           In dieser Kategorie sind derzeit keine Produkte verfügbar.
         </p>
       )}

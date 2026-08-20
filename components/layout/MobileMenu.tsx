@@ -74,11 +74,11 @@ export function MobileMenu() {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-2 py-4" aria-label="Mobile Navigation">
+            <nav className="flex-1 overflow-y-auto px-4 py-5" aria-label="Mobile Navigation">
               {mainNav.map((item) =>
                 item.items ? (
                   <details key={item.label} className="group border-b border-navy-100/70">
-                    <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-3.5 text-base font-medium text-navy-900 marker:content-none">
+                    <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-base font-medium text-navy-900 marker:content-none">
                       {item.label}
                       <svg viewBox="0 0 12 12" className="h-3.5 w-3.5 text-navy-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                         <path d="M2.5 4.5 6 8l3.5-3.5" />
@@ -90,7 +90,7 @@ export function MobileMenu() {
                           <Link
                             href={link.href}
                             onClick={() => setOpen(false)}
-                            className="block rounded-md px-6 py-2.5 text-sm text-navy-600 transition-colors hover:bg-mist hover:text-navy-900"
+                            className="block rounded-md px-4 py-2.5 text-sm text-navy-600 transition-colors hover:bg-mist hover:text-navy-900"
                           >
                             {link.label}
                           </Link>
@@ -103,7 +103,7 @@ export function MobileMenu() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-navy-100/70 px-3 py-3.5 text-base font-medium text-navy-900 transition-colors hover:text-teal-600"
+                    className="block border-b border-navy-100/70 py-4 text-base font-medium text-navy-900 transition-colors hover:text-teal-600"
                   >
                     {item.label}
                   </Link>

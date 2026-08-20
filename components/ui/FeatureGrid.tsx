@@ -5,49 +5,40 @@ export interface Feature {
   text: string;
 }
 
-/** Reusable premium feature card grid for interior pages. */
+/** Reusable editorial feature rail for interior pages. */
 export function FeatureGrid({
   items,
   columns = 3,
   className,
 }: {
   items: Feature[];
-  columns?: 2 | 3;
+  columns?: 1 | 2 | 3;
   className?: string;
 }) {
   return (
     <div
       className={cn(
-        "grid gap-6",
-        columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3",
+        "grid gap-x-10 gap-y-9",
+        columns === 1
+          ? "grid-cols-1"
+          : columns === 2
+            ? "sm:grid-cols-2"
+            : "sm:grid-cols-2 lg:grid-cols-3",
         className,
       )}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div
           key={item.title}
-          className="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm"
+          className="border-t border-navy-100 pt-5"
         >
-          <span
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-teal-400/40 text-teal-600"
-            aria-hidden
-          >
-            <svg
-              viewBox="0 0 16 16"
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M2.5 8.5 6 12l7.5-8" />
-            </svg>
+          <span className="text-sm font-semibold tabular-nums text-teal-600">
+            {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy-900">
+          <h3 className="mt-3 text-xl font-semibold tracking-tight text-navy-900">
             {item.title}
           </h3>
-          <p className="mt-2 text-sm leading-7 text-navy-600">{item.text}</p>
+          <p className="mt-3 text-sm leading-7 text-navy-600">{item.text}</p>
         </div>
       ))}
     </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -45,15 +46,29 @@ export default function QualitaetPage() {
       />
 
       <Section tone="white">
-        <SectionHeading
-          eyebrow="Unser Qualitätsverständnis"
-          title="Fünf Bausteine für verlässliche Ergebnisse."
-        />
-        <div className="mt-12">
-          <FeatureGrid items={items} />
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
+          <div>
+            <SectionHeading
+              eyebrow="Unser Qualitätsverständnis"
+              title="Fünf Bausteine für verlässliche Ergebnisse."
+            />
+            <div className="mt-10 overflow-hidden rounded-xl">
+              <Image
+                src="/media/clean24/stairwell-cleaning.jpg"
+                alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Objektpflege"
+                width={900}
+                height={680}
+                priority
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="lg:pt-3">
+            <FeatureGrid items={items} columns={1} />
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start gap-4 border-t border-navy-100 pt-8 sm:flex-row sm:items-center">
           <Button href={cta.primary.href} variant="primary" size="lg">
             {cta.primary.label}
           </Button>

@@ -72,7 +72,7 @@ function PurchasePanel({ product }: { product: Product }) {
           />
           {availabilityLabel}
         </span>
-        <CartButton />
+        {purchasable ? <CartButton /> : null}
       </div>
 
       {/* Variant selector */}
@@ -127,41 +127,39 @@ function PurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Add to cart */}
-      <button
-        type="button"
-        disabled={disabled}
-        aria-disabled={disabled}
-        onClick={() => {
-          // Guard: never add a non-purchasable variant to the cart.
-          if (!isVariantPurchasable(product, variant)) return;
-          addLine({
-            productId: product.id,
-            productSlug: product.slug,
-            variantId: variant.id,
-            name: product.name,
-            variantLabel: variant.label,
-            priceCents: variant.priceCents as number,
-            visual: product.visual,
-            image: product.image,
-          });
-        }}
-        className={`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 ${
-          disabled
-            ? "cursor-not-allowed bg-navy-100 text-navy-400"
-            : "bg-navy-800 text-white hover:bg-navy-700"
-        }`}
-      >
-        {buttonLabel}
-      </button>
+      {disabled ? (
+        <div className="mt-6 border-t border-navy-100 pt-5">
+          <p className="text-sm font-semibold text-navy-900">{buttonLabel}</p>
+          <p className="mt-2 text-sm leading-6 text-navy-500">
+            Unser Clean24 Shop befindet sich in Vorbereitung. Dieses Produkt
+            kann aktuell angesehen, aber nicht online bestellt werden.
+          </p>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => {
+            // Guard: never add a non-purchasable variant to the cart.
+            if (!isVariantPurchasable(product, variant)) return;
+            addLine({
+              productId: product.id,
+              productSlug: product.slug,
+              variantId: variant.id,
+              name: product.name,
+              variantLabel: variant.label,
+              priceCents: variant.priceCents as number,
+              visual: product.visual,
+              image: product.image,
+            });
+          }}
+          className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-navy-800 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2"
+        >
+          {buttonLabel}
+        </button>
+      )}
 
-      {/* Neutral prelaunch notice: not-yet-purchasable products explain why;
-          purchasable-but-not-ready entries still flag non-final data. */}
-      {!purchasable ? (
-        <p className="mt-3 text-xs leading-5 text-navy-500">
-          Dieses Produkt ist noch nicht online bestellbar.{" "}
-          {shopConfig.prelaunchNotice}
-        </p>
-      ) : !isProductReady(product) ? (
+      {/* Purchasable-but-not-ready entries still flag non-final data. */}
+      {!disabled && !isProductReady(product) ? (
         <p className="mt-3 text-xs leading-5 text-navy-500">
           {shopConfig.prelaunchNotice}
         </p>

@@ -14,9 +14,9 @@ export default function ShopPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Shop"
-        title="Shop"
-        lead="Ausgewählte Produkte rund um Reinigung, Pflege und Wohnungsabgaben – direkt von Clean24."
+        eyebrow="Shop / Bald verfügbar"
+        title="Clean24 Shop in Vorbereitung."
+        lead="Ausgewählte Produkte rund um Reinigung, Pflege und Wohnungsabgaben werden sorgfältig vorbereitet. Der öffentliche Shop ist sichtbar, Bestellungen und Zahlungen sind noch nicht aktiv."
       />
 
       <Section tone="mist">

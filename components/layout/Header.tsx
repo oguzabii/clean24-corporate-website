@@ -18,8 +18,8 @@ export function Header() {
   return (
     <>
       {/* Top contact bar — quiet, factual, very Swiss. */}
-      <div className="hidden bg-navy-950 text-navy-200 sm:block">
-        <Container className="flex h-9 items-center justify-between text-xs">
+      <div className="hidden bg-navy-950 text-navy-300 sm:block">
+        <Container className="flex h-8 items-center justify-between text-xs">
           <span className="font-medium tracking-wide">{site.slogan}</span>
           <div className="flex items-center gap-6">
             <a
@@ -38,8 +38,8 @@ export function Header() {
         </Container>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-navy-100/70 bg-white/85 backdrop-blur-md">
-        <Container className="flex h-[4.5rem] items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 border-b border-navy-100/60 bg-white/90 backdrop-blur-md">
+        <Container className="flex h-16 items-center justify-between gap-4 lg:h-[4.25rem]">
           <Link href="/" aria-label="Clean24 Startseite" className="shrink-0">
             <Logo tone="dark" priority />
           </Link>

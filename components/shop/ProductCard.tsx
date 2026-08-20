@@ -28,7 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
   const priced = typeof variant.priceCents === "number";
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-navy-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
       <Link
         href={detailHref}
         aria-label={`${product.name} – Details ansehen`}
@@ -110,32 +110,32 @@ export function ProductCard({ product }: { product: Product }) {
           </Link>
         </div>
 
-        <button
-          type="button"
-          disabled={disabled}
-          aria-disabled={disabled}
-          onClick={() => {
-            // Guard: never add a non-purchasable variant to the cart.
-            if (!isVariantPurchasable(product, variant)) return;
-            addLine({
-              productId: product.id,
-              productSlug: product.slug,
-              variantId: variant.id,
-              name: product.name,
-              variantLabel: variant.label,
-              priceCents: variant.priceCents as number,
-              visual: product.visual,
-              image: product.image,
-            });
-          }}
-          className={`mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md px-6 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 ${
-            disabled
-              ? "cursor-not-allowed bg-navy-100 text-navy-400"
-              : "bg-navy-800 text-white hover:bg-navy-700"
-          }`}
-        >
-          {buttonLabel}
-        </button>
+        {disabled ? (
+          <div className="mt-4 border-t border-navy-100 pt-4 text-sm font-medium text-navy-500">
+            {buttonLabel}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              // Guard: never add a non-purchasable variant to the cart.
+              if (!isVariantPurchasable(product, variant)) return;
+              addLine({
+                productId: product.id,
+                productSlug: product.slug,
+                variantId: variant.id,
+                name: product.name,
+                variantLabel: variant.label,
+                priceCents: variant.priceCents as number,
+                visual: product.visual,
+                image: product.image,
+              });
+            }}
+            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy-800 px-6 text-sm font-medium text-white transition-colors hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2"
+          >
+            {buttonLabel}
+          </button>
+        )}
       </div>
     </div>
   );

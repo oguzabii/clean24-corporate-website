@@ -49,38 +49,6 @@ const inquiryRows = [
   },
 ];
 
-/** 4 premium routing cards ("Worum geht es bei Ihrer Anfrage?"). */
-const routingCards = [
-  {
-    title: "Online-Offerte",
-    text: "Für konkrete Reinigungsanfragen, Wohnungsabgaben und verbindliche Offerten.",
-    action: "Zum Online-Formular",
-    href: cta.primary.href,
-    highlight: true,
-  },
-  {
-    title: "Verwaltungen & Objektbetreuung",
-    text: "Für Liegenschaften, Treppenhäuser, Allgemeinflächen, Tiefgaragen und regelmässige Objektpflege.",
-    action: "Anfrage per E-Mail",
-    href: cta.verwaltungen.href,
-    highlight: false,
-  },
-  {
-    title: "Allgemeine Fragen",
-    text: "Für direkte Fragen zu Clean24, Leistungen oder Verfügbarkeit.",
-    action: "E-Mail schreiben",
-    href: mailtoGeneral,
-    highlight: false,
-  },
-  {
-    title: "Direkt anrufen",
-    text: "Für schnelle Rückfragen oder dringende Abklärungen.",
-    action: contact.phone,
-    href: contact.phoneHref,
-    highlight: false,
-  },
-];
-
 export default function KontaktPage() {
   return (
     <>
@@ -121,12 +89,12 @@ export default function KontaktPage() {
               den richtigen Ablauf.
             </p>
 
-            <div className="mt-8 divide-y divide-navy-100 border-y border-navy-100">
+            <div className="mt-10 divide-y divide-navy-100 border-y border-navy-100">
               {inquiryRows.map((row) => (
                 <a
                   key={row.title}
                   href={row.href}
-                  className="group flex items-center gap-4 py-5 transition-colors hover:bg-mist/60"
+                  className="group flex items-center gap-4 py-5 transition-colors hover:text-teal-700"
                 >
                   <span className="flex-1">
                     <span className="block text-base font-semibold text-navy-900 transition-colors group-hover:text-teal-600">
@@ -144,12 +112,12 @@ export default function KontaktPage() {
 
           {/* Right: founder panel */}
           <div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-5">
               {founders.map((founder) => (
                 <FounderCard key={founder.slug} founder={founder} />
               ))}
             </div>
-            <p className="mt-6 rounded-2xl border border-navy-100 bg-mist/60 p-6 text-sm leading-7 text-navy-600">
+            <p className="mt-8 border-t border-navy-100 pt-6 text-sm leading-7 text-navy-600">
               Clean24 wird von den Brüdern Oğuzhan und Yavuz Memis geführt. Ihre
               Anfrage wird persönlich geprüft und in den passenden Ablauf
               geleitet – ob Online-Offerte, Verwaltung, Objektbetreuung oder
@@ -159,46 +127,18 @@ export default function KontaktPage() {
         </div>
       </Section>
 
-      {/* Routing cards */}
       <Section tone="mist">
-        <div className="max-w-2xl">
-          <h2 className="text-2xl font-semibold tracking-tight text-navy-900 sm:text-3xl">
-            Worum geht es bei Ihrer Anfrage?
-          </h2>
-          <p className="mt-3 text-[0.95rem] leading-7 text-navy-600">
-            Vier Wege, ein Ziel: Ihre Anfrage landet direkt dort, wo sie am
-            schnellsten bearbeitet werden kann.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {routingCards.map((card) => (
-            <a
-              key={card.title}
-              href={card.href}
-              className={`group flex flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
-                card.highlight
-                  ? "border-teal-300 ring-1 ring-teal-200"
-                  : "border-navy-100 hover:border-teal-300"
-              }`}
-            >
-              <h3 className="text-lg font-semibold tracking-tight text-navy-900">
-                {card.title}
-              </h3>
-              <p className="mt-3 flex-1 text-sm leading-6 text-navy-600">
-                {card.text}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-900 transition-colors group-hover:text-teal-600">
-                {card.action}
-                <ArrowIcon className="transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
-            </a>
-          ))}
-        </div>
-
-        {/* Direct contact data */}
-        <div className="mt-12 rounded-2xl border border-navy-100 bg-white p-6 sm:p-8">
-          <div className="grid gap-6 sm:grid-cols-3">
+        <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+          <div>
+            <h2 className="text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
+              Direkt. Persönlich. Klar geroutet.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-navy-600">
+              Online-Offerten laufen über das Formular. Verwaltungen und
+              Rückfragen erreichen Clean24 direkt.
+            </p>
+          </div>
+          <div className="grid gap-8 border-y border-navy-100 py-8 sm:grid-cols-3">
             <div>
               <div className="text-sm font-medium text-navy-500">Adresse</div>
               <div className="mt-1 text-sm not-italic text-navy-900">

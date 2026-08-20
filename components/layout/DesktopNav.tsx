@@ -9,7 +9,7 @@ import { mainNav, type NavItem } from "@/data/navigation";
 export function DesktopNav() {
   return (
     <nav
-      className="hidden items-center gap-x-6 lg:flex"
+      className="hidden items-center gap-x-5 lg:flex"
       aria-label="Hauptnavigation"
     >
       {mainNav.map((item) =>
@@ -19,7 +19,7 @@ export function DesktopNav() {
           <Link
             key={item.label}
             href={item.href}
-            className="rounded-sm py-2 text-sm font-medium text-navy-700 transition-colors hover:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            className="rounded-sm py-2 text-sm font-medium text-navy-700 transition-colors hover:text-navy-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
           >
             {item.label}
           </Link>
@@ -39,7 +39,7 @@ function NavDropdown({ item }: { item: NavItem }) {
     <div className="group relative">
       <Link
         href={item.href}
-        className="inline-flex items-center gap-1 rounded-sm py-2 text-sm font-medium text-navy-700 transition-colors hover:text-teal-600 group-focus-within:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+        className="inline-flex items-center gap-1 rounded-sm py-2 text-sm font-medium text-navy-700 transition-colors hover:text-navy-950 group-focus-within:text-navy-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
         aria-haspopup="true"
       >
         {item.label}
@@ -49,7 +49,7 @@ function NavDropdown({ item }: { item: NavItem }) {
       {/* pt-3 bridges the gap so hover doesn't drop between trigger and panel */}
       <div className="invisible absolute left-0 top-full z-50 pt-3 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
         <div
-          className={`rounded-2xl border border-navy-100 bg-white p-3 shadow-xl shadow-navy-950/10 ${
+          className={`rounded-xl border border-navy-100 bg-white p-3 shadow-xl shadow-navy-950/10 ${
             twoCol ? "w-[30rem]" : hasDescriptions ? "w-80" : "w-60"
           }`}
         >
@@ -62,7 +62,7 @@ function NavDropdown({ item }: { item: NavItem }) {
               <li key={`${link.label}-${i}`}>
                 <Link
                   href={link.href}
-                  className="block rounded-lg px-3 py-2 transition-colors hover:bg-mist focus-visible:outline-none focus-visible:bg-mist"
+                  className="block rounded-md px-3 py-2 transition-colors hover:bg-mist focus-visible:outline-none focus-visible:bg-mist"
                 >
                   <span className="block text-sm font-medium text-navy-900">
                     {link.label}
