@@ -19,12 +19,12 @@ export interface Founder {
 export const founders: Founder[] = [
   {
     slug: "oguzhan-memis",
-    name: "Oğuzhan Memis",
+    name: "Oguzhan Memis",
     role: "Geschäftsleitung & Gründer",
     focus: "Kundenbetreuung, Offerten, Verwaltungen und allgemeine Anfragen.",
-    bio: "Oğuzhan steht für Kundenbetreuung, Offerten, Verwaltungen und klare Kommunikation. Sein Fokus liegt darauf, Anfragen strukturiert aufzunehmen, Erwartungen sauber zu klären und Kunden durch den passenden Ablauf zu führen.",
+    bio: "Oguzhan steht für Kundenbetreuung, Offerten, Verwaltungen und klare Kommunikation. Sein Fokus liegt darauf, Anfragen strukturiert aufzunehmen, Erwartungen sauber zu klären und Kunden durch den passenden Ablauf zu führen.",
     image: "/contact/oguzhan-memis.png",
-    imageAlt: "Oğuzhan Memis, Geschäftsleitung & Gründer von Clean24.",
+    imageAlt: "Oguzhan Memis, Geschäftsleitung & Gründer von Clean24.",
   },
   {
     slug: "yavuz-memis",

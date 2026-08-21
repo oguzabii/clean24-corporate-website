@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { Container } from "./Container";
 import { Button } from "@/components/ui/Button";
-import { Logo } from "@/components/ui/Logo";
 import { DesktopNav } from "./DesktopNav";
+import { HeaderLogoLink } from "./HeaderLogoLink";
 import { MobileMenu } from "./MobileMenu";
 import { cta } from "@/data/cta";
 
@@ -17,9 +16,7 @@ export function Header() {
     <>
       <header className="sticky top-0 z-50 border-b border-navy-100/60 bg-white/90 backdrop-blur-md">
         <Container className="flex h-16 items-center justify-between gap-4">
-          <Link href="/" aria-label="Clean24 Startseite" className="shrink-0">
-            <Logo tone="dark" priority />
-          </Link>
+          <HeaderLogoLink />
 
           <DesktopNav />
 

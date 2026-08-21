@@ -310,7 +310,7 @@ export default function Home() {
                 <span className="block">Ein gemeinsamer Anspruch.</span>
               </h2>
               <p className="mt-8 max-w-xl text-xl leading-8 text-navy-600">
-                Oğuzhan und Yavuz Memis haben Clean24 2022 gegründet. Persönlich,
+                Oguzhan und Yavuz Memis haben Clean24 2022 gegründet. Persönlich,
                 erreichbar und mit Verantwortung für saubere Abläufe.
               </p>
               <div className="mt-9">
@@ -331,7 +331,6 @@ export default function Home() {
                 <SectionReveal
                   key={founder.slug}
                   delay={index * 0.08}
-                  className={index === 1 ? "sm:mt-20" : ""}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-navy-200">
                     <Image

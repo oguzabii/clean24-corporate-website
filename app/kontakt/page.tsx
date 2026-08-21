@@ -110,7 +110,7 @@ export default function KontaktPage() {
                 <span className="block text-navy-400">Direkte Wege.</span>
               </h2>
               <p className="mt-6 max-w-xl text-xl leading-8 text-navy-200">
-                Clean24 wird von Oğuzhan und Yavuz Memis geführt. Anfragen
+                Clean24 wird von Oguzhan und Yavuz Memis geführt. Anfragen
                 werden persönlich eingeordnet und in den passenden Ablauf
                 geleitet.
               </p>

@@ -9,7 +9,7 @@ import { founders } from "@/data/founders";
 export const metadata: Metadata = {
   title: "Unternehmen",
   description:
-    "Clean24 wurde 2022 von den Brüdern Oğuzhan und Yavuz Memis gegründet. Professionelle Reinigung mit Planung, Verantwortung und direkter Kommunikation.",
+    "Clean24 wurde 2022 von den Brüdern Oguzhan und Yavuz Memis gegründet. Professionelle Reinigung mit Planung, Verantwortung und direkter Kommunikation.",
 };
 
 const processPoints = [
@@ -44,7 +44,7 @@ export default function UnternehmenPage() {
               </h1>
             </div>
             <p className="max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
-              Clean24 wurde 2022 von Oğuzhan Memis und Yavuz Memis gegründet.
+              Clean24 wurde 2022 von Oguzhan Memis und Yavuz Memis gegründet.
               Ihr Anspruch: professionelle Reinigung mit klarer Planung,
               Verantwortung und direkter Kommunikation.
             </p>
@@ -168,7 +168,7 @@ export default function UnternehmenPage() {
             <div className="divide-y divide-white/15 border-y border-white/15">
               {[
                 { label: "Gegründet", value: "2022" },
-                { label: "Gründer", value: "Oğuzhan & Yavuz Memis" },
+                { label: "Gründer", value: "Oguzhan & Yavuz Memis" },
                 { label: "Leitgedanke", value: "Sauberkeit mit System." },
               ].map((item) => (
                 <div key={item.label} className="py-6">
