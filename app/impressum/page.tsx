@@ -5,7 +5,6 @@ import {
   LegalDocument,
   LegalSection,
   LegalFacts,
-  LegalNote,
 } from "@/components/legal/Legal";
 import { contact } from "@/data/contact";
 
@@ -38,7 +37,7 @@ export default function ImpressumPage() {
                   label: "PLZ / Ort",
                   value: `${contact.zip} ${contact.city}`,
                 },
-                { label: "Land", value: contact.country },
+                { label: "Land", value: "Switzerland" },
               ]}
             />
           </LegalSection>
@@ -122,12 +121,6 @@ export default function ImpressumPage() {
               Haftung.
             </p>
           </LegalSection>
-
-          <LegalNote>
-            Dieser Text ist ein sorgfältig erstellter Entwurf. Vor der finalen
-            Veröffentlichung sollten die rechtlichen Angaben bei Bedarf durch
-            eine Fachperson geprüft werden.
-          </LegalNote>
         </LegalDocument>
       </Section>
     </>

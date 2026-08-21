@@ -12,22 +12,23 @@ const serviceStories = [
   {
     title: "Unternehmen & Büros",
     text: "Arbeitsräume, Empfangsbereiche und Geschäftsumgebungen, die täglich repräsentativ funktionieren müssen.",
-    image: "/media/clean24/office-cleaning.jpg",
-    alt: "Professionelle Reinigung in einem modernen Büro.",
+    image: "/media/clean24/generated/home-story-office-cleaning.png",
+    alt: "Clean24 Unterhaltsreinigung in einer modernen Arbeitsumgebung.",
     href: "/leistungen/bueroreinigung",
   },
   {
     title: "Immobilien & Verwaltungen",
     text: "Treppenhäuser, Eingänge, Nebenräume und Liegenschaften mit klarer Planung und festen Ansprechpartnern.",
-    image: "/media/clean24/stairwell-cleaning.jpg",
-    alt: "Gepflegtes Treppenhaus in einer Schweizer Liegenschaft.",
+    image: "/media/clean24/generated/home-story-stairwell-care.png",
+    alt: "Sorgfältige Treppenhauspflege in einer gepflegten Liegenschaft.",
     href: "/verwaltungen",
+    imageClassName: "object-[center_42%]",
   },
   {
     title: "Spezial- & Objektpflege",
     text: "Glas, Garagen, Bau- und Sonderreinigungen, abgestimmt auf Objekt, Timing und Anspruch.",
-    image: "/media/clean24/glass-cleaning.jpg",
-    alt: "Sorgfältige Glasreinigung mit klarem Blick auf die Fläche.",
+    image: "/media/clean24/generated/home-story-glass-cleaning.png",
+    alt: "Präzise Glasreinigung als Teil professioneller Objektpflege.",
     href: "/leistungen/spezialreinigung",
   },
 ];
@@ -45,8 +46,8 @@ export default function Home() {
     <>
       <section className="relative isolate min-h-[86vh] overflow-hidden bg-navy-950 text-white">
         <Image
-          src="/media/clean24/hero-facility-cleaning.jpg"
-          alt="Reinigungsprofi reinigt am Abend die Glasfront einer modernen Bürolobby."
+          src="/media/clean24/generated/home-hero-clean24.png"
+          alt="Professionelle Clean24 Reinigung in einer modernen Arbeitsumgebung."
           fill
           priority
           sizes="100vw"
@@ -145,14 +146,11 @@ export default function Home() {
                       alt={story.alt}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                      className={`object-cover transition-transform duration-700 group-hover:scale-[1.035] ${story.imageClassName ?? "object-center"}`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950/78 via-navy-950/12 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">
-                        0{index + 1}
-                      </p>
-                      <h3 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-white">
+                      <h3 className="text-3xl font-semibold leading-tight tracking-tight text-white">
                         {story.title}
                       </h3>
                     </div>

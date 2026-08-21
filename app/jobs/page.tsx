@@ -74,8 +74,8 @@ export default function JobsPage() {
 
             <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[560px]">
               <Image
-                src="/media/clean24/glass-cleaning.jpg"
-                alt="Professionelle Glasreinigung als Beispiel für sorgfältige Reinigungsarbeit."
+                src="/media/clean24/generated/jobs-hero-clean24.png"
+                alt="Clean24 Arbeitsumgebung für Bewerbungen und mögliche Einsätze."
                 fill
                 sizes="(max-width: 1024px) 100vw, 48vw"
                 className="object-cover object-center"

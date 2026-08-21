@@ -45,8 +45,8 @@ export default function NachhaltigkeitPage() {
             </div>
             <div className="relative min-h-[380px] overflow-hidden bg-navy-100 sm:min-h-[620px]">
               <Image
-                src="/media/clean24/property-building.jpg"
-                alt="Gepflegte Liegenschaft als Beispiel für sorgfältige Objektpflege."
+                src="/media/clean24/generated/nachhaltigkeit-hero-clean24.png"
+                alt="Clean24 Mitarbeitende mit sorgfältigem Materialeinsatz im täglichen Betrieb."
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 48vw"

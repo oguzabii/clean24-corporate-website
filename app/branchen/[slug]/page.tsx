@@ -50,8 +50,8 @@ export default async function IndustryDetailPage({
           <div
             className={
               longTitleHero
-                ? "grid gap-10 lg:gap-12"
-                : "grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-20"
+                ? "grid gap-8 lg:gap-10"
+                : "grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16"
             }
           >
             <div className="min-w-0 max-w-full">
@@ -80,17 +80,39 @@ export default async function IndustryDetailPage({
 
       <section className="bg-mist py-16 sm:py-24 lg:py-32">
         <Container className="max-w-[88rem]">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-            <div className="relative min-h-[420px] overflow-hidden bg-navy-100 sm:min-h-[640px]">
+          <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-20">
+            <div className="relative min-h-[420px] overflow-hidden bg-navy-100 sm:min-h-[620px]">
+              {industry.mobileHeroImage ? (
+                <Image
+                  src={industry.mobileHeroImage}
+                  alt={industry.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 767px) 100vw"
+                  className="object-cover md:hidden"
+                  style={{
+                    objectPosition: industry.objectPositionMobile ?? "center center",
+                  }}
+                />
+              ) : null}
               <Image
-                src={industry.image}
+                src={industry.heroImage}
                 alt={industry.imageAlt}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 52vw"
-                className="object-cover object-center"
+                className={industry.mobileHeroImage ? "hidden object-cover md:block" : "object-cover"}
+                style={{
+                  objectPosition:
+                    industry.mobileHeroImage
+                      ? industry.objectPositionDesktop ?? "center center"
+                      : industry.objectPositionMobile ??
+                        industry.objectPositionDesktop ??
+                        "center center",
+                }}
               />
             </div>
+
             <div className="space-y-12">
               <DetailList title="Was in dieser Umgebung zählt" items={industry.matters} />
               <DetailList title="Planung & Kommunikation" items={industry.planning} />

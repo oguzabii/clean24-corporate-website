@@ -42,8 +42,8 @@ export default function LeistungenPage() {
           <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-20">
             <div className="relative min-h-[420px] overflow-hidden bg-navy-900 sm:min-h-[560px] lg:sticky lg:top-28">
               <Image
-                src="/media/clean24/office-cleaning.jpg"
-                alt="Professionelle Reinigung in einem modernen Büro."
+                src="/media/clean24/generated/leistungen-hero-clean24.png"
+                alt="Clean24 Reinigungsleistung in einer professionellen Arbeitsumgebung."
                 fill
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 className="object-cover object-center"

@@ -75,8 +75,8 @@ export default function ArbeitenBeiClean24Page() {
 
             <div className="relative min-h-[420px] overflow-hidden bg-navy-100 sm:min-h-[620px] lg:min-h-[720px]">
               <Image
-                src="/media/clean24/office-cleaning.jpg"
-                alt="Professionelle Reinigung in einer modernen Arbeitsumgebung."
+                src="/media/clean24/generated/arbeiten-hero-clean24.png"
+                alt="Clean24 Mitarbeitender bei professioneller Reinigungsarbeit in einer modernen Arbeitsumgebung."
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -123,8 +123,8 @@ export default function ArbeitenBeiClean24Page() {
           <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
             <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[560px]">
               <Image
-                src="/media/clean24/stairwell-cleaning.jpg"
-                alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Reinigungsarbeit."
+                src="/media/clean24/generated/arbeiten-team-in-action-clean24.png"
+                alt="Clean24 Team in einer Arbeitsumgebung mit vorbereiteten Reinigungsaufgaben."
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"

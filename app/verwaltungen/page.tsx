@@ -64,8 +64,8 @@ export default function VerwaltungenPage() {
 
             <div className="relative min-h-[420px] overflow-hidden bg-navy-900 sm:min-h-[640px] lg:min-h-[720px]">
               <Image
-                src="/media/clean24/property-building.jpg"
-                alt="Moderne Schweizer Wohnliegenschaft in der Abenddämmerung mit beleuchtetem Eingang."
+                src="/media/clean24/generated/verwaltungen-hero-property-care-1.png"
+                alt="Gepflegte Wohnliegenschaft als Beispiel für strukturierte Objektpflege für Verwaltungen."
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"

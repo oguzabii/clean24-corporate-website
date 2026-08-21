@@ -14,14 +14,12 @@ export function DesktopNav() {
   const pathname = usePathname();
   const previousPathname = useRef(pathname);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [suppressHover, setSuppressHover] = useState(false);
 
   useEffect(() => {
     if (previousPathname.current === pathname) return;
     previousPathname.current = pathname;
     const closeAfterRouteChange = window.setTimeout(() => {
       setOpenMenu(null);
-      setSuppressHover(true);
     }, 0);
     return () => window.clearTimeout(closeAfterRouteChange);
   }, [pathname]);
@@ -30,7 +28,6 @@ export function DesktopNav() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       setOpenMenu(null);
-      setSuppressHover(true);
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -39,21 +36,15 @@ export function DesktopNav() {
 
   const closeForNavigation = () => {
     setOpenMenu(null);
-    setSuppressHover(true);
   };
 
   return (
     <nav
       className="hidden items-center gap-x-5 lg:flex"
       aria-label="Hauptnavigation"
-      onPointerLeave={() => {
-        setOpenMenu(null);
-        setSuppressHover(false);
-      }}
       onKeyDown={(event) => {
         if (event.key === "Escape") {
           setOpenMenu(null);
-          setSuppressHover(true);
           (event.target as HTMLElement).blur();
         }
       }}
@@ -65,10 +56,7 @@ export function DesktopNav() {
             item={item}
             pathname={pathname}
             open={openMenu === item.label}
-            suppressHover={suppressHover}
             onOpen={() => setOpenMenu(item.label)}
-            onClose={() => setOpenMenu(null)}
-            onAllowHover={() => setSuppressHover(false)}
             onNavigate={closeForNavigation}
           />
         ) : (
@@ -93,22 +81,15 @@ function NavDropdown({
   item,
   pathname,
   open,
-  suppressHover,
   onOpen,
-  onClose,
-  onAllowHover,
   onNavigate,
 }: {
   item: NavItem;
   pathname: string;
   open: boolean;
-  suppressHover: boolean;
   onOpen: () => void;
-  onClose: () => void;
-  onAllowHover: () => void;
   onNavigate: () => void;
 }) {
-  const rootRef = useRef<HTMLDivElement>(null);
   const links = item.items ?? [];
   const hasDescriptions = links.some((l) => l.description);
   // Detailed lists stay single-column; long label-only lists use two columns.
@@ -118,29 +99,12 @@ function NavDropdown({
 
   return (
     <div
-      ref={rootRef}
       className="relative"
-      onPointerEnter={() => {
-        if (suppressHover) {
-          onAllowHover();
-        }
-        onOpen();
-      }}
-      onPointerMove={() => {
-        if (suppressHover) {
-          onAllowHover();
-          onOpen();
-        }
-      }}
-      onPointerLeave={onClose}
-      onBlur={(event) => {
-        if (!rootRef.current?.contains(event.relatedTarget as Node | null)) {
-          onClose();
-        }
-      }}
     >
       <Link
         href={item.href}
+        onPointerEnter={onOpen}
+        onMouseEnter={onOpen}
         onFocus={onOpen}
         onClick={onNavigate}
         className={cn(
@@ -177,7 +141,6 @@ function NavDropdown({
               <li key={`${link.label}-${i}`}>
                 <Link
                   href={link.href}
-                  onFocus={onOpen}
                   onClick={onNavigate}
                   className={cn(
                     "block rounded-md px-3 py-2 transition-colors hover:bg-mist focus-visible:outline-none focus-visible:bg-mist",

@@ -52,8 +52,8 @@ export default function QualitaetPage() {
         <Container className="max-w-[90rem]">
           <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[620px] lg:min-h-[720px]">
             <Image
-              src="/media/clean24/stairwell-cleaning.jpg"
-              alt="Gepflegtes Treppenhaus als Beispiel für strukturierte Reinigungsqualität."
+              src="/media/clean24/generated/qualitaet-hero-clean24-1.png"
+              alt="Clean24 Qualitätsarbeit mit strukturiertem Reinigungsprozess vor Ort."
               fill
               priority
               sizes="100vw"

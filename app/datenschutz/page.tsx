@@ -5,7 +5,6 @@ import {
   LegalDocument,
   LegalSection,
   LegalList,
-  LegalNote,
 } from "@/components/legal/Legal";
 import { contact } from "@/data/contact";
 
@@ -21,6 +20,7 @@ export default function DatenschutzPage() {
       <PageHeader
         eyebrow="Rechtliches"
         title="Datenschutzerklärung"
+        titleClassName="max-w-full whitespace-nowrap hyphens-none break-normal text-[clamp(1.8rem,7.2vw,5.6rem)] [overflow-wrap:normal] [word-break:normal]"
         lead="Informationen darüber, wie die Clean24 Memis GmbH mit Personendaten umgeht."
       />
 
@@ -57,7 +57,7 @@ export default function DatenschutzPage() {
               <br />
               {contact.street}
               <br />
-              {contact.zip} {contact.city}, {contact.country}
+              {contact.zip} {contact.city}, Switzerland
               <br />
               E-Mail:{" "}
               <a
@@ -205,13 +205,6 @@ export default function DatenschutzPage() {
               dieser Seite veröffentlichte Fassung.
             </p>
           </LegalSection>
-
-          <LegalNote>
-            Diese Datenschutzerklärung beschreibt den aktuellen technischen
-            Stand der Website. Vor der finalen Veröffentlichung sollte sie bei
-            Bedarf durch eine Fachperson geprüft und bei künftigen technischen
-            Änderungen aktualisiert werden.
-          </LegalNote>
         </LegalDocument>
       </Section>
     </>

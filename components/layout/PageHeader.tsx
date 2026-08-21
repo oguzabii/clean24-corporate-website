@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Container } from "./Container";
+import { cn } from "@/lib/cn";
 
 /**
  * Consistent premium page header band for interior pages (Kontakt, legal).
@@ -10,11 +11,13 @@ export function PageHeader({
   eyebrow,
   title,
   lead,
+  titleClassName,
   children,
 }: {
   eyebrow: string;
   title: string;
   lead?: string;
+  titleClassName?: string;
   /** Optional slot below the lead (e.g. contact quick facts). */
   children?: ReactNode;
 }) {
@@ -24,7 +27,12 @@ export function PageHeader({
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-300">
           {eyebrow}
         </p>
-        <h1 className="mt-7 max-w-5xl break-words text-[clamp(3.4rem,9vw,6.8rem)] font-semibold leading-[0.9] tracking-tight">
+        <h1
+          className={cn(
+            "mt-7 max-w-5xl break-words text-[clamp(3.4rem,9vw,6.8rem)] font-semibold leading-[0.9] tracking-tight",
+            titleClassName,
+          )}
+        >
           {title}
         </h1>
         {lead ? (

@@ -46,8 +46,8 @@ export default function InnovationPage() {
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
             <div className="relative min-h-[360px] overflow-hidden bg-navy-900 sm:min-h-[560px] lg:min-h-[680px]">
               <Image
-                src="/media/clean24/office-cleaning.jpg"
-                alt="Professionelle Büroreinigung als Beispiel für klar geplante Abläufe."
+                src="/media/clean24/generated/innovation-hero-clean24.png"
+                alt="Clean24 Planung und Organisation für strukturierte Reinigungsabläufe."
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 48vw"

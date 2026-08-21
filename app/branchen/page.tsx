@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
@@ -26,6 +27,16 @@ export default function BranchenPage() {
             Branchen beschreiben nicht, was wir tun. Sie beschreiben, welche
             Umgebung wir verstehen müssen, bevor Reinigung zuverlässig wird.
           </p>
+          <div className="relative mt-14 min-h-[320px] overflow-hidden bg-navy-900 sm:min-h-[520px] lg:min-h-[620px]">
+            <Image
+              src="/media/clean24/generated/branchen-hero-clean24.png"
+              alt="Clean24 Reinigungsarbeit in einer betreuten professionellen Umgebung."
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
         </Container>
       </section>
 
@@ -36,13 +47,24 @@ export default function BranchenPage() {
               <Link
                 key={industry.slug}
                 href={`/branchen/${industry.slug}`}
-                className="group grid min-h-28 gap-5 py-7 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[8rem_1fr_auto] sm:items-center"
+                className="group grid gap-5 py-8 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[5rem_minmax(0,1fr)_auto] lg:grid-cols-[8rem_minmax(0,1fr)_auto]"
               >
                 <span className="text-sm font-semibold tabular-nums text-teal-700">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span>
-                  <span className="block text-[clamp(2rem,5vw,4rem)] font-semibold leading-none tracking-tight text-navy-950">
+                <span className="min-w-0">
+                  <span className="relative block aspect-[4/3] w-full overflow-hidden bg-navy-100">
+                    <Image
+                      src={industry.overviewImage}
+                      alt={industry.imageAlt}
+                      fill
+                      loading="eager"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) calc(100vw - 8rem), 58rem"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                      style={{ objectPosition: industry.objectPositionDesktop ?? "center center" }}
+                    />
+                  </span>
+                  <span className="mt-6 block text-[clamp(2rem,5vw,4rem)] font-semibold leading-none tracking-tight text-navy-950">
                     {industry.name}
                   </span>
                   <span className="mt-3 block max-w-2xl text-base leading-7 text-navy-600">
