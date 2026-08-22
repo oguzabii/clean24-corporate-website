@@ -7,10 +7,21 @@ import { contact } from "@/data/contact";
 import { cta } from "@/data/cta";
 import { founders } from "@/data/founders";
 
+const description =
+  "Kontaktieren Sie Clean24 Memis GmbH in Dietikon. Offerten über das Formular, Verwaltungsanfragen per E-Mail sowie Telefon und allgemeine Fragen.";
+
 export const metadata: Metadata = {
   title: "Kontakt",
-  description:
-    "Kontaktieren Sie Clean24 Memis GmbH in Dietikon. Offerten über das Formular, Verwaltungsanfragen per E-Mail sowie Telefon und allgemeine Fragen.",
+  description,
+  alternates: { canonical: "/kontakt" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/kontakt",
+    title: "Kontakt | Clean24",
+    description,
+  },
 };
 
 const contactPaths = [
