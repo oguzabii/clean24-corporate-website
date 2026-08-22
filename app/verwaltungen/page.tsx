@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 
 const description =
-  "Clean24 unterstützt Immobilienverwaltungen mit klarer Planung, festen Ansprechpartnern, dokumentierten Einsätzen und Objektpflege für Liegenschaften.";
+  "Clean24 unterstützt Immobilienverwaltungen mit festen Ansprechpartnern, planbaren Einsätzen, nachvollziehbarer Dokumentation und Objektpflege für Liegenschaften.";
 
 export const metadata: Metadata = {
   title: "Verwaltungen",
@@ -30,19 +30,19 @@ export const metadata: Metadata = {
 
 const proof = [
   "Fester Ansprechpartner",
-  "Klare Planung",
+  "Planbare Einsätze",
   "Dokumentierte Einsätze",
 ];
 
 const objectCare = [
   {
     title: "Treppenhäuser",
-    text: "Gepflegte Eingänge und allgemeine Flächen mit klaren Intervallen.",
+    text: "Gepflegte Eingänge und allgemeine Flächen in abgestimmten Reinigungsintervallen.",
     href: "/leistungen/treppenhausreinigung",
   },
   {
     title: "Parkhäuser & Tiefgaragen",
-    text: "Robuste Reinigung grosser Verkehrsflächen mit passender Planung.",
+    text: "Robuste Reinigung grosser Verkehrsflächen mit passenden Zeitfenstern und geeigneter Ausrüstung.",
     href: "/leistungen/parkhausreinigung",
   },
   {
@@ -64,7 +64,7 @@ export default function VerwaltungenPage() {
               </p>
               <h1 className="mt-7 max-w-4xl text-[clamp(2.9rem,12vw,6.8rem)] font-semibold leading-[0.92] tracking-tight">
                 Ein Partner.
-                <span className="block">Klare Abläufe.</span>
+                <span className="block">Feste Zuständigkeit.</span>
                 <span className="block text-navy-400">Weniger Aufwand.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
@@ -98,10 +98,10 @@ export default function VerwaltungenPage() {
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
-                System
+                Zusammenarbeit
               </p>
               <h2 className="mt-5 text-[clamp(2.8rem,7vw,5.2rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
-                Weniger Reibung im Alltag.
+                Verlässliche Betreuung im Alltag.
               </h2>
             </div>
             <div className="grid gap-8 sm:grid-cols-3">
