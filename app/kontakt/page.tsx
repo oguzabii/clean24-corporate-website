@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 const contactPaths = [
   {
-    label: "01",
     title: "Ich brauche eine Offerte",
     text: "Für konkrete Reinigungsanfragen, Objektangaben und verbindliche Offerten.",
     href: cta.primary.href,
@@ -23,7 +22,6 @@ const contactPaths = [
     primary: true,
   },
   {
-    label: "02",
     title: "Ich vertrete eine Verwaltung",
     text: "Für Liegenschaften, Treppenhäuser, Parkhäuser und wiederkehrende Objektpflege.",
     href: cta.verwaltungen.href,
@@ -31,7 +29,6 @@ const contactPaths = [
     primary: false,
   },
   {
-    label: "03",
     title: "Ich habe eine allgemeine Frage",
     text: "Für Rückfragen zu Clean24, Abläufen, Erreichbarkeit oder Zusammenarbeit.",
     href: contact.emailHref,
@@ -70,11 +67,8 @@ export default function KontaktPage() {
               <a
                 key={path.title}
                 href={path.href}
-                className="group grid gap-5 py-7 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[5rem_1fr] lg:grid-cols-[7rem_1fr_auto] lg:items-center"
+                className="group grid gap-5 py-7 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10"
               >
-                <span className="text-sm font-semibold tabular-nums text-teal-700">
-                  {path.label}
-                </span>
                 <span>
                   <span className="block text-3xl font-semibold leading-tight tracking-tight text-navy-950 sm:text-4xl">
                     {path.title}
@@ -152,8 +146,8 @@ export default function KontaktPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
                 Direkter Kontakt
               </p>
-              <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
-                Telefon, E-Mail und Adresse.
+              <h2 className="mt-5 max-w-[12ch] text-[clamp(2.5rem,6vw,4.8rem)] font-semibold leading-[0.96] tracking-tight text-navy-950 [text-wrap:balance]">
+                So erreichen Sie Clean24.
               </h2>
             </div>
             <div className="divide-y divide-navy-200 border-y border-navy-200">
