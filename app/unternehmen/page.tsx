@@ -6,10 +6,21 @@ import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 import { founders } from "@/data/founders";
 
+const description =
+  "Im Jahr 2022 gründeten die Brüder Oguzhan und Yavuz Memis Clean24. Professionelle Reinigung mit Planung, Verantwortung und direkter Kommunikation.";
+
 export const metadata: Metadata = {
   title: "Unternehmen",
-  description:
-    "Im Jahr 2022 gründeten die Brüder Oguzhan und Yavuz Memis Clean24. Professionelle Reinigung mit Planung, Verantwortung und direkter Kommunikation.",
+  description,
+  alternates: { canonical: "/unternehmen" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/unternehmen",
+    title: "Unternehmen | Clean24",
+    description,
+  },
 };
 
 const processPoints = [
