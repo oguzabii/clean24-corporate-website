@@ -6,10 +6,27 @@ import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 import { industries } from "@/data/industries";
 
+const description =
+  "Clean24 arbeitet für Unternehmen, Immobilienverwaltungen, Gesundheitswesen, Bildung, Gewerbe, Parkhäuser und Privatkunden in Zürich und Umgebung.";
+
 export const metadata: Metadata = {
   title: "Branchen",
-  description:
-    "Clean24 arbeitet für Unternehmen, Immobilienverwaltungen, Gesundheitswesen, Bildung, Gewerbe, Parkhäuser und Privatkunden in Zürich und Umgebung.",
+  description,
+  alternates: { canonical: "/branchen" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/branchen",
+    title: "Branchen | Clean24",
+    description,
+    images: [
+      {
+        url: "/media/clean24/generated/branchen-hero-clean24.png",
+        alt: "Clean24 Reinigungsarbeit in einer betreuten professionellen Umgebung.",
+      },
+    ],
+  },
 };
 
 export default function BranchenPage() {
