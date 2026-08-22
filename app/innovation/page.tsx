@@ -82,14 +82,8 @@ export default function InnovationPage() {
             </h2>
           </div>
           <div className="mt-14 divide-y divide-navy-200 border-y border-navy-200">
-            {improvements.map((item, index) => (
-              <div
-                key={item}
-                className="grid gap-4 py-7 sm:grid-cols-[5rem_1fr] sm:items-center"
-              >
-                <span className="text-sm font-semibold tabular-nums text-teal-700">
-                  0{index + 1}
-                </span>
+            {improvements.map((item) => (
+              <div key={item} className="py-7">
                 <p className="text-3xl font-semibold leading-tight tracking-tight text-navy-950 sm:text-4xl">
                   {item}
                 </p>
