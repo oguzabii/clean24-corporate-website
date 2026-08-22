@@ -5,10 +5,27 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { cta } from "@/data/cta";
 
+const description =
+  "Clean24 unterstützt Immobilienverwaltungen mit klarer Planung, festen Ansprechpartnern, dokumentierten Einsätzen und Objektpflege für Liegenschaften.";
+
 export const metadata: Metadata = {
   title: "Verwaltungen",
-  description:
-    "Clean24 unterstützt Immobilienverwaltungen mit klarer Planung, festen Ansprechpartnern, dokumentierten Einsätzen und Objektpflege für Liegenschaften.",
+  description,
+  alternates: { canonical: "/verwaltungen" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/verwaltungen",
+    title: "Verwaltungen | Clean24",
+    description,
+    images: [
+      {
+        url: "/media/clean24/generated/verwaltungen-hero-property-care-1.png",
+        alt: "Gepflegte Wohnliegenschaft als Beispiel für strukturierte Objektpflege für Verwaltungen.",
+      },
+    ],
+  },
 };
 
 const proof = [
