@@ -98,14 +98,11 @@ export default function ArbeitenBeiClean24Page() {
             </h2>
           </div>
           <div className="mt-16 divide-y divide-white/15 border-y border-white/15">
-            {principles.map((item, index) => (
+            {principles.map((item) => (
               <section
                 key={item.title}
-                className="grid gap-5 py-8 sm:grid-cols-[7rem_1fr] sm:gap-8 lg:grid-cols-[10rem_0.8fr_1.2fr] lg:items-start"
+                className="grid gap-5 py-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-12"
               >
-                <span className="text-sm font-semibold tabular-nums text-teal-300">
-                  0{index + 1}
-                </span>
                 <h3 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
                   {item.title}
                 </h3>
@@ -178,14 +175,8 @@ export default function ArbeitenBeiClean24Page() {
               </h2>
             </div>
             <div className="divide-y divide-navy-200 border-y border-navy-200">
-              {applicationSteps.map((step, index) => (
-                <div
-                  key={step}
-                  className="grid gap-4 py-6 sm:grid-cols-[5rem_1fr] sm:items-center"
-                >
-                  <span className="text-sm font-semibold tabular-nums text-teal-700">
-                    0{index + 1}
-                  </span>
+              {applicationSteps.map((step) => (
+                <div key={step} className="py-6">
                   <p className="text-2xl font-semibold leading-tight tracking-tight text-navy-950">
                     {step}
                   </p>
