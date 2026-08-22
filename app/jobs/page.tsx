@@ -5,13 +5,31 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { contact } from "@/data/contact";
 
+const description =
+  "Jobs bei Clean24: Aktuelle Stellen, Initiativbewerbung und mögliche Einsatzbereiche in Reinigung, Teamleitung und Objektbetreuung.";
+
 export const metadata: Metadata = {
   title: "Jobs",
-  description:
-    "Jobs bei Clean24: Aktuelle Stellen, Initiativbewerbung und mögliche Einsatzbereiche in Reinigung, Teamleitung und Objektbetreuung.",
+  description,
+  alternates: { canonical: "/jobs" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/jobs",
+    title: "Jobs | Clean24",
+    description,
+    images: [
+      {
+        url: "/media/clean24/generated/jobs-hero-clean24.png",
+        alt: "Clean24 Arbeitsumgebung für Bewerbungen und mögliche Einsätze.",
+      },
+    ],
+  },
 };
 
 const mailtoApply = `${contact.emailHref}?subject=Bewerbung%20Clean24`;
+const mailtoPartner = `${contact.emailHref}?subject=Zusammenarbeit%20/%20Partnerbetrieb%20Clean24`;
 
 const roleAreas = [
   {
@@ -130,7 +148,7 @@ export default function JobsPage() {
                 hängt vom konkreten Bedarf ab.
               </p>
               <Link
-                href={mailtoApply}
+                href={mailtoPartner}
                 className="mt-8 inline-flex text-sm font-semibold text-navy-950 underline underline-offset-8 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
               >
                 Zusammenarbeit anfragen
