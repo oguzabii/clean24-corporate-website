@@ -41,7 +41,7 @@ const contactPaths = [
   },
   {
     title: "Ich habe eine allgemeine Frage",
-    text: "Für Rückfragen zu Clean24, Abläufen, Erreichbarkeit oder Zusammenarbeit.",
+    text: "Für Rückfragen zu Clean24, unseren Leistungen, Erreichbarkeit oder Zusammenarbeit.",
     href: contact.emailHref,
     action: "E-Mail schreiben",
     primary: false,
@@ -64,8 +64,8 @@ export default function KontaktPage() {
             </div>
             <p className="max-w-2xl text-xl leading-8 text-navy-600 sm:text-2xl sm:leading-9">
               Offerte, Verwaltung oder allgemeine Frage: Wählen Sie den
-              passenden Kontaktweg. Ihre Anfrage landet direkt im richtigen
-              Ablauf.
+              passenden Kontaktweg. So erreicht Ihr Anliegen direkt die
+              richtige Ansprechperson.
             </p>
           </div>
         </Container>
@@ -116,8 +116,7 @@ export default function KontaktPage() {
               </h2>
               <p className="mt-6 max-w-xl text-xl leading-8 text-navy-200">
                 Clean24 wird von Oguzhan und Yavuz Memis geführt. Anfragen
-                werden persönlich eingeordnet und in den passenden Ablauf
-                geleitet.
+                werden persönlich geprüft und direkt koordiniert.
               </p>
             </div>
             <div className="grid gap-6 sm:grid-cols-2">
