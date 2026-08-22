@@ -26,11 +26,11 @@ export const metadata: Metadata = {
 const processPoints = [
   {
     title: "Planung",
-    text: "Objekt, Umfang und Zuständigkeiten werden vor dem Einsatz geklärt.",
+    text: "Objekt, Leistungsumfang, Zeiten und Zuständigkeiten werden vor dem Einsatz abgestimmt.",
   },
   {
     title: "Ausführung",
-    text: "Die Arbeit vor Ort folgt einem klaren Auftrag und einem passenden Ablauf.",
+    text: "Die vereinbarten Leistungen werden vor Ort sorgfältig und nachvollziehbar ausgeführt.",
   },
   {
     title: "Kommunikation",
@@ -103,7 +103,7 @@ export default function UnternehmenPage() {
                 Geschichte
               </p>
               <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
-                Aus praktischer Arbeit entstand ein System.
+                Aus Erfahrung vor Ort entstand unsere Arbeitsweise.
               </h2>
             </div>
             <div className="max-w-3xl space-y-7 text-xl leading-8 text-navy-600">
@@ -114,8 +114,8 @@ export default function UnternehmenPage() {
                 Arbeitskraft.
               </p>
               <p>
-                Sie braucht saubere Absprachen, verlässliche Planung, klare
-                Zuständigkeiten und Menschen, die Verantwortung übernehmen.
+                Sie braucht verlässliche Planung, eindeutige Zuständigkeiten,
+                direkte Absprachen und Menschen, die Verantwortung übernehmen.
                 Daraus entstand der Leitgedanke von Clean24:
               </p>
               <p className="pt-2 text-[clamp(2rem,5vw,3.8rem)] font-semibold leading-[0.98] tracking-tight text-navy-950">
@@ -134,7 +134,7 @@ export default function UnternehmenPage() {
                 Arbeitsweise
               </p>
               <h2 className="mt-5 text-[clamp(2.6rem,6vw,5rem)] font-semibold leading-[0.96] tracking-tight text-navy-950">
-                Qualität entsteht im Ablauf.
+                Qualität zeigt sich in der Ausführung.
               </h2>
             </div>
             <div className="divide-y divide-navy-200 border-y border-navy-200">
@@ -169,8 +169,9 @@ export default function UnternehmenPage() {
               <p className="mt-6 max-w-2xl text-xl leading-8 text-navy-200">
                 Clean24 unterstützt private Kunden, Unternehmen,
                 Immobilienverwaltungen und gewerbliche Objekte in Zürich und
-                Umgebung. Nicht mit lauten Versprechen, sondern mit klaren
-                Abläufen und direkter Erreichbarkeit.
+                Umgebung. Nicht mit lauten Versprechen, sondern mit verlässlicher
+                Organisation, direkter Kommunikation und persönlicher
+                Erreichbarkeit.
               </p>
             </div>
             <div className="divide-y divide-white/15 border-y border-white/15">
@@ -199,8 +200,8 @@ export default function UnternehmenPage() {
             Lernen Sie Clean24 kennen.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-600">
-            Ob Offerte, Verwaltung oder allgemeine Frage: Wir führen Ihre
-            Anfrage in den passenden Ablauf.
+            Ob Offerte, Verwaltung oder allgemeine Frage: Wir kümmern uns
+            direkt um Ihr Anliegen.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Button href={cta.primary.href} variant="primary" size="lg">
