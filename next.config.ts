@@ -6,6 +6,25 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  async redirects() {
+    return [
+      {
+        source: "/services",
+        destination: "/leistungen",
+        permanent: true,
+      },
+      {
+        source: "/ueber-uns-2",
+        destination: "/unternehmen",
+        permanent: true,
+      },
+      {
+        source: "/privacy-policy",
+        destination: "/datenschutz",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
