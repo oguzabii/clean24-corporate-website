@@ -24,6 +24,7 @@ export function Logo({
       width={1380}
       height={671}
       priority={priority}
+      data-tone={tone}
       className={cn("h-10 w-auto", className)}
     />
   );
