@@ -310,8 +310,8 @@ export default function Home() {
                 <span className="block">Ein gemeinsamer Anspruch.</span>
               </h2>
               <p className="mt-8 max-w-xl text-xl leading-8 text-navy-600">
-                Oguzhan und Yavuz Memis haben Clean24 2022 gegründet. Persönlich,
-                erreichbar und mit Verantwortung für saubere Abläufe.
+                Im Jahr 2022 gründeten die Brüder Oguzhan und Yavuz Memis Clean24.
+                Persönlich, erreichbar und mit Verantwortung für saubere Abläufe.
               </p>
               <div className="mt-9">
                 <Link
