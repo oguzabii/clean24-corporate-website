@@ -57,6 +57,7 @@ export function DesktopNav() {
             pathname={pathname}
             open={openMenu === item.label}
             onOpen={() => setOpenMenu(item.label)}
+            onClose={() => setOpenMenu(null)}
             onNavigate={closeForNavigation}
           />
         ) : (
@@ -82,12 +83,14 @@ function NavDropdown({
   pathname,
   open,
   onOpen,
+  onClose,
   onNavigate,
 }: {
   item: NavItem;
   pathname: string;
   open: boolean;
   onOpen: () => void;
+  onClose: () => void;
   onNavigate: () => void;
 }) {
   const links = item.items ?? [];
@@ -100,6 +103,13 @@ function NavDropdown({
   return (
     <div
       className="relative"
+      onPointerLeave={onClose}
+      onMouseLeave={onClose}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          onClose();
+        }
+      }}
     >
       <Link
         href={item.href}
