@@ -29,24 +29,10 @@ export const metadata: Metadata = {
   },
   description: homeDescription,
   applicationName: "Clean24",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "de_CH",
     siteName: "Clean24",
-    url: siteUrl,
-    title: homeTitle,
-    description: homeDescription,
-    images: [
-      {
-        url: "/media/clean24/hero-facility-cleaning.jpg",
-        width: 2048,
-        height: 1152,
-        alt: "Clean24 – professionelle Gebäude- und Facility-Reinigung.",
-      },
-    ],
   },
   robots: {
     index: true,
