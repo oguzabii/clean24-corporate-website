@@ -11,7 +11,7 @@ export function HeaderLogoLink() {
     <Link
       href="/"
       aria-label="Clean24 Startseite"
-      className="shrink-0"
+      className="shrink-0 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2"
       onClick={(event) => {
         if (pathname !== "/") return;
         event.preventDefault();
