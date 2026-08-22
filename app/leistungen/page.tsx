@@ -9,10 +9,27 @@ import {
   serviceGroups,
 } from "@/data/services";
 
+const description =
+  "Leistungen von Clean24: Unterhaltsreinigung, Büroreinigung, Treppenhausreinigung, Praxisreinigung, Parkhausreinigung, Spezialreinigung und Umzugsreinigung.";
+
 export const metadata: Metadata = {
   title: "Leistungen",
-  description:
-    "Leistungen von Clean24: Unterhaltsreinigung, Büroreinigung, Treppenhausreinigung, Praxisreinigung, Parkhausreinigung, Spezialreinigung und Umzugsreinigung.",
+  description,
+  alternates: { canonical: "/leistungen" },
+  openGraph: {
+    type: "website",
+    locale: "de_CH",
+    siteName: "Clean24",
+    url: "/leistungen",
+    title: "Leistungen | Clean24",
+    description,
+    images: [
+      {
+        url: "/media/clean24/generated/leistungen-hero-clean24.png",
+        alt: "Clean24 Reinigungsleistung in einer professionellen Arbeitsumgebung.",
+      },
+    ],
+  },
 };
 
 export default function LeistungenPage() {
