@@ -47,8 +47,9 @@ export default function LeistungenPage() {
               </h1>
             </div>
             <p className="max-w-2xl text-xl leading-8 text-navy-600 sm:text-2xl sm:leading-9">
-              Clean24 organisiert Reinigung nach Objekt, Nutzung und Rhythmus.
-              Jede Leistung hat eine klare Aufgabe und eine eigene Route.
+              Clean24 organisiert Reinigung nach Objekt, Nutzung und
+              Einsatzrhythmus. Umfang, Intervall und Ausführung werden passend
+              zur jeweiligen Umgebung abgestimmt.
             </p>
           </div>
         </Container>
@@ -119,8 +120,8 @@ export default function LeistungenPage() {
             Welche Reinigung passt zu Ihrem Objekt?
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-200">
-            Beschreiben Sie kurz Objekt, Fläche und gewünschten Rhythmus. Clean24
-            meldet sich mit dem passenden nächsten Schritt.
+            Beschreiben Sie kurz Objekt, Fläche und gewünschten Rhythmus. Wir
+            prüfen die Angaben und melden uns persönlich bei Ihnen.
           </p>
           <div className="mt-9">
             <Button href={cta.primary.href} variant="accent" size="lg">
