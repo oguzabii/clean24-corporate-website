@@ -63,7 +63,6 @@ export const mainNav: NavItem[] = [
       { label: "Unternehmen", href: "/unternehmen" },
       { label: "Arbeiten bei Clean24", href: "/arbeiten-bei-clean24" },
       { label: "Jobs", href: "/jobs" },
-      { label: "Kontakt", href: "/kontakt" },
       { label: "Qualität", href: "/qualitaet" },
       { label: "Innovation", href: "/innovation" },
       { label: "Nachhaltigkeit", href: "/nachhaltigkeit" },
