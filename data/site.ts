@@ -16,7 +16,7 @@ export const site = {
   slogan: "Sauberkeit mit System.",
   secondary:
     "Professionelle Reinigung. Klare Abläufe. Verlässliche Ergebnisse.",
-  badge: "Schweizer Reinigungs- & Facility-Services",
+  badge: "Schweizer Reinigungs- und Facility-Services",
   /** Founding year (no exact date). */
   founded: 2022,
   /**
@@ -40,17 +40,17 @@ export const site = {
     {
       title: "Professionelle Reinigung",
       description:
-        "Geschultes Personal und geprüfte Verfahren für jeden Objekttyp.",
+        "Sorgfältige Ausführung und passende Reinigungsmethoden für unterschiedliche Objekttypen.",
     },
     {
       title: "Klare Abläufe",
       description:
-        "Strukturierte Planung, feste Ansprechpartner und transparente Prozesse.",
+        "Verlässliche Einsatzplanung, feste Ansprechpartner und transparente Zuständigkeiten.",
     },
     {
       title: "Verlässliche Ergebnisse",
       description:
-        "Konstante Qualität durch Kontrollen und dokumentierte Standards.",
+        "Sorgfältige Ausführung, direkte Rückmeldungen und nachvollziehbare Qualitätskontrolle.",
     },
   ],
 };
