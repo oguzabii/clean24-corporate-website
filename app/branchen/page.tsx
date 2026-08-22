@@ -43,15 +43,12 @@ export default function BranchenPage() {
       <section className="bg-white py-20 sm:py-28 lg:py-36">
         <Container className="max-w-[80rem]">
           <div className="divide-y divide-navy-200 border-y border-navy-200">
-            {industries.map((industry, index) => (
+            {industries.map((industry) => (
               <Link
                 key={industry.slug}
                 href={`/branchen/${industry.slug}`}
-                className="group grid gap-5 py-8 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[5rem_minmax(0,1fr)_auto] lg:grid-cols-[8rem_minmax(0,1fr)_auto]"
+                className="group grid gap-5 py-8 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-8"
               >
-                <span className="text-sm font-semibold tabular-nums text-teal-700">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <span className="min-w-0">
                   <span className="relative block aspect-[4/3] w-full overflow-hidden bg-navy-100">
                     <Image
@@ -72,7 +69,7 @@ export default function BranchenPage() {
                   </span>
                 </span>
                 <span
-                  className="text-sm font-semibold text-navy-500 transition-transform group-hover:translate-x-1"
+                  className="pt-1 text-sm font-semibold text-navy-500 transition-transform group-hover:translate-x-1"
                   aria-hidden
                 >
                   →
