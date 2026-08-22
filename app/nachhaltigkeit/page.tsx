@@ -69,14 +69,11 @@ export default function NachhaltigkeitPage() {
               </h2>
             </div>
             <div className="divide-y divide-navy-200 border-y border-navy-200">
-              {practices.map((item, index) => (
+              {practices.map((item) => (
                 <section
                   key={item.title}
-                  className="grid gap-4 py-7 sm:grid-cols-[5rem_0.9fr_1.1fr] sm:items-start"
+                  className="grid gap-4 py-7 sm:grid-cols-[0.9fr_1.1fr] sm:items-start sm:gap-8"
                 >
-                  <span className="text-sm font-semibold tabular-nums text-teal-700">
-                    0{index + 1}
-                  </span>
                   <h3 className="text-2xl font-semibold tracking-tight text-navy-950">
                     {item.title}
                   </h3>
