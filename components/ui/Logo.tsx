@@ -20,7 +20,7 @@ export function Logo({
   return (
     <Image
       src={src}
-      alt="Clean24 — Ihr Reinigungsprofi"
+      alt="Clean24"
       width={1380}
       height={671}
       priority={priority}
