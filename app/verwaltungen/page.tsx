@@ -88,12 +88,9 @@ export default function VerwaltungenPage() {
               </h2>
             </div>
             <div className="grid gap-8 sm:grid-cols-3">
-              {proof.map((item, index) => (
+              {proof.map((item) => (
                 <div key={item} className="border-t border-navy-200 pt-5">
-                  <span className="text-sm font-semibold tabular-nums text-teal-700">
-                    0{index + 1}
-                  </span>
-                  <h3 className="mt-4 text-2xl font-semibold leading-tight tracking-tight text-navy-950">
+                  <h3 className="text-2xl font-semibold leading-tight tracking-tight text-navy-950">
                     {item}
                   </h3>
                 </div>
