@@ -2,11 +2,9 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /**
- * The Clean24 logo (transparent PNG). Two brand variants keep the mark
- * readable on any surface without a white plate:
- *  - `tone="dark"`  → full-colour wordmark for light backgrounds (header)
- *  - `tone="light"` → light wordmark with preserved leaf/drop accents for
- *                     dark backgrounds (footer), derived from the colour logo
+ * The official Clean24 logo (transparent PNG).
+ * Both surface tones deliberately use the same full-colour brand asset so the
+ * blue wordmark and green leaf stay consistent across header and footer.
  */
 export function Logo({
   tone = "dark",
@@ -17,10 +15,7 @@ export function Logo({
   className?: string;
   priority?: boolean;
 }) {
-  const src =
-    tone === "light"
-      ? "/brand/clean24-logo-footer.png"
-      : "/brand/clean24-logo.png";
+  const src = "/brand/clean24-logo.png";
 
   return (
     <Image
