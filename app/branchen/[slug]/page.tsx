@@ -21,10 +21,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const industry = getIndustryBySlug(slug);
   if (!industry) return { title: "Branche nicht gefunden" };
+
+  const description = `${industry.name}: ${industry.lead}`;
+  const url = `/branchen/${industry.slug}`;
+
   return {
     title: industry.name,
-    description: `${industry.name}: ${industry.lead}`,
-    alternates: { canonical: `/branchen/${industry.slug}` },
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      locale: "de_CH",
+      siteName: "Clean24",
+      url,
+      title: `${industry.name} | Clean24`,
+      description,
+      images: [
+        {
+          url: industry.heroImage,
+          alt: industry.imageAlt,
+        },
+      ],
+    },
   };
 }
 
