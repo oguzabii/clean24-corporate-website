@@ -25,10 +25,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return { title: "Leistung nicht gefunden" };
+
+  const description = `${service.name} von Clean24: ${service.description}`;
+  const url = `/leistungen/${service.slug}`;
+
   return {
     title: service.name,
-    description: `${service.name} von Clean24: ${service.description}`,
-    alternates: { canonical: `/leistungen/${service.slug}` },
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      locale: "de_CH",
+      siteName: "Clean24",
+      url,
+      title: `${service.name} | Clean24`,
+      description,
+      images: [
+        {
+          url: service.image,
+          alt: service.imageAlt,
+        },
+      ],
+    },
   };
 }
 
