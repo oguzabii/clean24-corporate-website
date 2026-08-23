@@ -18,7 +18,7 @@ const serviceStories = [
   },
   {
     title: "Immobilien & Verwaltungen",
-    text: "Treppenhäuser, Eingänge, Nebenräume und Liegenschaften mit klarer Planung und festen Ansprechpartnern.",
+    text: "Treppenhäuser, Eingänge, Nebenräume und Liegenschaften mit abgestimmten Intervallen und festen Ansprechpartnern.",
     image: "/media/clean24/generated/home-story-stairwell-care.png",
     alt: "Sorgfältige Treppenhauspflege in einer gepflegten Liegenschaft.",
     href: "/verwaltungen",
@@ -36,7 +36,7 @@ const serviceStories = [
 const administrationProof = [
   "Fester Ansprechpartner",
   "Dokumentierte Einsätze",
-  "Klare Planung",
+  "Planbare Einsätze",
 ];
 
 const qualitySteps = ["Planen.", "Ausführen.", "Kontrollieren."];
@@ -103,7 +103,8 @@ export default function Home() {
             <p className="max-w-5xl text-[clamp(2.4rem,7vw,5.8rem)] font-semibold leading-[0.98] tracking-tight">
               Professionelle Reinigung beginnt nicht beim Putzen.
               <span className="block text-navy-400">
-                Sondern bei Planung, Verantwortung und klaren Abläufen.
+                Sondern bei guter Vorbereitung, Verantwortung und verlässlicher
+                Ausführung.
               </span>
             </p>
           </SectionReveal>
@@ -118,13 +119,13 @@ export default function Home() {
                 Leistungen
               </p>
               <h2 className="mt-5 max-w-4xl text-[clamp(2.9rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
-                Drei Aufgaben. Ein sauberer Ablauf.
+                Drei Bereiche. Ein verlässlicher Partner.
               </h2>
             </SectionReveal>
             <SectionReveal y={18}>
               <p className="max-w-xl text-xl leading-8 text-navy-600">
-                Die Startseite zeigt nicht jedes Detail. Sie zeigt, wie Clean24
-                Arbeit denkt: nach Objekt, Rhythmus und Verantwortung.
+                Vom Büro bis zur Liegenschaft: Clean24 richtet Reinigung nach
+                Nutzung, Objekt und Einsatzrhythmus aus.
               </p>
             </SectionReveal>
           </div>
@@ -225,7 +226,7 @@ export default function Home() {
               </p>
               <h2 className="mt-5 max-w-3xl text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.92] tracking-tight">
                 Ein Partner.
-                <span className="block">Klare Abläufe.</span>
+                <span className="block">Feste Zuständigkeit.</span>
                 <span className="block text-navy-400">Weniger Aufwand.</span>
               </h2>
               <p className="mt-8 max-w-xl text-xl leading-8 text-navy-200">
@@ -280,8 +281,8 @@ export default function Home() {
                 Qualität
               </p>
               <h2 className="mt-5 max-w-2xl text-[clamp(3rem,7vw,5.8rem)] font-semibold leading-[0.92] tracking-tight text-navy-950">
-                Qualität ist kein Versprechen.
-                <span className="block text-navy-400">Sie ist ein Ablauf.</span>
+                Qualität zeigt sich vor Ort.
+                <span className="block text-navy-400">Bei jedem Einsatz.</span>
               </h2>
               <div className="mt-10 space-y-3">
                 {qualitySteps.map((step) => (
@@ -311,7 +312,8 @@ export default function Home() {
               </h2>
               <p className="mt-8 max-w-xl text-xl leading-8 text-navy-600">
                 Im Jahr 2022 gründeten die Brüder Oguzhan und Yavuz Memis Clean24.
-                Persönlich, erreichbar und mit Verantwortung für saubere Abläufe.
+                Persönlich, erreichbar und mit Verantwortung für die Ausführung
+                vor Ort.
               </p>
               <div className="mt-9">
                 <Link
