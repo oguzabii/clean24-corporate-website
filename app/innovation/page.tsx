@@ -7,14 +7,14 @@ import { cta } from "@/data/cta";
 export const metadata: Metadata = {
   title: "Innovation",
   description:
-    "Innovation bei Clean24 bedeutet bessere Prozesse: digitale Abläufe, klare Kommunikation, strukturierte Planung und kontinuierliche Verbesserung.",
+    "Innovation bei Clean24 bedeutet bessere Organisation: digitale Anfragen, vollständige Objektangaben, saubere interne Übergaben und laufende Verbesserung.",
 };
 
 const improvements = [
-  "Anfragen strukturiert aufnehmen",
-  "Informationen sauber weitergeben",
-  "Einsätze klarer planen",
-  "Abläufe laufend verbessern",
+  "Anfragen vollständig erfassen",
+  "Objektinformationen sicher weitergeben",
+  "Einsätze vorausschauend planen",
+  "Rückmeldungen direkt in die Einsatzplanung übernehmen",
 ];
 
 export default function InnovationPage() {
@@ -28,14 +28,15 @@ export default function InnovationPage() {
                 Innovation
               </p>
               <h1 className="mt-7 max-w-5xl text-[clamp(3.1rem,10vw,6.8rem)] font-semibold leading-[0.92] tracking-tight">
-                Bessere Abläufe.
-                <span className="block text-navy-400">Weniger Reibung.</span>
+                Bessere Organisation.
+                <span className="block text-navy-400">Weniger Aufwand.</span>
               </h1>
             </div>
             <p className="max-w-2xl text-xl leading-8 text-navy-600 sm:text-2xl sm:leading-9">
-              Innovation bedeutet bei Clean24 nicht Show. Sie bedeutet:
-              Anfragen, Planung und Kommunikation einfacher und zuverlässiger zu
-              machen.
+              Innovation bedeutet bei Clean24 nicht Technik um der Technik
+              willen. Digitale Werkzeuge sollen Anfragen vereinfachen,
+              Informationen vollständig halten und die Einsatzplanung
+              unterstützen.
             </p>
           </div>
         </Container>
@@ -47,7 +48,7 @@ export default function InnovationPage() {
             <div className="relative min-h-[360px] overflow-hidden bg-navy-900 sm:min-h-[560px] lg:min-h-[680px]">
               <Image
                 src="/media/clean24/generated/innovation-hero-clean24.png"
-                alt="Clean24 Planung und Organisation für strukturierte Reinigungsabläufe."
+                alt="Clean24 Planung und Organisation für professionelle Reinigungseinsätze."
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 48vw"
@@ -59,11 +60,11 @@ export default function InnovationPage() {
                 Organisation
               </p>
               <h2 className="mt-5 text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.96] tracking-tight">
-                Digital dort, wo es den Alltag klärt.
+                Digital dort, wo es die Arbeit einfacher macht.
               </h2>
               <p className="mt-6 max-w-2xl text-xl leading-8 text-navy-200">
-                Online-Anfragen, klare Angaben und strukturierte interne
-                Abläufe helfen, Rückfragen zu reduzieren und Einsätze besser
+                Online-Anfragen, vollständige Objektangaben und saubere interne
+                Übergaben reduzieren Rückfragen und helfen, Einsätze besser
                 vorzubereiten.
               </p>
             </div>
@@ -78,7 +79,7 @@ export default function InnovationPage() {
               Verbesserung
             </p>
             <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
-              Kleine Prozessschritte machen den Unterschied.
+              Kleine Verbesserungen machen im Alltag den Unterschied.
             </h2>
           </div>
           <div className="mt-14 divide-y divide-navy-200 border-y border-navy-200">
