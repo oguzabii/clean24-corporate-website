@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyCta } from "@/components/layout/MobileStickyCta";
+import { contact } from "@/data/contact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +21,26 @@ const homeTitle =
   "Clean24 | Reinigung & Facility Services in Zürich und Umgebung";
 const homeDescription =
   "Professionelle Reinigung für Unternehmen, Verwaltungen und private Kunden. Clean24 bietet klare Abläufe, transparente Offerten und zuverlässige Reinigung in Zürich und Umgebung.";
+
+const organizationStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteUrl}/#organization`,
+  name: "Clean24",
+  legalName: contact.company,
+  url: siteUrl,
+  logo: `${siteUrl}/brand/clean24-logo.png`,
+  foundingDate: "2022",
+  email: contact.email,
+  telephone: contact.phoneHref.replace("tel:", ""),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: contact.street,
+    postalCode: contact.zip,
+    addressLocality: contact.city,
+    addressCountry: "CH",
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -51,6 +72,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white font-sans text-ink">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationStructuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         {/* Progressive enhancement: if JS is unavailable, reveal-animated
             content must still be fully visible. */}
         <noscript>
