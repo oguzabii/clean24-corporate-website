@@ -7,25 +7,25 @@ import { cta } from "@/data/cta";
 export const metadata: Metadata = {
   title: "Qualität",
   description:
-    "Qualität bei Clean24 entsteht durch klare Planung, definierte Zuständigkeiten, strukturierte Einsätze, direkte Kommunikation und saubere Ausführung.",
+    "Qualität bei Clean24 bedeutet sorgfältige Vorbereitung, definierte Zuständigkeiten, kontrollierbare Einsätze, direkte Kommunikation und saubere Ausführung.",
 };
 
 const process = [
   {
     title: "Planen",
-    text: "Umfang, Objekt und Zuständigkeiten werden vor dem Einsatz geklärt.",
+    text: "Objekt, Leistungsumfang, Zeiten und Zuständigkeiten werden vor dem Einsatz abgestimmt.",
   },
   {
     title: "Ausführen",
-    text: "Die Reinigung folgt einem strukturierten Einsatz und einer klaren Erwartung.",
+    text: "Das Team arbeitet nach dem vereinbarten Leistungsumfang und den Anforderungen des Objekts.",
   },
   {
     title: "Abstimmen",
     text: "Rückfragen und Beobachtungen werden direkt kommuniziert.",
   },
   {
-    title: "Nachvollziehen",
-    text: "Abläufe bleiben verständlich, damit Qualität wiederholbar wird.",
+    title: "Kontrollieren",
+    text: "Ausführung und Rückmeldungen werden geprüft, damit die vereinbarte Qualität verlässlich bleibt.",
   },
 ];
 
@@ -38,12 +38,12 @@ export default function QualitaetPage() {
             Qualität
           </p>
           <h1 className="mt-7 max-w-6xl text-[clamp(3.2rem,11vw,7rem)] font-semibold leading-[0.92] tracking-tight">
-            Qualität entsteht nicht im Versprechen.
-            <span className="block text-navy-400">Sie entsteht im Ablauf.</span>
+            Qualität zeigt sich nicht im Versprechen.
+            <span className="block text-navy-400">Sie zeigt sich vor Ort.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-xl leading-8 text-navy-200 sm:text-2xl sm:leading-9">
-            Clean24 setzt auf klare Planung, definierte Zuständigkeiten,
-            strukturierte Einsätze und direkte Kommunikation.
+            Clean24 setzt auf sorgfältige Vorbereitung, eindeutige
+            Zuständigkeiten, verlässliche Ausführung und direkte Kommunikation.
           </p>
         </Container>
       </section>
@@ -53,7 +53,7 @@ export default function QualitaetPage() {
           <div className="relative min-h-[360px] overflow-hidden bg-navy-100 sm:min-h-[620px] lg:min-h-[720px]">
             <Image
               src="/media/clean24/generated/qualitaet-hero-clean24-1.png"
-              alt="Clean24 Qualitätsarbeit mit strukturiertem Reinigungsprozess vor Ort."
+              alt="Clean24 Qualitätsarbeit bei einem professionellen Reinigungseinsatz vor Ort."
               fill
               priority
               sizes="100vw"
@@ -68,10 +68,10 @@ export default function QualitaetPage() {
           <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
-                Ablauf
+                Arbeitsweise
               </p>
               <h2 className="mt-5 text-[clamp(2.7rem,7vw,5.4rem)] font-semibold leading-[0.94] tracking-tight text-navy-950">
-                Saubere Ausführung braucht klare Reihenfolge.
+                Vom Auftrag bis zur Qualitätskontrolle.
               </h2>
             </div>
             <div className="divide-y divide-navy-200 border-y border-navy-200">
@@ -99,8 +99,8 @@ export default function QualitaetPage() {
             Qualität mit System.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-navy-600">
-            Sagen Sie uns, welches Objekt gereinigt werden soll. Wir klären den
-            passenden Ablauf.
+            Sagen Sie uns, welches Objekt gereinigt werden soll. Wir klären
+            Leistungsumfang, Zeitpunkt und die passende Ausführung.
           </p>
           <div className="mt-9">
             <Button href={cta.primary.href} variant="primary" size="lg">
