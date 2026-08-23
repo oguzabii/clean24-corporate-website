@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         destination: "/datenschutz",
         permanent: true,
       },
+      {
+        source: "/kontakt-2",
+        destination: "/kontakt",
+        permanent: true,
+      },
     ];
   },
 };
